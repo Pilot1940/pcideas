@@ -4,78 +4,109 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parikshit Chitalkar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #ffffff;
-      --text: #111111;
-      --muted: #666666;
-      --link: #0055cc;
-      --link-hover: #003d99;
-      --border: #e5e5e5;
+      --bg:         #FAFAF7;
+      --bg-alt:     #F2F0EB;
+      --text:       #1A1A18;
+      --text-dim:   #5C5B56;
+      --text-muted: #8A8983;
+      --accent:     #B8462E;
+      --border:     #E0DED8;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f0f0f;
-        --text: #eeeeee;
-        --muted: #999999;
-        --link: #6699ff;
-        --link-hover: #88aaff;
-        --border: #2a2a2a;
-      }
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      font-size: 17px;
-    }
+    html { font-size: 17px; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
       line-height: 1.65;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      -webkit-font-smoothing: antialiased;
     }
 
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--text);
+      padding: 11px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 15px;
+      letter-spacing: 0.3px;
+      color: var(--bg);
+      text-decoration: none;
+    }
+
+    .topbar-rss {
+      font-size: 11px;
+      color: rgba(250,250,247,0.45);
+      text-decoration: none;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      transition: color 0.15s;
+    }
+    .topbar-rss:hover { color: rgba(250,250,247,0.9); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--text);
+      color: var(--bg);
+      padding: 72px 24px 60px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.9rem, 6vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: #e8a090;
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.82rem, 2vw, 0.95rem);
+      font-weight: 300;
+      color: rgba(250,250,247,0.55);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── POST LIST ── */
     main {
       max-width: 720px;
       width: 100%;
       margin: 0 auto;
-      padding: 4rem 1.5rem 2rem;
+      padding: 0 24px;
       flex: 1;
     }
 
-    header {
-      margin-bottom: 3.5rem;
-    }
-
-    header h1 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 0.35rem;
-    }
-
-    header p {
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-
-    .post-list {
-      list-style: none;
-    }
+    .post-list { list-style: none; }
 
     .post-list li {
-      padding: 1.4rem 0;
+      padding: 1.6rem 0;
       border-bottom: 1px solid var(--border);
     }
 
@@ -85,64 +116,66 @@
 
     .post-title {
       display: block;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--link);
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      font-weight: 700;
+      color: var(--text);
       text-decoration: none;
-      margin-bottom: 0.25rem;
-      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 0.35rem;
+      transition: color 0.15s;
     }
-
-    .post-title:hover {
-      color: var(--link-hover);
-      text-decoration: underline;
-    }
+    .post-title:hover { color: var(--accent); }
 
     .post-desc {
       font-size: 0.88rem;
-      color: var(--muted);
-      margin-bottom: 0.25rem;
-      line-height: 1.5;
+      color: var(--text-dim);
+      margin-bottom: 0.3rem;
+      line-height: 1.55;
     }
 
     .post-date {
-      font-size: 0.78rem;
-      color: var(--muted);
-      opacity: 0.7;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
     }
 
+    /* ── FOOTER ── */
     footer {
       max-width: 720px;
       width: 100%;
       margin: 0 auto;
-      padding: 2rem 1.5rem 3rem;
+      padding: 1.8rem 24px 3rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
     }
 
-    footer a {
-      color: var(--muted);
-      text-decoration: none;
-      opacity: 0.8;
-    }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
 
-    footer a:hover {
-      opacity: 1;
-      text-decoration: underline;
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 52px 20px 44px; }
+      .topbar { padding: 10px 20px; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>Parikshit Chitalkar</h1>
-      <p>Thoughts on music, technology, finance, and the world</p>
-    </header>
 
+  <nav class="topbar">
+    <a class="topbar-name" href="/">Parikshit Chitalkar</a>
+    <a class="topbar-rss" href="/feed.xml">RSS</a>
+  </nav>
+
+  <header class="hero">
+    <h1>Ideas worth <em>writing</em> down</h1>
+    <p class="hero-tagline">Music · Technology · Finance · The World</p>
+  </header>
+
+  <main>
     <ul class="post-list">
 
       <!-- POST ENTRY — edit data-title and data-desc to update the displayed text -->
@@ -188,5 +221,6 @@
     <span>© 2026 Parikshit Chitalkar</span>
     <a href="/feed.xml">RSS</a>
   </footer>
+
 </body>
 </html>
