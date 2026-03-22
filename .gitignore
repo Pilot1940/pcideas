@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Cowork skill files (not part of the blog)
+*.skill
