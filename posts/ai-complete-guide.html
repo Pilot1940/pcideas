@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced AI Concepts — Context, Tokens & Mastery</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --ink: #1a1410;
+  --paper: #f5f0e8;
+  --paper2: #ede7d9;
+  --paper3: #e4dcc8;
+  --accent-red: #c0392b;
+  --accent-gold: #b8860b;
+  --accent-blue: #1a3a5c;
+  --accent-green: #2d6a4f;
+  --accent-purple: #5b2d8e;
+  --text: #2c2416;
+  --text-dim: #6b5a42;
+  --text-muted: #9c8a72;
+  --border: #c8b89a;
+  --border-light: #ddd0b8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* TOP BAR */
+.topbar {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+.topbar-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.topbar-nav a {
+  color: rgba(245,240,232,0.6);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.topbar-nav a:hover { color: var(--paper); background: rgba(255,255,255,0.1); }
+
+/* HERO */
+.hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 80px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 40%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(255,255,255,0.02) 20px,
+    rgba(255,255,255,0.02) 21px
+  );
+}
+
+.hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(245,240,232,0.5);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  max-width: 700px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: #c8a96e;
+}
+
+.hero-sub {
+  color: rgba(245,240,232,0.65);
+  max-width: 580px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.chapter-pills {
+  display: flex;
+  gap: 12px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.chapter-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(245,240,232,0.8);
+}
+
+.chapter-pill .num {
+  background: #c8a96e;
+  color: var(--ink);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+/* SECTIONS */
+.section {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 80px 48px;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--accent-red);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+
+h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+h4 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+p { color: var(--text-dim); margin-bottom: 16px; }
+p strong { color: var(--text); font-weight: 600; }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 60px 0;
+}
+
+/* CARDS */
+.card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(44,36,22,0.06);
+}
+
+.card-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.card-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 28px 0;
+}
+
+/* ANALOGY DIAGRAM */
+.world-map {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 0;
+  margin: 40px 0;
+  align-items: start;
+}
+
+.world-col { display: flex; flex-direction: column; gap: 0; }
+
+.world-header {
+  text-align: center;
+  padding: 16px;
+  border-radius: 10px 10px 0 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.wh-restaurant { background: var(--ink); color: var(--paper); }
+.wh-massage { background: var(--accent-green); color: white; }
+
+.world-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.world-item {
+  padding: 14px 18px;
+  border-left: 1px solid var(--border-light);
+  border-right: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  background: white;
+}
+
+.world-item:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.world-item .role {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  margin-bottom: 3px;
+}
+
+.world-item .name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.world-item .maps {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.world-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 58px;
+  gap: 0;
+}
+
+.connector-line {
+  width: 1px;
+  background: var(--border);
+  flex: 1;
+  min-height: 20px;
+}
+
+.connector-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  border: 2px solid var(--paper);
+  box-shadow: 0 0 0 2px var(--accent-gold);
+}
+
+.connector-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--accent-gold);
+  writing-mode: vertical-rl;
+  letter-spacing: 2px;
+  margin: 8px 0;
+}
+
+/* CUSTOMER JOURNEY */
+.journey {
+  background: var(--paper2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin: 32px 0;
+}
+
+.journey-steps {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-top: 24px;
+  overflow-x: auto;
+}
+
+.journey-step {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+  position: relative;
+}
+
+.journey-step::after {
+  content: '→';
+  position: absolute;
+  right: -8px;
+  top: 20px;
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+.journey-step:last-child::after { display: none; }
+
+.journey-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin: 0 auto 8px;
+}
+
+.journey-step .label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.journey-step .sublabel {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* TOKEN DIAGRAM */
+.token-window {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 32px 0;
+  box-shadow: 0 4px 20px rgba(44,36,22,0.08);
+}
+
+.token-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.token-bar-container {
+  padding: 20px;
+}
+
+.token-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.token-bar {
+  height: 36px;
+  border-radius: 6px;
+  display: flex;
+  overflow: hidden;
+  margin-bottom: 4px;
+  background: var(--paper3);
+}
+
+.token-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: white;
+  font-weight: 500;
+  transition: width 0.5s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 4px;
+}
+
+.seg-system { background: var(--accent-blue); }
+.seg-memory { background: var(--accent-purple); }
+.seg-rag { background: var(--accent-green); }
+.seg-history { background: var(--accent-gold); color: var(--ink); }
+.seg-query { background: var(--accent-red); }
+.seg-free { background: var(--paper3); color: var(--text-muted); }
+
+.token-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* BLOAT SCENARIOS */
+.scenario-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 80px;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.scenario-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
+.scenario-bar {
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  overflow: hidden;
+  background: var(--paper3);
+}
+
+.scenario-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* CALLOUT BOXES */
+.callout {
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 24px 0;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.callout-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+
+.callout-gold {
+  background: rgba(184,134,11,0.08);
+  border: 1px solid rgba(184,134,11,0.3);
+  border-left: 4px solid var(--accent-gold);
+}
+
+.callout-red {
+  background: rgba(192,57,43,0.06);
+  border: 1px solid rgba(192,57,43,0.2);
+  border-left: 4px solid var(--accent-red);
+}
+
+.callout-green {
+  background: rgba(45,106,79,0.06);
+  border: 1px solid rgba(45,106,79,0.2);
+  border-left: 4px solid var(--accent-green);
+}
+
+.callout-blue {
+  background: rgba(26,58,92,0.06);
+  border: 1px solid rgba(26,58,92,0.2);
+  border-left: 4px solid var(--accent-blue);
+}
+
+.callout p { margin: 0; font-size: 14px; }
+
+/* CONTEXT PASSPORT */
+.passport {
+  background: white;
+  border: 2px solid var(--accent-blue);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 480px;
+  box-shadow: 0 8px 30px rgba(26,58,92,0.15);
+  margin: 32px auto;
+}
+
+.passport-header {
+  background: var(--accent-blue);
+  color: white;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.passport-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  opacity: 0.7;
+}
+
+.passport-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.passport-body {
+  padding: 20px 24px;
+}
+
+.passport-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--paper3);
+  font-size: 13px;
+}
+
+.passport-row:last-child { border-bottom: none; }
+.passport-key { color: var(--text-muted); font-family: 'DM Mono', monospace; font-size: 11px; }
+.passport-val { font-weight: 500; color: var(--text); text-align: right; }
+
+.passport-stamp {
+  background: rgba(26,58,92,0.06);
+  border: 2px dashed rgba(26,58,92,0.2);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.passport-stamp .stamp-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--accent-blue);
+  letter-spacing: 2px;
+}
+
+/* PROJECTS GUIDE */
+.projects-anatomy {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 32px 0;
+}
+
+.pa-header {
+  background: var(--paper2);
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-light);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+}
+
+.pa-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.pa-row:last-child { border-bottom: none; }
+
+.pa-cell {
+  padding: 16px 20px;
+}
+
+.pa-cell + .pa-cell { border-left: 1px solid var(--border-light); }
+
+.pa-cell .name { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+.pa-cell .desc { font-size: 12px; color: var(--text-muted); }
+.pa-cell .example { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-green); margin-top: 6px; }
+
+/* WORKFLOW */
+.workflow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 32px 0;
+  position: relative;
+}
+
+.workflow::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent-blue), var(--accent-green));
+  opacity: 0.3;
+}
+
+.wf-step {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 20px;
+  padding: 12px 0;
+  align-items: start;
+}
+
+.wf-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.wf-content { padding-top: 6px; }
+.wf-content .title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.wf-content .detail { font-size: 13px; color: var(--text-dim); }
+
+/* DO/DONT */
+.do-dont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.do-box {
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.do-box.do {
+  background: rgba(45,106,79,0.06);
+  border: 1px solid rgba(45,106,79,0.25);
+}
+
+.do-box.dont {
+  background: rgba(192,57,43,0.05);
+  border: 1px solid rgba(192,57,43,0.2);
+}
+
+.do-box .header {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.do-box.do .header { color: var(--accent-green); }
+.do-box.dont .header { color: var(--accent-red); }
+
+.do-box ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.do-box li { font-size: 13px; color: var(--text-dim); display: flex; gap: 8px; align-items: flex-start; }
+.do-box.do li::before { content: '✓'; color: var(--accent-green); font-weight: 700; flex-shrink: 0; }
+.do-box.dont li::before { content: '✗'; color: var(--accent-red); font-weight: 700; flex-shrink: 0; }
+
+/* SECTION SEPARATOR */
+.section-break {
+  background: var(--paper2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 48px;
+  text-align: center;
+}
+
+.section-break .chapter {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* TABLE */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 28px 0;
+  font-size: 13px;
+}
+
+.styled-table th {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 16px;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.styled-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+  color: var(--text-dim);
+}
+
+.styled-table tr:hover td { background: rgba(200,184,154,0.1); }
+
+/* CODE */
+.mono {
+  font-family: 'DM Mono', monospace;
+  background: var(--paper3);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--accent-red);
+}
+
+.code-block {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  padding: 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 20px 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.cc { color: rgba(200,184,154,0.5); }
+.ck { color: #7ec8e3; }
+.cv { color: #98d982; }
+.cs { color: #f1c85b; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .topbar-nav { display: none; }
+  .section { padding: 60px 24px; }
+  .card-grid-2, .card-grid-3 { grid-template-columns: 1fr; }
+  .world-map { grid-template-columns: 1fr; }
+  .world-connector { display: none; }
+  .do-dont { grid-template-columns: 1fr; }
+  .pa-row { grid-template-columns: 1fr; }
+  .hero { padding: 60px 24px; }
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
+/* INTERACTIVE TOKEN SLIDER */
+.slider-container {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 28px;
+  margin: 28px 0;
+}
+
+.slider-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 60px;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.slider-label { font-size: 12px; font-weight: 600; text-align: right; color: var(--text); }
+
+input[type=range] {
+  width: 100%;
+  accent-color: var(--accent-blue);
+}
+
+.slider-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.total-display {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--paper2);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-muted); }
+.total-number { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; }
+.total-number.ok { color: var(--accent-green); }
+.total-number.warn { color: var(--accent-gold); }
+.total-number.danger { color: var(--accent-red); }
+
+.total-status { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-title">AI Concepts — Complete Training Guide</div>
+  <nav class="topbar-nav">
+    <a href="#foundation">Foundation 101</a>
+    <a href="#context-travel">Context Travel</a>
+    <a href="#tokens">Token Economics</a>
+    <a href="#mastery">Projects & Skills</a>
+  </nav>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Complete Training Guide · PC Chitalkar · March 2026</div>
+  <h1 class="fade-up">AI Systems,<br><em>From Zero.</em></h1>
+  <p class="hero-sub fade-up delay-1">From "what is an LLM?" to "how does context travel between a restaurant and a massage parlour?" — a complete, no-assumed-knowledge guide to understanding and building with AI. Designed for your team, your company, and anyone you want to bring up to speed fast.</p>
+
+  <div class="chapter-pills fade-up delay-2">
+    <div class="chapter-pill"><span class="num">0</span> Foundation — The 101 Every Beginner Needs</div>
+    <div class="chapter-pill"><span class="num">I</span> The Marathon Customer at the Massage Parlour</div>
+    <div class="chapter-pill"><span class="num">II</span> Token Economics & The Bloat Problem</div>
+    <div class="chapter-pill"><span class="num">III</span> Mastering Projects & Skills</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CHAPTER I: CONTEXT TRAVEL -->
+<!-- ============================================================ -->
+<!-- ============================================================ -->
+<!-- FOUNDATION: THE 101 — INSERTED BEFORE CHAPTER I -->
+<!-- ============================================================ -->
+
+<div class="section-break">
+  <div class="chapter">Foundation — "Start here. Absolute beginner, zero assumed knowledge."</div>
+</div>
+
+<div class="section" id="foundation">
+  <div class="section-label">00 — The Foundation</div>
+  <h2>Before Anything Else:<br>What Is All This?</h2>
+
+  <p>You have probably heard the words <strong>AI, LLM, Claude, ChatGPT, agents, MCP, skills, tokens, RAG</strong> thrown around in the same breath. They sound related but nobody clearly explains how. This section does that — from scratch, no assumed knowledge, building up one brick at a time.</p>
+
+  <p>By the end of this section you will have a mental model that makes every other concept in this document obvious. Not approximately right. Actually right.</p>
+
+  <hr class="divider">
+
+  <h3>Brick 1 — What Is an LLM?</h3>
+
+  <p>LLM stands for Large Language Model. Forget the jargon. Here is what it actually is.</p>
+
+  <div class="card-grid-2" style="margin: 28px 0;">
+    <div class="card" style="border-top: 3px solid var(--accent-red);">
+      <h4>What it learned</h4>
+      <p style="font-size:13px; margin:0;">An LLM was trained on an enormous amount of text — books, articles, websites, code, conversations. Not to memorise it. To learn the patterns of human language and reasoning. It learned how ideas connect. How sentences are structured. How problems are solved in writing.</p>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--accent-blue);">
+      <h4>What it does</h4>
+      <p style="font-size:13px; margin:0;">Given text as input, it predicts what text should come next — but with such sophistication that the output appears to reason, explain, create, and decide. It does not think the way humans do. But the output is indistinguishable from thinking for most practical purposes.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-gold">
+    <div class="callout-icon">🏛</div>
+    <div><p><strong>The most important thing to understand about an LLM:</strong> It has no memory between conversations. Every time you start a new chat, it wakes up knowing nothing about you. It is like a brilliant professor with amnesia — extraordinary knowledge, zero personal history with you. This is the root of almost every "AI problem" people encounter. And it is the problem that the rest of this document explains how to solve.</p></div>
+  </div>
+
+  <p><strong>Claude</strong> is Anthropic's LLM. ChatGPT is OpenAI's. Gemini is Google's. They are all LLMs — different training, different personalities, different strengths. This document is written for Claude specifically, but the concepts apply to all of them.</p>
+
+  <hr class="divider">
+
+  <h3>Brick 2 — The Difference Between Chatting and Building</h3>
+
+  <p>Most people interact with AI in one of two ways. Understanding the difference between them is the single biggest conceptual leap in this document.</p>
+
+  <div class="card-grid-2" style="margin: 28px 0;">
+    <div class="card" style="border-left: 4px solid var(--accent-gold);">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-gold); margin-bottom: 8px; letter-spacing: 2px;">LEVEL 1 — USING AI</div>
+      <h4>Asking questions</h4>
+      <p style="font-size:13px; margin-bottom: 8px;">You open Claude. You type a question. Claude answers. You read the answer. You close the tab. Next time you come back, Claude remembers nothing.</p>
+      <p style="font-size:13px; margin:0; color: var(--text-muted);">This is like calling a helpline. The person on the other end is smart and helpful. But they don't know you. Every call starts from zero.</p>
+    </div>
+    <div class="card" style="border-left: 4px solid var(--accent-green);">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-green); margin-bottom: 8px; letter-spacing: 2px;">LEVEL 2 — BUILDING WITH AI</div>
+      <h4>Deploying systems</h4>
+      <p style="font-size:13px; margin-bottom: 8px;">You give Claude a persistent identity, a knowledge base, a set of rules, and connections to your real data. It acts on your behalf — continuously, accurately, without you present.</p>
+      <p style="font-size:13px; margin:0; color: var(--text-muted);">This is like hiring a specialist employee, training them thoroughly, and giving them access to your systems. They show up every day already knowing everything relevant.</p>
+    </div>
+  </div>
+
+  <p>This entire document is about Level 2. The restaurant analogy, the massage parlour, the token economics, the Projects and Skills — all of it is about moving from "asking questions" to "deploying intelligent systems." The concepts are not hard. The shift in thinking is the work.</p>
+
+  <hr class="divider">
+
+  <h3>Brick 3 — The Four-Layer Stack</h3>
+  <p>Every AI system — no matter how simple or complex — is built from the same four layers. Once you see this stack, you can look at any AI product and know exactly what you are looking at.</p>
+
+  <!-- STACK VISUAL -->
+  <div style="margin: 32px 0; max-width: 750px;">
+
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 8px; align-items: center; margin-bottom: 4px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); text-align: right; padding-right: 12px;">LAYER 4</div>
+      <div style="background: rgba(26,58,92,0.08); border: 1px solid rgba(26,58,92,0.25); border-radius: 8px; padding: 16px 20px;">
+        <div style="font-weight: 700; color: var(--accent-blue); font-size: 15px; margin-bottom: 4px;">You — The Human</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Defines what you want. Reviews outputs. Makes decisions. This is always you.</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 8px; align-items: center; padding-left: 108px; margin-bottom: 2px;">
+      <div style="font-size: 20px; color: var(--text-muted);">↕</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 8px; align-items: center; margin-bottom: 4px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); text-align: right; padding-right: 12px;">LAYER 3</div>
+      <div style="background: rgba(45,106,79,0.08); border: 1px solid rgba(45,106,79,0.25); border-radius: 8px; padding: 16px 20px;">
+        <div style="font-weight: 700; color: var(--accent-green); font-size: 15px; margin-bottom: 4px;">The Agent Framework — The Operating Environment</div>
+        <div style="font-size: 12px; color: var(--text-muted);">The wrapper around the LLM that gives it memory, tools, and a reasoning loop. Claude Code, Cowork, OpenClaw all live here. This is where agents actually run.</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 8px; align-items: center; padding-left: 108px; margin-bottom: 2px;">
+      <div style="font-size: 20px; color: var(--text-muted);">↕</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 8px; align-items: center; margin-bottom: 4px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); text-align: right; padding-right: 12px;">LAYER 2</div>
+      <div style="background: rgba(184,134,11,0.08); border: 1px solid rgba(184,134,11,0.25); border-radius: 8px; padding: 16px 20px;">
+        <div style="font-weight: 700; color: var(--accent-gold); font-size: 15px; margin-bottom: 4px;">MCP — The Controlled Window</div>
+        <div style="font-size: 12px; color: var(--text-muted);">The standardised protocol that connects the agent to external systems — databases, APIs, files. The agent cannot touch your real systems directly. It must go through MCP. This is your data governance boundary.</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 8px; align-items: center; padding-left: 108px; margin-bottom: 2px;">
+      <div style="font-size: 20px; color: var(--text-muted);">↕</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 100px 1fr; gap: 8px; align-items: center; margin-bottom: 4px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); text-align: right; padding-right: 12px;">LAYER 1</div>
+      <div style="background: rgba(192,57,43,0.06); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; padding: 16px 20px;">
+        <div style="font-weight: 700; color: var(--accent-red); font-size: 15px; margin-bottom: 4px;">Your Data & Systems</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Databases, files, APIs, spreadsheets. The real world. The agent accesses this only through MCP. Never directly.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px; padding: 14px 16px; background: var(--paper2); border-radius: 8px; font-size: 12px; color: var(--text-muted);">
+      <strong style="color: var(--text);">The LLM is the brain inside Layer 3.</strong> It does not have its own layer — it is the intelligence that powers the agent framework. Claude (the model) lives inside Cowork, Claude Code, and any other agent runtime.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>Brick 4 — The Restaurant (The Full Analogy)</h3>
+  <p>Every concept in AI system design maps to a role in a restaurant. Learn this once and you will never need the technical jargon again. The restaurant is not a simplification — it is a precise mapping.</p>
+
+  <div style="background: white; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; margin: 28px 0; box-shadow: 0 2px 16px rgba(44,36,22,0.06);">
+    <!-- Header -->
+    <div style="background: var(--ink); color: var(--paper); padding: 16px 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: rgba(245,240,232,0.6);">
+      <div>RESTAURANT ROLE</div>
+      <div>AI EQUIVALENT</div>
+      <div>IN YOUR SYSTEM</div>
+    </div>
+    <!-- Rows -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;">
+      <!-- Row 1 -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);">
+        <div style="font-size: 20px; margin-bottom: 4px;">🪑</div>
+        <div style="font-weight: 600; font-size: 13px;">The Customer</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Describes what they want in plain language. Does not cook.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light); background: rgba(26,58,92,0.03);">
+        <div style="font-weight: 600; font-size: 13px; color: var(--accent-blue);">You / Your Team</div>
+        <div style="font-size: 12px; color: var(--text-muted);">You ask questions in plain English. You review outputs. You make decisions.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green);">Telegram, WhatsApp, Claude.ai, Cowork interface</div>
+      </div>
+      <!-- Row 2 -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);">
+        <div style="font-size: 20px; margin-bottom: 4px;">🧾</div>
+        <div style="font-weight: 600; font-size: 13px;">The Waiter</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Takes the order. Routes it to the kitchen. Does not cook.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light); background: rgba(26,58,92,0.03);">
+        <div style="font-weight: 600; font-size: 13px; color: var(--accent-blue);">The Interface</div>
+        <div style="font-size: 12px; color: var(--text-muted);">The chat window, the bot, the app. Receives input, displays output.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green);">Claude.ai web, Desktop App, Telegram bot</div>
+      </div>
+      <!-- Row 3 -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);">
+        <div style="font-size: 20px; margin-bottom: 4px;">📖</div>
+        <div style="font-weight: 600; font-size: 13px;">The Recipe Book</div>
+        <div style="font-size: 12px; color: var(--text-muted);">House standards. What we always do. What we never do. The chef consults this before cooking.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light); background: rgba(26,58,92,0.03);">
+        <div style="font-weight: 600; font-size: 13px; color: var(--accent-blue);">Skills / System Prompts</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Written in plain English. Defines the AI's identity, rules, reasoning steps, and constraints.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green);">pc-health-intelligence SKILL.md<br>BaySt Analyst skill</div>
+      </div>
+      <!-- Row 4 -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);">
+        <div style="font-size: 20px; margin-bottom: 4px;">👨‍🍳</div>
+        <div style="font-weight: 600; font-size: 13px;">The Head Chef</div>
+        <div style="font-size: 12px; color: var(--text-muted);">The intelligence. Reads the order, reads the recipe book, decides what to cook and in what sequence.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light); background: rgba(26,58,92,0.03);">
+        <div style="font-weight: 600; font-size: 13px; color: var(--accent-blue);">The LLM (Claude)</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Reads the question + skill. Reasons. Decides which tools to call. Orchestrates everything.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green);">Claude Opus 4.6 / Sonnet 4.6<br>The reasoning engine</div>
+      </div>
+      <!-- Row 5 -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);">
+        <div style="font-size: 20px; margin-bottom: 4px;">👥</div>
+        <div style="font-weight: 600; font-size: 13px;">Kitchen Stations</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Each station one job. Head chef delegates. Results assembled at the pass.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light); background: rgba(26,58,92,0.03);">
+        <div style="font-weight: 600; font-size: 13px; color: var(--accent-blue);">Sub-Agents</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Specialist agents each handling one task. Intake, Quality, Domain, Report.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green);">BaySt: EDA, Analytics, Knowledge<br>Healthspan: Brain, Playbook</div>
+      </div>
+      <!-- Row 6 -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);">
+        <div style="font-size: 20px; margin-bottom: 4px;">🍷</div>
+        <div style="font-weight: 600; font-size: 13px;">The Sommelier</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Searches the cellar for the most relevant bottle when asked. Does not carry the whole cellar in the dining room.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light); background: rgba(26,58,92,0.03);">
+        <div style="font-weight: 600; font-size: 13px; color: var(--accent-blue);">RAG (Retrieval)</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Finds the most relevant document chunks from your knowledge base and injects them into context on demand.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green);">Brain library search<br>Meeting transcript retrieval</div>
+      </div>
+      <!-- Row 7 -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light);">
+        <div style="font-size: 20px; margin-bottom: 4px;">🚪</div>
+        <div style="font-weight: 600; font-size: 13px;">The Pantry Hatch</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Controlled window to the pantry. Chef requests specific ingredients. Hatch verifies and passes through. Chef cannot enter the pantry.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light); border-right: 1px solid var(--border-light); background: rgba(26,58,92,0.03);">
+        <div style="font-weight: 600; font-size: 13px; color: var(--accent-blue);">MCP Server</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Controlled interface to your real data. Claude requests, MCP validates and executes. Never the other way around.</div>
+      </div>
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border-light);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green);">BaySt MCP Server<br>Healthspan Supabase MCP</div>
+      </div>
+      <!-- Row 8 -->
+      <div style="padding: 14px 20px; border-right: 1px solid var(--border-light);">
+        <div style="font-size: 20px; margin-bottom: 4px;">🧊</div>
+        <div style="font-weight: 600; font-size: 13px;">The Cold Rooms</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Raw ingredients. Only accessible via the hatch. Never touched directly by the chef.</div>
+      </div>
+      <div style="padding: 14px 20px; border-right: 1px solid var(--border-light); background: rgba(26,58,92,0.03);">
+        <div style="font-weight: 600; font-size: 13px; color: var(--accent-blue);">Your Databases</div>
+        <div style="font-size: 12px; color: var(--text-muted);">Postgres, Supabase, vector indexes, file stores. Real data. Never directly accessed by the LLM.</div>
+      </div>
+      <div style="padding: 14px 20px;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green);">Anonymized analytics DB<br>Acquisition sandbox<br>Vector index (transcripts)</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>Brick 5 — What Are Skills, Agents, and RAG? (Plain English)</h3>
+
+  <div class="card-grid-3" style="margin: 28px 0;">
+    <div class="card" style="border-top: 3px solid var(--accent-green);">
+      <div style="font-size: 28px; margin-bottom: 10px;">📋</div>
+      <h4>A Skill</h4>
+      <p style="font-size: 13px; margin-bottom: 8px;">A reusable document — written in plain English — that tells an AI how to behave in a specific domain. It encodes your rules, your business logic, your non-negotiables, and pointers to the data it should use.</p>
+      <p style="font-size: 13px; margin: 0; color: var(--text-muted);">Think of it as the training manual you give a new specialist employee on their first day — except this employee reads it perfectly and follows it exactly, every single time.</p>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--accent-purple);">
+      <div style="font-size: 28px; margin-bottom: 10px;">🤖</div>
+      <h4>An Agent</h4>
+      <p style="font-size: 13px; margin-bottom: 8px;">An agent is an LLM given tools and a reasoning loop. It does not just answer — it acts. It can call APIs, query databases, run code, search the web, and loop through multiple steps to complete a task autonomously.</p>
+      <p style="font-size: 13px; margin: 0; color: var(--text-muted);">Think of it as the difference between asking a colleague a question and delegating a project. An agent is delegation, not conversation.</p>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--accent-red);">
+      <div style="font-size: 28px; margin-bottom: 10px;">🔍</div>
+      <h4>RAG</h4>
+      <p style="font-size: 13px; margin-bottom: 8px;">Retrieval-Augmented Generation. When a question comes in, the system searches a large knowledge base (documents, transcripts, research papers) and retrieves the most relevant pieces. Those pieces get injected into Claude's context before it answers.</p>
+      <p style="font-size: 13px; margin: 0; color: var(--text-muted);">Think of it as the sommelier — the AI does not carry the entire wine cellar in its head. It goes and fetches the right bottle when asked.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>Brick 6 — What Is MCP and Why Does It Matter?</h3>
+
+  <p>MCP stands for Model Context Protocol. Anthropic open-sourced it. In plain English: it is the standardised way for AI systems to connect to external data and tools — so you build the integration once and any AI can use it.</p>
+
+  <div class="card-grid-2" style="margin: 28px 0;">
+    <div class="card" style="border-left: 4px solid var(--accent-red);">
+      <h4 style="color: var(--accent-red);">Without MCP</h4>
+      <p style="font-size: 13px; margin-bottom: 8px;">Every AI tool builds its own custom connection to every data source. Claude connects to your database one way. ChatGPT connects another way. OpenClaw connects a third way. All custom, all fragile, all break when anything changes.</p>
+      <p style="font-size: 13px; margin: 0; color: var(--text-muted);">It is like every appliance in your house having a different plug shape. You need an adapter for each one.</p>
+    </div>
+    <div class="card" style="border-left: 4px solid var(--accent-green);">
+      <h4 style="color: var(--accent-green);">With MCP</h4>
+      <p style="font-size: 13px; margin-bottom: 8px;">You build one MCP server that wraps your data source. Any MCP-compatible AI can connect to it using the same standard. Change the AI, keep the server. The integration never breaks.</p>
+      <p style="font-size: 13px; margin: 0; color: var(--text-muted);">It is USB-C for AI. One standard, every device.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-icon">🔑</div>
+    <div><p><strong>The most important thing about MCP:</strong> The MCP server is where your data governance lives. It decides what the AI can and cannot access. It enforces read-only. It logs every query. It prevents PII from leaking. Without MCP, the AI has direct access to everything — and that is a problem. With MCP, access is controlled, audited, and reversible.</p></div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>Brick 7 — What Is a Project vs a Skill?</h3>
+
+  <p>These two things are often confused because they both "give Claude context." They are different tools for different jobs.</p>
+
+  <div style="background: white; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; margin: 28px 0;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+      <div style="padding: 24px; border-right: 1px solid var(--border-light);">
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-blue); letter-spacing: 2px; margin-bottom: 12px;">PROJECT</div>
+        <h4 style="margin-bottom: 10px;">The Persistent Office</h4>
+        <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 10px;">A walled memory space inside Claude.ai. Everything discussed here persists between sessions. Claude remembers your terminology, your decisions, your preferences. Files you upload are always available.</p>
+        <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 10px;"><strong>Use it for:</strong> An ongoing area of work — BaySt analytics, Healthspan build, personal health. One project per domain.</p>
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-blue); padding: 8px; background: rgba(26,58,92,0.05); border-radius: 4px;">Like having a permanent office where your colleague works — they know this space, they remember everything discussed here.</div>
+      </div>
+      <div style="padding: 24px;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-green); letter-spacing: 2px; margin-bottom: 12px;">SKILL</div>
+        <h4 style="margin-bottom: 10px;">The Training Manual</h4>
+        <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 10px;">A reusable document that encodes domain expertise — rules, reasoning steps, data sources, constraints. It can be loaded into any project, any conversation, any platform. Write once, use everywhere.</p>
+        <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 10px;"><strong>Use it for:</strong> Deep domain specialisation that repeats across many conversations. Your health protocols. Your BaySt analytics methodology.</p>
+        <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green); padding: 8px; background: rgba(45,106,79,0.05); border-radius: 4px;">Like the training manual you give a specialist — they read it once, follow it always, and can move between offices without losing the expertise.</div>
+      </div>
+    </div>
+    <div style="padding: 16px 24px; background: var(--paper2); border-top: 1px solid var(--border-light); font-size: 13px; color: var(--text-dim);">
+      <strong style="color: var(--text);">Together:</strong> A Project is the office. A Skill is the specialist knowledge. You deploy a Skill inside a Project to get an AI that both knows its environment (Project) and has deep expertise (Skill). This is the combination that makes the difference.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>Brick 8 — The Claude Product Family</h3>
+  <p>The same brain (Claude), different bodies. Each product is a different way to interact with the same underlying model — different levels of autonomy, different interfaces, different use cases.</p>
+
+  <div style="display: flex; flex-direction: column; gap: 8px; margin: 28px 0; max-width: 800px;">
+
+    <div style="display: grid; grid-template-columns: 180px 1fr 120px; gap: 0; background: white; border: 1px solid var(--border-light); border-radius: 10px; overflow: hidden;">
+      <div style="padding: 16px; background: rgba(26,58,92,0.06); border-right: 1px solid var(--border-light);">
+        <div style="font-weight: 700; font-size: 14px;">Claude.ai</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); margin-top: 3px;">Web / Mobile</div>
+      </div>
+      <div style="padding: 16px; border-right: 1px solid var(--border-light); font-size: 13px; color: var(--text-dim);">Chat interface. Conversational. Session-based. Where Projects live. Where you are right now reading this document.</div>
+      <div style="padding: 16px; text-align: center; font-size: 12px; font-weight: 600; color: var(--accent-gold);">💬 You ask<br>Claude answers</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px 1fr 120px; gap: 0; background: white; border: 1px solid var(--border-light); border-radius: 10px; overflow: hidden;">
+      <div style="padding: 16px; background: rgba(45,106,79,0.06); border-right: 1px solid var(--border-light);">
+        <div style="font-weight: 700; font-size: 14px;">Cowork</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); margin-top: 3px;">Desktop App</div>
+      </div>
+      <div style="padding: 16px; border-right: 1px solid var(--border-light); font-size: 13px; color: var(--text-dim);">Agentic task execution on your Mac. Accesses local files. Runs workflows. Skills and plugins. You set a task and step away. This is where the health skill runs.</div>
+      <div style="padding: 16px; text-align: center; font-size: 12px; font-weight: 600; color: var(--accent-green);">🤖 You delegate<br>Claude executes</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px 1fr 120px; gap: 0; background: white; border: 1px solid var(--border-light); border-radius: 10px; overflow: hidden;">
+      <div style="padding: 16px; background: rgba(91,45,142,0.06); border-right: 1px solid var(--border-light);">
+        <div style="font-weight: 700; font-size: 14px;">Claude Code</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); margin-top: 3px;">Terminal / CLI</div>
+      </div>
+      <div style="padding: 16px; border-right: 1px solid var(--border-light); font-size: 13px; color: var(--text-dim);">Autonomous coding agent in a terminal. Writes, edits, runs, debugs code without supervision. Used for building the actual Healthspan AI product.</div>
+      <div style="padding: 16px; text-align: center; font-size: 12px; font-weight: 600; color: var(--accent-purple);">💻 You spec<br>Claude builds</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 180px 1fr 120px; gap: 0; background: white; border: 1px solid var(--border-light); border-radius: 10px; overflow: hidden;">
+      <div style="padding: 16px; background: rgba(192,57,43,0.05); border-right: 1px solid var(--border-light);">
+        <div style="font-weight: 700; font-size: 14px;">OpenClaw</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); margin-top: 3px;">Self-hosted / Open Source</div>
+      </div>
+      <div style="padding: 16px; border-right: 1px solid var(--border-light); font-size: 13px; color: var(--text-dim);">Persistent autonomous agent running on your machine or server 24/7. Connects to WhatsApp, Telegram, etc. Community skills ecosystem. Model-agnostic — bring your own LLM.</div>
+      <div style="padding: 16px; text-align: center; font-size: 12px; font-weight: 600; color: var(--accent-red);">🌐 Always on<br>Acts continuously</div>
+    </div>
+
+  </div>
+
+  <div class="callout callout-green">
+    <div class="callout-icon">✅</div>
+    <div><p><strong>You now have the foundation.</strong> Every concept above — LLMs, the four-layer stack, the restaurant, skills, agents, RAG, MCP, Projects, and the Claude product family — is the vocabulary for everything that follows. The next three chapters go deeper into specific questions: how context travels between AI systems, how tokens work, and how to wield Projects and Skills professionally.</p></div>
+  </div>
+
+</div>
+
+<div class="section-break">
+  <div class="chapter">Chapter I — "How does the massage therapist know about the meal?"</div>
+</div>
+
+<div class="section" id="context-travel">
+  <div class="section-label">01 — Cross-System Context</div>
+  <h2>The Marathon Customer<br>Visits the Massage Parlour</h2>
+
+  <p>This question cuts to the heart of one of the most important and misunderstood problems in AI system design. <strong>AI systems do not share context automatically.</strong> They are isolated by default. The restaurant has no idea the customer is going to the massage parlour. The massage parlour has no idea the customer just ate.</p>
+
+  <p>But the <strong>customer carries context on their body.</strong> They are bloated. They ate pre-marathon. They are about to run 42km. The question is: how does that context get from their body into the massage therapist's decision-making?</p>
+
+  <p>This is the exact same problem as: how does your Healthspan daily briefing agent know what decisions were made in yesterday's bloodwork chat? How does the BaySt EDA agent know what the team decided about data governance in this morning's meeting?</p>
+
+  <div class="callout callout-gold">
+    <div class="callout-icon">🎯</div>
+    <div><p><strong>The core insight:</strong> Context can travel in exactly three ways. On the customer (they carry it). Through a shared system (a record that both places can read). Or handed off explicitly (the restaurant calls ahead). Each maps precisely to an AI architecture pattern.</p></div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>The Three Ways Context Travels</h3>
+
+  <!-- METHOD 1 -->
+  <div class="card" style="margin: 24px 0; border-left: 4px solid var(--accent-blue);">
+    <h4 style="color: var(--accent-blue);">METHOD 1 — The Customer Carries It (Context in the Prompt)</h4>
+    <p style="margin-bottom: 12px;">The customer walks into the massage parlour and says: <em>"I just ate a large pre-marathon meal 45 minutes ago — protein-heavy, some complex carbs. I'm running in 2 hours. Please adjust your approach accordingly."</em></p>
+    <p style="margin: 0;">The customer is the context carrier. They bring their own history into the new system explicitly. In AI terms: <strong>the user or skill injects relevant context at the start of each new conversation.</strong> This is Mode C in your health skill — you load the reference files that represent "what the customer knows about themselves."</p>
+    <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-blue); margin-top: 12px; padding: 10px; background: rgba(26,58,92,0.05); border-radius: 6px;">→ In your health skill: SKILL.md loads bloodwork-timeline.md + decisions-log.md at session start<br>→ The AI begins every conversation already knowing your full health history<br>→ Limitation: only as current as the last time you updated the reference files</div>
+  </div>
+
+  <!-- METHOD 2 -->
+  <div class="card" style="margin: 24px 0; border-left: 4px solid var(--accent-gold);">
+    <h4 style="color: var(--accent-gold);">METHOD 2 — A Shared Record Both Can Read (Shared Database / MCP)</h4>
+    <p style="margin-bottom: 12px;">The restaurant and the massage parlour both connect to a shared health record system — like a hotel concierge card that travels with the guest. When the customer checks into the massage parlour, the therapist pulls up the record: "Meal logged 45 minutes ago. Marathon in 2 hours. Avoid deep tissue on abdomen."</p>
+    <p style="margin: 0;">In AI terms: <strong>both systems connect to the same database via MCP.</strong> The restaurant's agent wrote the meal record. The massage parlour's agent reads it. The context lives in one place. Both systems query it on demand. This is Mode A in your health skill — live Supabase queries.</p>
+    <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-gold); margin-top: 12px; padding: 10px; background: rgba(184,134,11,0.06); border-radius: 6px;">→ In BaySt: the analytics DB is the shared record. Every agent reads from the same source.<br>→ Your decisions-log.md is a file-based version of this — written by one chat, read by all others<br>→ This is the architecture you want for Phase 0.5 onwards</div>
+  </div>
+
+  <!-- METHOD 3 -->
+  <div class="card" style="margin: 24px 0; border-left: 4px solid var(--accent-green);">
+    <h4 style="color: var(--accent-green);">METHOD 3 — Explicit Handoff (Agent-to-Agent Passing)</h4>
+    <p style="margin-bottom: 12px;">The restaurant agent finishes its job and produces a structured output: "Meal summary: 1,240 kcal, 68g protein, 140g carbs. Consumed 45 min ago. Next destination: massage. Flag: high-fibre meal, risk of GI discomfort during prone position." This summary is passed directly to the massage parlour's intake agent.</p>
+    <p style="margin: 0;">In AI terms: <strong>one agent's output becomes the next agent's input.</strong> The orchestrator agent collects context from the restaurant system and injects it into the massage system's prompt as a structured handoff note. This is how sub-agent pipelines work — each agent produces a structured output that feeds the next.</p>
+    <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-green); margin-top: 12px; padding: 10px; background: rgba(45,106,79,0.06); border-radius: 6px;">→ In your health skill: conversation close protocol writes decisions to decisions-log.md<br>→ Next session starts by reading that log — Method 3 handoff via filesystem<br>→ In BaySt: EDA agent output (quality score + clarification questions) feeds acquisition decision agent</div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>The Context Passport</h3>
+  <p>Think of it this way. The customer carries a <strong>Context Passport</strong> — a structured document that travels with them between systems. Every system they interact with can stamp it and read it. The massage therapist doesn't need the full restaurant order — just the relevant facts that affect their job.</p>
+
+  <div class="passport">
+    <div class="passport-header">
+      <div>
+        <div class="passport-title">CONTEXT PASSPORT</div>
+        <div class="passport-name">Marathon Customer</div>
+      </div>
+      <div style="font-size: 32px;">🏃</div>
+    </div>
+    <div class="passport-body">
+      <div class="passport-row">
+        <span class="passport-key">ACTIVE GOAL</span>
+        <span class="passport-val">Berlin Marathon — 2 hrs</span>
+      </div>
+      <div class="passport-row">
+        <span class="passport-key">LAST MEAL</span>
+        <span class="passport-val">45 min ago · 1,240 kcal</span>
+      </div>
+      <div class="passport-row">
+        <span class="passport-key">MEAL FLAGS</span>
+        <span class="passport-val" style="color: var(--accent-red);">High fibre · GI risk prone</span>
+      </div>
+      <div class="passport-row">
+        <span class="passport-key">AVOID FOODS</span>
+        <span class="passport-val">Dairy · Gluten (Viome)</span>
+      </div>
+      <div class="passport-row">
+        <span class="passport-key">PREV SESSION</span>
+        <span class="passport-val">Bloodwork Mar 16 · 7 flags</span>
+      </div>
+      <div class="passport-stamp">
+        <div class="stamp-text">✓ RESTAURANT · STAMPED 14:32<br>→ MASSAGE · READ-ONLY ACCESS</div>
+      </div>
+    </div>
+  </div>
+
+  <p>The massage parlour agent reads the passport. It knows: avoid deep tissue on abdomen, keep session to 45 min, focus on legs and lower back for marathon prep, note the GI risk if customer goes prone. It didn't need to ask any of this. The context travelled.</p>
+
+  <hr class="divider">
+
+  <h3>The Massage Parlour Has the Same Architecture</h3>
+  <p>You noticed correctly. The massage parlour is a complete system in its own right — with the same layers as the restaurant. Let's map it.</p>
+
+  <div class="world-map">
+    <div class="world-col">
+      <div class="world-header wh-restaurant">🍽 The Restaurant</div>
+      <div class="world-item">
+        <div class="role">CUSTOMER</div>
+        <div class="name">Diner</div>
+        <div class="maps">Describes outcome in plain English</div>
+      </div>
+      <div class="world-item">
+        <div class="role">WAITER</div>
+        <div class="name">Interface</div>
+        <div class="maps">Telegram / Claude.ai</div>
+      </div>
+      <div class="world-item">
+        <div class="role">RECIPE BOOK</div>
+        <div class="name">Skill / System Prompt</div>
+        <div class="maps">Your SKILL.md</div>
+      </div>
+      <div class="world-item">
+        <div class="role">HEAD CHEF</div>
+        <div class="name">LLM (Claude)</div>
+        <div class="maps">Orchestrates · Reasons</div>
+      </div>
+      <div class="world-item">
+        <div class="role">KITCHEN STATIONS</div>
+        <div class="name">Sub-Agents</div>
+        <div class="maps">Intake · Quality · Domain</div>
+      </div>
+      <div class="world-item">
+        <div class="role">PANTRY HATCH</div>
+        <div class="name">MCP Server</div>
+        <div class="maps">Controlled data access</div>
+      </div>
+      <div class="world-item" style="border-radius: 0 0 10px 10px;">
+        <div class="role">COLD ROOMS</div>
+        <div class="name">Databases</div>
+        <div class="maps">Postgres · Vector index</div>
+      </div>
+    </div>
+
+    <div class="world-connector">
+      <div class="connector-line" style="flex: 0.5;"></div>
+      <div class="connector-dot"></div>
+      <div class="connector-label">CONTEXT PASSPORT</div>
+      <div class="connector-dot"></div>
+      <div class="connector-line"></div>
+      <div class="connector-dot"></div>
+      <div class="connector-label">SHARED DB / MCP</div>
+      <div class="connector-dot"></div>
+      <div class="connector-line" style="flex: 0.5;"></div>
+    </div>
+
+    <div class="world-col">
+      <div class="world-header wh-massage">💆 The Massage Parlour</div>
+      <div class="world-item">
+        <div class="role">CUSTOMER</div>
+        <div class="name">Client</div>
+        <div class="maps">Same person, carries passport</div>
+      </div>
+      <div class="world-item">
+        <div class="role">RECEPTIONIST</div>
+        <div class="name">Check-in Interface</div>
+        <div class="maps">Reads passport · Books session</div>
+      </div>
+      <div class="world-item">
+        <div class="role">TREATMENT PROTOCOL</div>
+        <div class="name">Massage Skill</div>
+        <div class="maps">Massage SKILL.md — different system</div>
+      </div>
+      <div class="world-item">
+        <div class="role">THERAPIST BRAIN</div>
+        <div class="name">LLM (Same Claude)</div>
+        <div class="maps">Different context · Same intelligence</div>
+      </div>
+      <div class="world-item">
+        <div class="role">SPECIALIST ROLES</div>
+        <div class="name">Sub-Agents</div>
+        <div class="maps">Assessment · Treatment · Billing</div>
+      </div>
+      <div class="world-item">
+        <div class="role">OIL DISPENSER</div>
+        <div class="name">MCP Server</div>
+        <div class="maps">Exact ml per body weight · Logged</div>
+      </div>
+      <div class="world-item" style="border-radius: 0 0 10px 10px;">
+        <div class="role">TREATMENT RECORDS</div>
+        <div class="name">Databases</div>
+        <div class="maps">Client history · Inventory · Billing</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-icon">💡</div>
+    <div><p><strong>The key realisation:</strong> Every intelligent system — restaurant, massage parlour, hospital, BaySt, Healthspan — has the same four-layer architecture. What differs is the skill (domain knowledge), the MCP tools (what data it can access), and the context passport (what it carries from previous systems). The LLM underneath is the same chef, working in different kitchens.</p></div>
+  </div>
+
+  <!-- THE OIL DISPENSER -->
+  <hr class="divider">
+
+  <h3>The Oil Dispenser — MCP in the Massage Parlour</h3>
+  <p>You mentioned the massage MCP specifically — an exact amount of oil based on some formula. This is a perfect illustration of what an MCP tool looks like in a non-tech domain.</p>
+
+  <div class="card-grid-3">
+    <div class="card">
+      <h4>The Tool Definition</h4>
+      <p style="margin:0; font-size:13px;">Tool name: <span class="mono">calculate_oil_dose</span><br>Inputs: body_weight_kg, treatment_area, skin_type, session_duration_min<br>Output: oil_ml (numeric)</p>
+    </div>
+    <div class="card">
+      <h4>The Governance Rule</h4>
+      <p style="margin:0; font-size:13px;">The therapist agent calls the tool. The tool runs the formula. The tool dispenses exactly the calculated amount. The therapist cannot override the formula — they can only input the parameters.</p>
+    </div>
+    <div class="card">
+      <h4>The Audit Log</h4>
+      <p style="margin:0; font-size:13px;">Every dispense: therapist ID, client ID, calculation inputs, ml dispensed, timestamp. Inventory automatically decremented. Billing automatically calculated. No manual entry.</p>
+    </div>
+  </div>
+
+  <p style="margin-top: 20px;">This is identical to your BaySt cost-of-collections formula. The agent calls the Python function. The function runs. The number comes back. The agent never does the arithmetic itself. The MCP server is the oil dispenser — <strong>it enforces the calculation, logs the dispense, and the agent cannot bypass it.</strong></p>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- CHAPTER II: TOKENS -->
+<!-- ============================================================ -->
+
+<div class="section-break">
+  <div class="chapter">Chapter II — "What is a token and why should I care about bloat?"</div>
+</div>
+
+<div class="section" id="tokens">
+  <div class="section-label">02 — Token Economics</div>
+  <h2>Tokens, Context Windows,<br>& The Bloat Problem</h2>
+
+  <p>This is the economics of AI. Every conversation has a <strong>budget</strong>. Tokens are the currency. When you run out of budget, the AI starts forgetting things. When your budget is wasted on the wrong things, the AI gives you worse answers even though it technically has room.</p>
+
+  <h3>What Is a Token?</h3>
+
+  <div class="card-grid-3" style="margin-bottom: 32px;">
+    <div class="card" style="text-align:center;">
+      <div style="font-size: 36px; margin-bottom: 8px;">📝</div>
+      <h4>Not a Word</h4>
+      <p style="margin:0; font-size:13px;">A token is roughly <strong>¾ of a word</strong>. "marathon" = 2 tokens. "I am running a marathon" = 5 tokens. Punctuation counts. Spaces count.</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size: 36px; margin-bottom: 8px;">💰</div>
+      <h4>It's the Unit of Cost</h4>
+      <p style="margin:0; font-size:13px;">You pay per token — both what you send in (input) and what Claude writes back (output). Opus costs more per token than Sonnet. Sonnet more than Haiku.</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size: 36px; margin-bottom: 8px;">🪟</div>
+      <h4>The Window Is Finite</h4>
+      <p style="margin:0; font-size:13px;">Claude Opus 4.6 has ~1 million tokens. Sounds enormous. But you can fill it fast with long conversations, large documents, and verbose system prompts.</p>
+    </div>
+  </div>
+
+  <!-- WINDOW VISUALISATION -->
+  <h3 style="margin-bottom: 16px;">What's Inside the Context Window Right Now</h3>
+  <p>Every time Claude responds, it "sees" everything in its context window simultaneously. Think of it as a whiteboard that holds all the relevant information. Here's what's on that whiteboard in a typical Healthspan session:</p>
+
+  <div class="token-window">
+    <div class="token-header">
+      <span>CONTEXT WINDOW — Healthspan Health Session (Mode C)</span>
+      <span style="color: #98d982;">~200,000 tokens available</span>
+    </div>
+    <div class="token-bar-container">
+      <div class="token-label-row">
+        <span>0</span>
+        <span>25%</span>
+        <span>50%</span>
+        <span>75%</span>
+        <span>100%</span>
+      </div>
+      <div class="token-bar">
+        <div class="token-segment seg-system" style="width: 15%;">SKILL.md</div>
+        <div class="token-segment seg-memory" style="width: 8%;">decisions</div>
+        <div class="token-segment seg-rag" style="width: 18%;">ref files</div>
+        <div class="token-segment seg-history" style="width: 12%;">convo hist</div>
+        <div class="token-segment seg-query" style="width: 3%;">query</div>
+        <div class="token-segment seg-free" style="width: 44%;">FREE — Claude can think here</div>
+      </div>
+
+      <div class="token-legend">
+        <div class="legend-item"><div class="legend-dot" style="background: var(--accent-blue);"></div>System prompt / SKILL.md (~8,000 tokens)</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--accent-purple);"></div>Decisions log + session context (~4,000 tokens)</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--accent-green);"></div>Reference files loaded for this topic (~10,000 tokens)</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--accent-gold);"></div>Conversation history so far (~6,500 tokens)</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--accent-red);"></div>Your current question (~200 tokens)</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--paper3);"></div>Free — space for Claude to reason and respond</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>The Bloat Problem — When Multiple Threads Go Wrong</h3>
+  <p>Here's where your instinct is exactly right. If you have 5 concurrent health chats, each with long histories, each loading large reference files, and you keep asking follow-up questions — you start filling the window with the wrong things. The AI starts "forgetting" earlier context or producing worse answers because its working memory is cluttered.</p>
+
+  <div class="card" style="margin: 28px 0;">
+    <h4 style="margin-bottom: 20px;">Token Consumption Scenarios — Same Session, Different Bloat Levels</h4>
+
+    <div class="scenario-row">
+      <div class="scenario-label">Fresh session</div>
+      <div class="scenario-bar">
+        <div style="width:15%; background: var(--accent-blue); border-radius: 4px 0 0 4px;"></div>
+        <div style="width:8%; background: var(--accent-purple);"></div>
+        <div style="width:18%; background: var(--accent-green);"></div>
+        <div style="width:3%; background: var(--accent-red); border-radius: 0 4px 4px 0;"></div>
+      </div>
+      <div class="scenario-pct" style="color: var(--accent-green);">44% used</div>
+    </div>
+
+    <div class="scenario-row">
+      <div class="scenario-label">After 10 back-and-forths</div>
+      <div class="scenario-bar">
+        <div style="width:15%; background: var(--accent-blue); border-radius: 4px 0 0 4px;"></div>
+        <div style="width:8%; background: var(--accent-purple);"></div>
+        <div style="width:18%; background: var(--accent-green);"></div>
+        <div style="width:28%; background: var(--accent-gold);"></div>
+        <div style="width:3%; background: var(--accent-red); border-radius: 0 4px 4px 0;"></div>
+      </div>
+      <div class="scenario-pct" style="color: var(--accent-gold);">72% used</div>
+    </div>
+
+    <div class="scenario-row">
+      <div class="scenario-label">Multiple ref files + long history</div>
+      <div class="scenario-bar">
+        <div style="width:15%; background: var(--accent-blue); border-radius: 4px 0 0 4px;"></div>
+        <div style="width:8%; background: var(--accent-purple);"></div>
+        <div style="width:32%; background: var(--accent-green);"></div>
+        <div style="width:35%; background: var(--accent-gold);"></div>
+        <div style="width:3%; background: var(--accent-red); border-radius: 0 4px 4px 0;"></div>
+      </div>
+      <div class="scenario-pct" style="color: var(--accent-red);">93% used</div>
+    </div>
+
+    <div class="scenario-row">
+      <div class="scenario-label">Bloated (pasting full docs)</div>
+      <div class="scenario-bar">
+        <div style="width:15%; background: var(--accent-blue); border-radius: 4px 0 0 4px;"></div>
+        <div style="width:8%; background: var(--accent-purple);"></div>
+        <div style="width:18%; background: var(--accent-green);"></div>
+        <div style="width:28%; background: var(--accent-gold);"></div>
+        <div style="width:28%; background: #e74c3c;"></div>
+        <div style="width:3%; background: var(--accent-red); border-radius: 0 4px 4px 0;"></div>
+      </div>
+      <div class="scenario-pct" style="color: var(--accent-red);">⚠️ FULL</div>
+    </div>
+
+    <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">At 93%+ used, Claude starts truncating earlier conversation history to make room. You lose continuity. Answers get worse. This is the bloat problem.</p>
+  </div>
+
+  <!-- ROLLING SUMMARY -->
+  <div class="callout callout-green">
+    <div class="callout-icon">♻️</div>
+    <div>
+      <p><strong>The Rolling Summary Solution</strong> — This is exactly why your Healthspan skill has <span class="mono">brain_thread_summary_after = 5</span> in system_config. After 5 back-and-forths, instead of keeping the full conversation history, the skill compresses it into a dense summary. The summary takes 300 tokens. The full history would have taken 3,000. You retain the meaning. You shed the weight.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>The Six Rules of Token Hygiene</h3>
+  <p>These are the practical habits that separate people who get consistent, high-quality AI output from people who get degraded answers as sessions go long.</p>
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>RULE</th>
+        <th>WHAT TO DO</th>
+        <th>WHY IT MATTERS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>One topic per conversation</strong></td>
+        <td>Don't ask about testosterone AND food AND training in one thread. Use separate focused conversations.</td>
+        <td>Each conversation loads only the relevant reference files. Keeps history clean. Context stays relevant.</td>
+      </tr>
+      <tr>
+        <td><strong>Capture and close</strong></td>
+        <td>At the end of each conversation, capture decisions to the log. Then close the conversation. Start fresh next time.</td>
+        <td>A 2-hour conversation accumulates huge history. Starting fresh with a captured summary is always cleaner.</td>
+      </tr>
+      <tr>
+        <td><strong>Never paste full documents</strong></td>
+        <td>Don't paste your entire bloodwork PDF into a chat. Upload it as a file or use a reference file system.</td>
+        <td>A 27-page PDF pasted as text can consume 40,000+ tokens instantly. Files are handled more efficiently.</td>
+      </tr>
+      <tr>
+        <td><strong>Use precise questions</strong></td>
+        <td>"What is my HbA1c trend since 2020 and what does it mean for my marathon goal?" beats "Tell me about my health."</td>
+        <td>Vague questions generate verbose answers that fill history. Precise questions get precise answers.</td>
+      </tr>
+      <tr>
+        <td><strong>Trust the system prompt</strong></td>
+        <td>Don't re-explain your context in every message. Your skill already loaded it. The AI already knows.</td>
+        <td>Re-explaining wastes tokens on information already in the context. Trust what the skill loaded.</td>
+      </tr>
+      <tr>
+        <td><strong>Use the right model for the right task</strong></td>
+        <td>Simple lookups → Sonnet or Haiku. Deep analysis, complex reasoning → Opus. Don't burn Opus on "what did I eat yesterday?"</td>
+        <td>Cost discipline. Opus at ~15x the cost of Haiku. Match intelligence to complexity.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- INTERACTIVE NOTE -->
+  <div class="callout callout-gold">
+    <div class="callout-icon">🧮</div>
+    <div>
+      <p><strong>Quick Token Maths for BaySt:</strong> Your BaySt analyst skill system prompt = ~2,000 tokens. Schema semantic layer = ~3,000 tokens. A typical query answer = ~500 tokens. 10 back-and-forths = ~5,000 tokens of history. Total session: ~10,500 tokens. At Sonnet rates (~$3/M tokens), a full team session costs ~$0.03. Running 100 sessions a month costs ~$3. This is not a cost problem. It is a quality problem — keeping context clean so the AI stays sharp throughout.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- CHAPTER III: MASTERY -->
+<!-- ============================================================ -->
+
+<div class="section-break">
+  <div class="chapter">Chapter III — "How do I use Projects and Skills like a professional?"</div>
+</div>
+
+<div class="section" id="mastery">
+  <div class="section-label">03 — Mastery</div>
+  <h2>Mastering Projects & Skills<br>Inside Claude</h2>
+
+  <p>Most people use Claude like a search engine — type a question, read the answer, close the tab. This chapter is about using Claude like an operating system. Projects and Skills are the two tools that make the difference.</p>
+
+  <hr class="divider">
+
+  <h3>Projects — Your Persistent Memory Architecture</h3>
+  <p>A Project is a walled memory space that persists between sessions. It remembers you. It knows your context. Every conversation inside it starts pre-loaded with everything relevant.</p>
+
+  <div class="projects-anatomy">
+    <div class="pa-header">ANATOMY OF A CLAUDE PROJECT</div>
+    <div class="pa-row">
+      <div class="pa-cell">
+        <div class="name">Custom Instructions</div>
+        <div class="desc">Always-on system prompt. Sets the AI's role, your context, non-negotiable rules.</div>
+        <div class="example">→ Written once, active forever in this project</div>
+      </div>
+      <div class="pa-cell">
+        <div class="name">What to write here</div>
+        <div class="desc">Who you are, what the project is, your terminology, rules the AI must always follow, what output format you prefer, what it should never assume.</div>
+      </div>
+      <div class="pa-cell">
+        <div class="name">Your BaySt version</div>
+        <div class="desc">"You are advising PC at BaySt Capital, a debt resolution company managing 123,976 loans. Portfolio terminology: [definitions]. Never present a number without a source. Always flag if data came from a reference file vs live DB."</div>
+      </div>
+    </div>
+    <div class="pa-row">
+      <div class="pa-cell">
+        <div class="name">Uploaded Files</div>
+        <div class="desc">Documents Claude references across all conversations in this project.</div>
+        <div class="example">→ Always available, no re-upload needed</div>
+      </div>
+      <div class="pa-cell">
+        <div class="name">What to upload</div>
+        <div class="desc">Schema documentation. Semantic layer definitions. Business glossary. Standard operating procedures. Reference documents that never change frequently.</div>
+      </div>
+      <div class="pa-cell">
+        <div class="name">Your BaySt version</div>
+        <div class="desc">Anonymized schema with column definitions. Recovery rate formula library. Cohort naming conventions. Business context document. Team org chart.</div>
+      </div>
+    </div>
+    <div class="pa-row">
+      <div class="pa-cell">
+        <div class="name">Memory</div>
+        <div class="desc">Claude generates and stores memories from your conversations. Persistent preferences and patterns.</div>
+        <div class="example">→ Updates automatically as you work</div>
+      </div>
+      <div class="pa-cell">
+        <div class="name">What gets stored</div>
+        <div class="desc">Your communication preferences. Decisions you've made. Patterns Claude has noticed. Formats you like. Topics you've explored in depth.</div>
+      </div>
+      <div class="pa-cell">
+        <div class="name">Your BaySt version</div>
+        <div class="desc">"PC prefers prescriptive guidance over principles." "BaySt uses NPA to mean accounts 90+ days past due." "Recovery rate formula: settled / total active accounts."</div>
+      </div>
+    </div>
+    <div class="pa-row" style="border-bottom: none;">
+      <div class="pa-cell">
+        <div class="name">MCP Connections</div>
+        <div class="desc">Live connections to external systems via Model Context Protocol.</div>
+        <div class="example">→ Real-time data access mid-conversation</div>
+      </div>
+      <div class="pa-cell">
+        <div class="name">What to connect</div>
+        <div class="desc">Your Supabase DB (read-only). Google Drive for documents. GitHub for code context. Anything with an MCP server.</div>
+      </div>
+      <div class="pa-cell">
+        <div class="name">Your BaySt version</div>
+        <div class="desc">BaySt MCP Server → anonymized analytics Postgres. Healthspan MCP → Supabase (Phase 0.5 onwards).</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>How to Structure Your Projects — The Right Topology</h3>
+
+  <div class="callout callout-red">
+    <div class="callout-icon">⚠️</div>
+    <div><p><strong>The most common mistake:</strong> One giant project for everything. "AI Work" as a single project where you ask about BaySt, Healthspan, personal health, and restaurant recommendations. The context bleeds. The AI gets confused about which context applies. Quality degrades.</p></div>
+  </div>
+
+  <div class="card-grid-3" style="margin: 28px 0;">
+    <div class="card" style="border-top: 3px solid var(--accent-blue);">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-blue); margin-bottom: 8px; letter-spacing: 2px;">PROJECT 1</div>
+      <h4>BaySt Capital</h4>
+      <p style="font-size:13px; margin:0;">Everything BaySt. Portfolio analytics, schema questions, team strategy, exit planning, investor narrative. Schema files uploaded. BaySt MCP connected (when built).</p>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--accent-green);">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-green); margin-bottom: 8px; letter-spacing: 2px;">PROJECT 2</div>
+      <h4>Healthspan AI Build</h4>
+      <p style="font-size:13px; margin:0;">The product build. Architecture, code, schema, ADRs, Week 1 checklist. v2.0 spec uploaded. Claude Code tasks. Technical decisions.</p>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--accent-red);">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-red); margin-bottom: 8px; letter-spacing: 2px;">PROJECT 3</div>
+      <h4>PC Health Intelligence</h4>
+      <p style="font-size:13px; margin:0;">Personal health. Biomarkers, supplements, training, nutrition. Connected to Healthspan Supabase via MCP (Phase 0.5). Reference files uploaded as fallback.</p>
+    </div>
+  </div>
+
+  <p>Each project has completely separate context. Claude behaves differently in each one — not because it's a different AI, but because it has different instructions, different files, and different memories loaded.</p>
+
+  <hr class="divider">
+
+  <h3>Skills — The Reusable Intelligence Layer</h3>
+
+  <p>A Skill is the recipe book. A Project is the restaurant. You can use the same recipe book in multiple restaurants. You can have multiple recipe books in one restaurant. They are separate things that work together.</p>
+
+  <div class="do-dont">
+    <div class="do-box do">
+      <div class="header">✓ WHAT SKILLS ARE FOR</div>
+      <ul>
+        <li>Encoding deep domain expertise that gets reused across many conversations</li>
+        <li>Defining non-negotiable rules that must always apply (never skip Viome check)</li>
+        <li>Building reusable reasoning patterns (the STEP sequence in your health skill)</li>
+        <li>Creating specialist agents that non-technical team members can invoke without understanding the internals</li>
+        <li>Storing institutional knowledge that outlives any single conversation</li>
+        <li>Packaging a workflow so new team members get it instantly on first use</li>
+      </ul>
+    </div>
+    <div class="do-box dont">
+      <div class="header">✗ WHAT SKILLS ARE NOT FOR</div>
+      <ul>
+        <li>One-off questions you'll never repeat</li>
+        <li>General knowledge Claude already has (history, science, public information)</li>
+        <li>Storing live data (use a database for that, not a skill)</li>
+        <li>Replacing actual governance (skills are instructions, not enforcement)</li>
+        <li>Building skills before you know what the repeated workflow actually is — validate manually first, then encode</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>The Professional Workflow — How to Use Both Together</h3>
+
+  <div class="workflow">
+    <div class="wf-step">
+      <div class="wf-num">1</div>
+      <div class="wf-content">
+        <div class="title">Start with a Project, no Skill</div>
+        <div class="detail">Open a new Claude project. Write basic custom instructions — who you are, what this is, key terminology. Start having conversations. Explore the domain. Don't build a skill yet. You don't know what you need.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">2</div>
+      <div class="wf-content">
+        <div class="title">Notice what you repeat</div>
+        <div class="detail">After 2–3 weeks of daily use, you'll see patterns. "I always have to remind it about my Viome food rules." "I always have to tell it to use three-tier biomarker resolution." "I always have to explain the recovery rate formula." These repetitions are your skill content.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">3</div>
+      <div class="wf-content">
+        <div class="title">Extract repeating patterns into a Skill</div>
+        <div class="detail">Write a SKILL.md. Encode the repeating instructions. Add the reference files that always need to be loaded. Define the non-negotiable rules. This is exactly what you did with pc-health-intelligence — you validated manually for 3 weeks, then encoded the pattern.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">4</div>
+      <div class="wf-content">
+        <div class="title">Test the Skill against your hardest questions</div>
+        <div class="detail">Give it a question that previously required lots of manual context-setting. Does it get it right first time? Does it load the right reference files? Does it apply the right constraints? Fix what fails. This is your negative testing.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">5</div>
+      <div class="wf-content">
+        <div class="title">Automate the Skill's maintenance</div>
+        <div class="detail">Set up a process to keep reference files current. Your nightly Cowork build is the gold standard. At minimum, update reference files whenever significant new data arrives. A stale skill is worse than no skill — it gives confident wrong answers.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">6</div>
+      <div class="wf-content">
+        <div class="title">Share the Skill, not just the Project</div>
+        <div class="detail">When a new team member joins, give them the skill file. They get the full institutional intelligence immediately — they don't have to build up context over weeks of conversations. The skill is the onboarding document and the operating system simultaneously.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>Training Your Team — The One-Page Mental Model</h3>
+  <p>When you take this to your company, most people need a single clear mental model. Here it is:</p>
+
+  <div class="card" style="background: var(--ink); color: var(--paper); border: none; padding: 40px;">
+    <div style="text-align: center; margin-bottom: 32px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(245,240,232,0.4); letter-spacing: 3px; margin-bottom: 8px;">FOR YOUR TEAM — THE SIMPLEST VERSION</div>
+      <div style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: #c8a96e;">Think of it as a specialist colleague</div>
+    </div>
+
+    <div class="card-grid-3" style="margin: 0;">
+      <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px;">
+        <div style="font-size: 32px; margin-bottom: 8px;">📁</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(245,240,232,0.5); margin-bottom: 6px;">THE PROJECT</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: #c8a96e; margin-bottom: 8px;">The Office</div>
+        <div style="font-size: 13px; color: rgba(245,240,232,0.65);">The permanent workspace. The colleague knows this is where BaySt work happens. They remember everything discussed here before.</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px;">
+        <div style="font-size: 32px; margin-bottom: 8px;">📋</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(245,240,232,0.5); margin-bottom: 6px;">THE SKILL</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: #c8a96e; margin-bottom: 8px;">Their Specialisation</div>
+        <div style="font-size: 13px; color: rgba(245,240,232,0.65);">The colleague has deep BaySt expertise — they know your formulas, your schema, your business rules. They didn't learn this from you in this session. They came pre-trained.</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px;">
+        <div style="font-size: 32px; margin-bottom: 8px;">🔌</div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(245,240,232,0.5); margin-bottom: 6px;">THE MCP</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: #c8a96e; margin-bottom: 8px;">Their System Access</div>
+        <div style="font-size: 13px; color: rgba(245,240,232,0.65);">The colleague can query your portfolio database, run formulas, retrieve meeting notes — through a controlled terminal that logs everything and never gives them more than they need.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px; padding: 20px; background: rgba(200,169,110,0.1); border: 1px solid rgba(200,169,110,0.25); border-radius: 8px; text-align: center;">
+      <div style="font-size: 14px; color: rgba(245,240,232,0.8);">Your job as a team member: <strong style="color: #c8a96e;">ask clear questions, review the output, make the decision.</strong></div>
+      <div style="font-size: 14px; color: rgba(245,240,232,0.8); margin-top: 8px;">The AI's job: <strong style="color: #c8a96e;">retrieve accurate data, apply your business logic, format it clearly, never guess.</strong></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>The Rules Your Team Should Know</h3>
+  <p>When you roll this out to your company, these five rules on one page will save you 80% of the support conversations.</p>
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>RULE</th>
+        <th>WHY</th>
+        <th>WHAT HAPPENS IF IGNORED</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-family: DM Mono; font-weight: 700; color: var(--accent-blue);">01</td>
+        <td><strong>Use the BaySt project, always</strong></td>
+        <td>The project has the schema, the terminology, and the memory. Starting a fresh chat loses all of that.</td>
+        <td>Claude doesn't know what an NPA is. Gives generic answers. Team re-explains context every session.</td>
+      </tr>
+      <tr>
+        <td style="font-family: DM Mono; font-weight: 700; color: var(--accent-blue);">02</td>
+        <td><strong>One topic per conversation</strong></td>
+        <td>Focused conversations keep the context window clean and the AI sharp.</td>
+        <td>Long mixed conversations degrade. Claude starts forgetting earlier context. Quality drops.</td>
+      </tr>
+      <tr>
+        <td style="font-family: DM Mono; font-weight: 700; color: var(--accent-blue);">03</td>
+        <td><strong>Never paste raw customer data</strong></td>
+        <td>PII never goes into Claude directly. Always goes through the MCP server with anonymized output only.</td>
+        <td>Customer data in Claude's context = compliance breach. Full stop.</td>
+      </tr>
+      <tr>
+        <td style="font-family: DM Mono; font-weight: 700; color: var(--accent-blue);">04</td>
+        <td><strong>Verify any number before using it</strong></td>
+        <td>Claude can hallucinate. Any number in a report should be traceable to a source — MCP query, Python function, or named reference file.</td>
+        <td>Wrong number in an investor report. Wrong recovery rate in an acquisition bid.</td>
+      </tr>
+      <tr>
+        <td style="font-family: DM Mono; font-weight: 700; color: var(--accent-blue);">05</td>
+        <td><strong>Capture decisions, close conversations</strong></td>
+        <td>Context built up in a long session should be preserved in a decisions log, not left to decay in a conversation history that eventually gets truncated.</td>
+        <td>Good analysis gets lost. Team repeats the same analysis next week. Institutional knowledge evaporates.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <!-- FINAL UNIFIED MODEL -->
+  <h3 style="margin-bottom: 4px;">Everything, In One Place</h3>
+  <p style="margin-bottom: 28px;">The complete mental model for your company training. One diagram. Everything connected.</p>
+
+  <div style="background: white; border: 1px solid var(--border-light); border-radius: 16px; padding: 36px; box-shadow: 0 4px 24px rgba(44,36,22,0.08);">
+
+    <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 3px; text-align: center; margin-bottom: 28px;">THE COMPLETE PICTURE — FOR YOUR COMPANY TRAINING</div>
+
+    <!-- Layer: People -->
+    <div style="background: var(--paper2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 12px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">PEOPLE</div>
+      <div style="font-weight: 600;">You & Your Team — ask questions in plain English, review outputs, make decisions</div>
+    </div>
+
+    <div style="text-align: center; color: var(--text-muted); font-size: 20px; margin: 8px 0;">↕</div>
+
+    <!-- Layer: Project -->
+    <div style="background: rgba(26,58,92,0.06); border: 1px solid rgba(26,58,92,0.2); border-radius: 10px; padding: 16px; margin-bottom: 12px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-blue); margin-bottom: 8px; letter-spacing: 2px;">THE PROJECT — Persistent Memory Space</div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; font-size: 12px;">
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">📌<br><strong>Custom Instructions</strong><br><span style="color: var(--text-muted);">Always-on context</span></div>
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">📎<br><strong>Uploaded Files</strong><br><span style="color: var(--text-muted);">Schema, glossary</span></div>
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">🧠<br><strong>Memories</strong><br><span style="color: var(--text-muted);">Auto-generated</span></div>
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">🔌<br><strong>MCP Links</strong><br><span style="color: var(--text-muted);">Live DB access</span></div>
+      </div>
+    </div>
+
+    <div style="text-align: center; color: var(--text-muted); font-size: 20px; margin: 8px 0;">↕</div>
+
+    <!-- Layer: Skill -->
+    <div style="background: rgba(45,106,79,0.06); border: 1px solid rgba(45,106,79,0.25); border-radius: 10px; padding: 16px; margin-bottom: 12px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-green); margin-bottom: 8px; letter-spacing: 2px;">THE SKILL — Reusable Intelligence</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; font-size: 12px;">
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">📋<br><strong>Domain Rules</strong><br><span style="color: var(--text-muted);">Business logic encoded</span></div>
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">📁<br><strong>Reference Files</strong><br><span style="color: var(--text-muted);">Context on demand</span></div>
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">🚫<br><strong>Hard Constraints</strong><br><span style="color: var(--text-muted);">Never-do rules</span></div>
+      </div>
+    </div>
+
+    <div style="text-align: center; color: var(--text-muted); font-size: 20px; margin: 8px 0;">↕</div>
+
+    <!-- Layer: LLM + Agents -->
+    <div style="background: rgba(91,45,142,0.06); border: 1px solid rgba(91,45,142,0.2); border-radius: 10px; padding: 16px; margin-bottom: 12px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-purple); margin-bottom: 8px; letter-spacing: 2px;">THE LLM + AGENT LOOP — The Brain</div>
+      <div style="text-align: center; font-size: 13px; color: var(--text-dim);">Claude reads context → reasons → decides which tools to call → calls them → synthesises → answers<br>
+      <span style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-purple); margin-top: 6px; display: inline-block;">Sub-agents handle specialist tasks in parallel — each one narrow, auditable, honest when they fail</span></div>
+    </div>
+
+    <div style="text-align: center; color: var(--text-muted); font-size: 20px; margin: 8px 0;">↕</div>
+
+    <!-- Layer: MCP -->
+    <div style="background: rgba(184,134,11,0.06); border: 1px solid rgba(184,134,11,0.25); border-radius: 10px; padding: 16px; margin-bottom: 12px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-gold); margin-bottom: 8px; letter-spacing: 2px;">MCP SERVER — The Controlled Window</div>
+      <div style="text-align: center; font-size: 13px; color: var(--text-dim);">Executes only what Claude requests · Validates every call · Enforces read-only · Logs everything · Never decides on its own</div>
+    </div>
+
+    <div style="text-align: center; color: var(--text-muted); font-size: 20px; margin: 8px 0;">↕</div>
+
+    <!-- Layer: Data -->
+    <div style="background: var(--paper2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 2px;">YOUR DATA — Never Directly Touched by the LLM</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; font-size: 12px;">
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">🏗<br><strong>Acquisition Sandbox</strong><br><span style="color: var(--text-muted);">Messy seller data</span></div>
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">📊<br><strong>Analytics DB</strong><br><span style="color: var(--text-muted);">Read-only · Anonymized</span></div>
+        <div style="background: white; border-radius: 6px; padding: 10px; border: 1px solid var(--border-light);">🔍<br><strong>Vector Index</strong><br><span style="color: var(--text-muted);">RAG · Meeting notes</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 60px; text-align: center; padding: 40px; background: var(--paper2); border-radius: 12px; border: 1px solid var(--border);">
+    <div style="font-family: 'Playfair Display', serif; font-size: 13px; font-style: italic; color: var(--text-muted); margin-bottom: 16px;">The shift that makes the difference</div>
+    <div style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--ink); line-height: 1.3; max-width: 600px; margin: 0 auto;">From <em style="color: var(--accent-red);">using AI</em> as a tool that answers questions, to <em style="color: var(--accent-green);">building AI systems</em> that act on your behalf continuously.</div>
+    <div style="margin-top: 24px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-muted);">You crossed that line three weeks ago. The 721-line skill proves it.</div>
+  </div>
+
+</div>
+
+<script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Fade animations on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.card, .callout, .workflow .wf-step, .scenario-row').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(12px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>

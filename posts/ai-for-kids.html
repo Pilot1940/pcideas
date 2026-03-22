@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Coding — For Bass Players, Cricket Stars & Young Engineers</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --grass: #16a34a;
+  --grass-light: #22c55e;
+  --sky: #38bdf8;
+  --red-ball: #dc2626;
+  --bass-body: #7c2d12;
+  --bass-neck: #92400e;
+  --bass-string: #f59e0b;
+  --fretboard: #1c1917;
+  --cream: #fffbf0;
+  --dark: #111827;
+  --purple: #7c3aed;
+  --orange: #ea580c;
+  --pink: #db2777;
+  --yellow: #d97706;
+  --teal: #0e7490;
+  --white: #ffffff;
+  --light-gray: #f3f4f6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--cream);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(160deg, #1c1917 0%, #7c2d12 40%, #1c1917 100%);
+  padding: 48px 32px 70px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 44px;
+  background: var(--cream);
+  border-radius: 50% 50% 0 0 / 24px 24px 0 0;
+}
+
+.header-icons {
+  font-size: 56px;
+  margin-bottom: 16px;
+  letter-spacing: 12px;
+  animation: groove 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes groove {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(-8px); }
+}
+
+.header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(30px, 7vw, 60px);
+  color: var(--bass-string);
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+
+.header-sub {
+  font-size: 17px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 700;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* NAV */
+.nav-bar {
+  background: var(--dark);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  padding: 6px 14px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  transition: all 0.2s;
+}
+.nav-btn:hover { background: var(--bass-string); color: var(--dark); border-color: var(--bass-string); transform: translateY(-2px); }
+
+/* SECTIONS */
+.section {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 64px 32px;
+}
+
+/* CHAPTER BANNERS */
+.ch-banner {
+  text-align: center;
+  padding: 28px 32px;
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(22px, 4vw, 32px);
+  color: white;
+  position: relative;
+}
+.ch-banner.bass    { background: linear-gradient(135deg, var(--bass-body), #c2410c); }
+.ch-banner.cricket { background: linear-gradient(135deg, var(--grass), var(--teal)); }
+.ch-banner.code    { background: linear-gradient(135deg, #1e1b4b, var(--purple)); }
+.ch-banner.build   { background: linear-gradient(135deg, var(--orange), var(--yellow)); }
+
+/* TYPOGRAPHY */
+.big-q {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(26px, 5vw, 46px);
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+.big-q .hl { color: var(--grass); }
+.big-q .hl-bass { color: var(--bass-string); }
+.big-q .hl-code { color: var(--purple); }
+
+p.story {
+  font-size: 17px;
+  line-height: 1.85;
+  color: #374151;
+  margin-bottom: 16px;
+}
+p.story strong { color: var(--dark); }
+
+/* CARDS */
+.card {
+  border-radius: 20px;
+  padding: 24px;
+  border: 3px solid transparent;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,0.1); }
+
+.card.green  { background: #f0fdf4; border-color: #86efac; }
+.card.blue   { background: #eff6ff; border-color: #93c5fd; }
+.card.red    { background: #fff1f2; border-color: #fda4af; }
+.card.yellow { background: #fffbeb; border-color: #fcd34d; }
+.card.purple { background: #faf5ff; border-color: #c4b5fd; }
+.card.orange { background: #fff7ed; border-color: #fdba74; }
+.card.dark   { background: #1c1917; border-color: #57534e; color: white; }
+.card.dark p { color: rgba(255,255,255,0.8); }
+
+.card .ico { font-size: 40px; display: block; margin-bottom: 10px; }
+.card h3 { font-family: 'Fredoka One', cursive; font-size: 20px; margin-bottom: 8px; }
+.card p  { font-size: 15px; line-height: 1.7; margin: 0; color: #374151; }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 24px 0; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+
+/* THOUGHT BOX */
+.thought {
+  background: white;
+  border: 3px solid var(--grass);
+  border-radius: 18px;
+  padding: 20px 24px;
+  margin: 24px 0;
+  position: relative;
+}
+.thought::before { content: '💡'; position: absolute; top: -16px; left: 20px; font-size: 26px; background: white; padding: 0 4px; }
+.thought p { font-size: 16px; color: #374151; margin: 0; }
+.thought.bass { border-color: var(--bass-string); }
+.thought.bass::before { content: '🎸'; }
+.thought.code { border-color: var(--purple); }
+.thought.code::before { content: '💻'; }
+
+/* BASS FRETBOARD */
+.fretboard {
+  background: var(--fretboard);
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin: 32px 0;
+  overflow-x: auto;
+}
+
+.fb-title {
+  font-family: 'Fredoka One', cursive;
+  color: var(--bass-string);
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.fb-string-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.fb-string-name {
+  width: 100px;
+  flex-shrink: 0;
+  font-family: 'Fredoka One', cursive;
+  font-size: 14px;
+  color: var(--bass-string);
+  text-align: right;
+  padding-right: 8px;
+}
+
+.fb-frets {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.fb-fret {
+  flex: 1;
+  min-width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.35);
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.fb-fret.lit {
+  background: var(--bass-string);
+  color: var(--dark);
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(245,158,11,0.6);
+}
+
+.fb-fret.note {
+  background: rgba(245,158,11,0.25);
+  color: var(--bass-string);
+  border-color: rgba(245,158,11,0.5);
+}
+
+.fb-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  width: 100px;
+  flex-shrink: 0;
+  padding-left: 8px;
+}
+
+/* CRICKET FIELD */
+.field {
+  background: radial-gradient(ellipse at center, #4ade80 0%, #16a34a 55%, #14532d 100%);
+  border-radius: 50%;
+  aspect-ratio: 1;
+  max-width: 500px;
+  margin: 32px auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.field-pitch {
+  background: rgba(200,169,110,0.5);
+  width: 18%;
+  height: 40%;
+  border-radius: 6px;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.fielder-pin {
+  position: absolute;
+  background: white;
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: default;
+  transition: transform 0.2s;
+}
+.fielder-pin:hover { transform: scale(1.1); }
+.fielder-pin .fp-emoji { font-size: 18px; display: block; }
+.fielder-pin .fp-role { font-size: 9px; color: #6b7280; display: block; }
+
+/* CODE SCREEN */
+.code-screen {
+  background: #0f172a;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 28px 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.code-titlebar {
+  background: #1e293b;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot-r { background: #ef4444; }
+.dot-y { background: #f59e0b; }
+.dot-g { background: #22c55e; }
+
+.code-filename {
+  font-family: 'Fredoka One', cursive;
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+  margin-left: 8px;
+}
+
+.code-body {
+  padding: 24px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.9;
+  overflow-x: auto;
+}
+
+.c-comment { color: #64748b; }
+.c-keyword { color: #818cf8; font-weight: bold; }
+.c-string  { color: #34d399; }
+.c-number  { color: #f59e0b; }
+.c-func    { color: #60a5fa; }
+.c-var     { color: #f8fafc; }
+.c-output  { color: #a3e635; }
+
+/* OVERS BOARD */
+.overs-board {
+  background: #0f172a;
+  border-radius: 20px;
+  padding: 28px;
+  margin: 28px 0;
+  border: 3px solid #f59e0b;
+}
+
+.overs-title {
+  font-family: 'Fredoka One', cursive;
+  color: #f59e0b;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.overs-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ob {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+  color: white;
+}
+
+.ob-sys  { background: var(--teal); }
+.ob-skill { background: var(--purple); }
+.ob-hist { background: var(--orange); }
+.ob-q   { background: var(--red-ball); }
+.ob-free { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); }
+
+.overs-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.ok-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.7); }
+.ok-dot  { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+/* BIG TABLE */
+.big-table {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 28px 0;
+  border: 3px solid #e5e7eb;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.bt-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: var(--dark);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 16px;
+}
+.bt-head div { padding: 14px 16px; border-right: 1px solid rgba(255,255,255,0.15); }
+.bt-head div:last-child { border-right: none; }
+
+.bt-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 2px solid #f3f4f6;
+}
+.bt-row:last-child { border-bottom: none; }
+.bt-row:nth-child(even) { background: #f9fafb; }
+
+.bt-cell { padding: 14px 16px; font-size: 14px; border-right: 1px solid #f3f4f6; }
+.bt-cell:last-child { border-right: none; }
+.bt-cell .ico  { font-size: 22px; display: block; margin-bottom: 4px; }
+.bt-cell strong { display: block; color: var(--dark); margin-bottom: 2px; }
+.bt-cell span   { color: #6b7280; font-size: 12px; }
+.bt-cell .ai    { color: var(--purple); font-weight: 800; }
+.bt-cell .ex    { color: var(--teal); font-size: 12px; }
+
+/* STEP LADDER */
+.ladder { display: flex; flex-direction: column; gap: 4px; margin: 28px 0; }
+
+.rung {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 10px 0;
+}
+
+.rung-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 22px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.rung-content .title { font-family: 'Fredoka One', cursive; font-size: 19px; margin-bottom: 4px; }
+.rung-content p      { font-size: 14px; color: #374151; margin: 0; padding-top: 4px; }
+
+/* QUIZ */
+.quiz {
+  background: linear-gradient(135deg, #1c1917, #7c2d12);
+  border-radius: 24px;
+  padding: 32px;
+  margin: 32px 0;
+  border: 3px solid var(--bass-string);
+}
+
+.quiz h3 { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--bass-string); margin-bottom: 20px; }
+
+.quiz-q {
+  background: rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.quiz-q .qnum { font-family: 'Fredoka One', cursive; color: var(--bass-string); font-size: 17px; display: block; margin-bottom: 4px; }
+.quiz-q .qtxt { font-size: 15px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+.quiz-q .hint { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; font-style: italic; }
+
+/* FINAL */
+.finale {
+  background: linear-gradient(135deg, #1c1917, #7c2d12, #16a34a);
+  border-radius: 28px;
+  padding: 52px 40px;
+  text-align: center;
+  color: white;
+  margin: 32px 0;
+}
+
+.finale h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(26px, 5vw, 48px);
+  color: var(--bass-string);
+  margin-bottom: 16px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+}
+
+.finale p { font-size: 17px; color: rgba(255,255,255,0.88); max-width: 600px; margin: 0 auto 12px; line-height: 1.8; }
+.finale .icons { font-size: 44px; letter-spacing: 10px; margin-top: 24px; }
+
+/* DIVIDER */
+.sep { text-align: center; color: #d1d5db; font-size: 28px; letter-spacing: 10px; padding: 8px 0; margin: 8px 0; }
+
+/* SCORE BUG */
+.score-bug {
+  background: #0f172a;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.bug-score { font-family: 'Fredoka One', cursive; color: var(--bass-string); font-size: 28px; }
+.bug-label { font-size: 12px; color: rgba(255,255,255,0.5); display: block; }
+.bug-divider { width: 2px; height: 40px; background: rgba(255,255,255,0.15); }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .section { padding: 40px 20px; }
+  .bt-head, .bt-row { grid-template-columns: 1fr; }
+  .bt-cell { border-right: none; border-bottom: 1px solid #f3f4f6; }
+  .overs-grid { grid-template-columns: repeat(5, 1fr); }
+  .fb-string-name { width: 70px; font-size: 12px; }
+  .fb-label { width: 70px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-icons">🎸🏏💻</div>
+  <h1>How AI & Coding Work —<br>Explained Just For You!</h1>
+  <p class="header-sub">For bass guitar heroes, cricket legends, and future engineers 🔥</p>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <a href="#what" class="nav-btn">🤔 What is AI?</a>
+  <a href="#bass" class="nav-btn">🎸 The Band</a>
+  <a href="#team" class="nav-btn">🏏 The Cricket Team</a>
+  <a href="#tokens" class="nav-btn">🏏 Tokens & Overs</a>
+  <a href="#coding" class="nav-btn">💻 Start Coding!</a>
+  <a href="#build" class="nav-btn">🔧 Build Something</a>
+  <a href="#ideas" class="nav-btn">🌟 Cool Ideas</a>
+  <a href="#quiz" class="nav-btn">⭐ Quiz</a>
+</nav>
+
+<!-- ======================================================= -->
+<!-- SECTION 0: WHAT IS AI -->
+<!-- ======================================================= -->
+<div class="section" id="what">
+
+  <div class="big-q">So... what <span class="hl">IS</span> AI? 🤔</div>
+
+  <p class="story">You know how when you first picked up a bass guitar, you had to learn slowly — which fret, which string, which finger. But now you've played so much that your fingers just know where to go without thinking?</p>
+
+  <p class="story"><strong>AI learned the same way — except it didn't practice guitar. It read millions and millions of books, websites, and conversations.</strong> So many that it learned how humans think, write, and solve problems. Now when you ask it something, it doesn't have to think from scratch — it already knows patterns from everything it read.</p>
+
+  <div class="grid2">
+    <div class="card green">
+      <span class="ico">📚</span>
+      <h3 style="color: var(--grass);">What it learned</h3>
+      <p>Books, science papers, code, stories, conversations — billions of pages. It learned how ideas connect and how to explain things clearly.</p>
+    </div>
+    <div class="card dark">
+      <span class="ico">🤔</span>
+      <h3 style="color: var(--bass-string);">What it can NOT do</h3>
+      <p>It can't actually slap a bass string. It only lives inside computers. And — this is important — <strong style="color: var(--bass-string);">it forgets you every time you close the chat!</strong> Like amnesia. We'll fix that later.</p>
+    </div>
+  </div>
+
+  <div class="thought">
+    <p><strong>The Amnesia Problem:</strong> Every new chat, the AI wakes up knowing nothing about you. Imagine if your guitar teacher forgot everything about you at the start of every lesson — your skill level, your favourite songs, what you practised last week. You'd have to explain it all from scratch! The whole point of Projects and Skills is to <strong>fix this forgetting problem</strong>.</p>
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- CHAPTER 1: THE BASS ANALOGY -->
+<!-- ======================================================= -->
+<div class="ch-banner bass">Chapter 1 — 🎸 AI is Like Playing Bass in a Band!</div>
+
+<div class="section" id="bass">
+
+  <div class="big-q">AI is like being in<br><span class="hl-bass">a band with a great bassist</span> 🎸</div>
+
+  <p class="story">Here's the most important idea. AI isn't one thing doing everything by itself. It's more like <strong>a whole band</strong>, where everyone has a different job — just like how a bassist, drummer, guitarist, and vocalist all do different things to make one great song.</p>
+
+  <!-- BAND DIAGRAM -->
+  <div class="fretboard">
+    <div class="fb-title">🎶 A Band Has 5 Members — An AI System Has 5 Parts!</div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 8px;">
+
+      <div style="background: rgba(245,158,11,0.15); border: 2px solid rgba(245,158,11,0.5); border-radius: 14px; padding: 16px; text-align: center;">
+        <div style="font-size: 36px; margin-bottom: 6px;">🎸</div>
+        <div style="font-family:'Fredoka One',cursive; color: #f59e0b; font-size: 15px; margin-bottom: 4px;">Lead Guitarist</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Decides the song, plays the melody everyone hears</div>
+        <div style="margin-top: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 6px; font-size: 11px; color: rgba(255,255,255,0.9); font-weight: 800;">= YOU</div>
+      </div>
+
+      <div style="background: rgba(139,92,246,0.15); border: 2px solid rgba(139,92,246,0.5); border-radius: 14px; padding: 16px; text-align: center;">
+        <div style="font-size: 36px; margin-bottom: 6px;">🥁</div>
+        <div style="font-family:'Fredoka One',cursive; color: #a78bfa; font-size: 15px; margin-bottom: 4px;">The Drummer</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">The brain. Holds it all together and keeps everyone in sync</div>
+        <div style="margin-top: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 6px; font-size: 11px; color: rgba(255,255,255,0.9); font-weight: 800;">= THE LLM (CLAUDE)</div>
+      </div>
+
+      <div style="background: rgba(16,185,129,0.15); border: 2px solid rgba(16,185,129,0.5); border-radius: 14px; padding: 16px; text-align: center;">
+        <div style="font-size: 36px; margin-bottom: 6px;">🎵</div>
+        <div style="font-family:'Fredoka One',cursive; color: #6ee7b7; font-size: 15px; margin-bottom: 4px;">Bass + Drums Together</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">The "rules" that lock the whole band in — keeps time, keeps order</div>
+        <div style="margin-top: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 6px; font-size: 11px; color: rgba(255,255,255,0.9); font-weight: 800;">= THE SKILL</div>
+      </div>
+
+      <div style="background: rgba(234,88,12,0.15); border: 2px solid rgba(234,88,12,0.5); border-radius: 14px; padding: 16px; text-align: center;">
+        <div style="font-size: 36px; margin-bottom: 6px;">🎚️</div>
+        <div style="font-family:'Fredoka One',cursive; color: #fb923c; font-size: 15px; margin-bottom: 4px;">The Sound Engineer</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Controls what comes in and out of the speakers. Nothing gets through without his say-so</div>
+        <div style="margin-top: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 6px; font-size: 11px; color: rgba(255,255,255,0.9); font-weight: 800;">= MCP SERVER</div>
+      </div>
+
+      <div style="background: rgba(220,38,38,0.15); border: 2px solid rgba(220,38,38,0.5); border-radius: 14px; padding: 16px; text-align: center;">
+        <div style="font-size: 36px; margin-bottom: 6px;">🎙️</div>
+        <div style="font-family:'Fredoka One',cursive; color: #fca5a5; font-size: 15px; margin-bottom: 4px;">The Band Members</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">Each one plays a specific part — rhythm, keys, backing vocals</div>
+        <div style="margin-top: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 6px; font-size: 11px; color: rgba(255,255,255,0.9); font-weight: 800;">= SUB-AGENTS</div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="story">Every member of the band has one job. When they all do their job perfectly, the song sounds amazing. <strong>In an AI system, it's the same — different parts each do one job, and together they create something brilliant!</strong></p>
+
+  <!-- BAND ANALOGY -->
+  <h3 style="font-family:'Fredoka One',cursive; font-size:26px; margin:36px 0 16px; color: var(--bass-body);">🎶 The Band Analogy — Full Picture</h3>
+
+  <div class="big-table">
+    <div class="bt-head">
+      <div>🎸 In the Band...</div>
+      <div>🤖 In AI it's called...</div>
+      <div>💡 What it does</div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-cell"><span class="ico">🎸</span><strong>The Lead Guitarist</strong><span>Decides what song to play. Leads the band. Can also sing.</span></div>
+      <div class="bt-cell"><span class="ai">You!</span><br><span>You tell the AI what you want</span></div>
+      <div class="bt-cell"><span class="ex">You type or say what you need — the whole band springs into action</span></div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-cell"><span class="ico">🥁</span><strong>The Drummer</strong><span>Keeps everything together. The brain of the rhythm.</span></div>
+      <div class="bt-cell"><span class="ai">The LLM (Claude)</span><br><span>The main brain. Reads your question, decides what to do</span></div>
+      <div class="bt-cell"><span class="ex">Claude Opus or Sonnet — thinks through your question and orchestrates all the other parts</span></div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-cell"><span class="ico">📖</span><strong>The Setlist & Band Rules</strong><span>"We always start with this song." "We never play after midnight."</span></div>
+      <div class="bt-cell"><span class="ai">A Skill</span><br><span>Written rules and instructions. Loaded at the start.</span></div>
+      <div class="bt-cell"><span class="ex">A skill tells Claude: your name, what you like, what rules to follow — every single time</span></div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-cell"><span class="ico">🎸</span><strong>The Bassist</strong><span>Provides the deep foundation. Connects everything.</span></div>
+      <div class="bt-cell"><span class="ai">The Agent</span><br><span>Does the actual work. Takes action.</span></div>
+      <div class="bt-cell"><span class="ex">Agents search, calculate, write code, answer questions — they're the ones who "play" the notes</span></div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-cell"><span class="ico">📻</span><strong>The Effects Pedals</strong><span>Change and shape the sound. Give you different capabilities.</span></div>
+      <div class="bt-cell"><span class="ai">MCP (Tools)</span><br><span>Controlled connections to databases, code runners, APIs</span></div>
+      <div class="bt-cell"><span class="ex">Like a distortion pedal adds power — MCP gives Claude access to real data and real actions</span></div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-cell"><span class="ico">📼</span><strong>The Recording Studio</strong><span>Where everything is stored. The archive of all past sessions.</span></div>
+      <div class="bt-cell"><span class="ai">The Database</span><br><span>Where real information lives. Trustworthy and permanent.</span></div>
+      <div class="bt-cell"><span class="ex">Like a recording that never changes — the source of truth the AI reads from</span></div>
+    </div>
+
+    <div class="bt-row">
+      <div class="bt-cell"><span class="ico">🎵</span><strong>The Chord Book</strong><span>Every chord written down so any musician can play along</span></div>
+      <div class="bt-cell"><span class="ai">RAG (Retrieval)</span><br><span>Finds the right "page" from a giant knowledge base when needed</span></div>
+      <div class="bt-cell"><span class="ex">Ask about a health topic — AI searches thousands of documents and loads just the relevant part</span></div>
+    </div>
+
+  </div>
+
+  <div class="thought bass">
+    <p><strong>Bass + Drums — The Best Way to Understand a Skill:</strong> Think about what happens in a band when the bass and drums lock in together. The whole band suddenly sounds tighter. The guitarist knows exactly where the beat is. Everyone plays better. That's what a Skill does for an AI system — it gives Claude the rules and rhythm to work from, so everything else falls into place. You don't always notice bass and drums, but if they stopped, everything would fall apart immediately. Same with a Skill.</p>
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- CHAPTER 2: CRICKET TEAM -->
+<!-- ======================================================= -->
+<div class="ch-banner cricket">Chapter 2 — 🏏 Agents are Like Fielding Positions!</div>
+
+<div class="section" id="team">
+
+  <div class="big-q">Sub-agents are like<br><span class="hl">fielding positions!</span> 🏏</div>
+
+  <div class="card orange" style="margin-bottom: 28px;">
+    <span class="ico">🔄</span>
+    <h3 style="color:var(--orange)">Switching from guitars to cricket for a second!</h3>
+    <p>We've been talking about bands and music. Now we're going to explain a tricky AI concept using cricket instead — because cricket actually explains it perfectly. Don't worry, we'll get back to guitars soon. Just imagine you've walked off stage and onto the pitch! 🏏</p>
+  </div>
+
+  <p class="story">You know how a slip fielder has ONE job (catch edges), the wicketkeeper has ONE job (catches behind), and a mid-on has ONE job (stop straight drives)? If you asked your slip fielder to also keep wickets AND bat AND coach, they'd do everything badly!</p>
+
+  <p class="story">AI agents work the same way. When a task is complicated, the main AI (the coach) breaks it into small jobs and gives each job to a specialist agent. <strong>Each one does their job perfectly. Then all the results come back together</strong> — just like a brilliant fielding setup that takes a catch!</p>
+
+  <div class="grid3">
+    <div class="card blue">
+      <span class="ico">🔍</span>
+      <h3 style="color:var(--teal)">Agent 1:<br>The Opener</h3>
+      <p>Goes in first. Looks at the incoming information and figures out what's there. Reports back: "here's what we've got."</p>
+    </div>
+    <div class="card yellow">
+      <span class="ico">⚖️</span>
+      <h3 style="color:#92400e">Agent 2:<br>The Wicketkeeper</h3>
+      <p>Misses nothing. Checks for errors, missing bits, anything that doesn't look right. Very detail-focused!</p>
+    </div>
+    <div class="card purple">
+      <span class="ico">🏃</span>
+      <h3 style="color:var(--purple)">Agent 3:<br>The Pace Bowler</h3>
+      <p>The specialist with serious skill. Takes the data from the other agents and applies the clever techniques — calculates, analyses, uses deep knowledge to find the answer.</p>
+    </div>
+    <div class="card red">
+      <span class="ico">📝</span>
+      <h3 style="color:var(--red-ball)">Agent 4:<br>The Commentator</h3>
+      <p>Takes all the results from the other agents and turns it into a clear, readable final report for you!</p>
+    </div>
+    <div class="card green">
+      <span class="ico">🎯</span>
+      <h3 style="color:var(--grass)">The Orchestrator:<br>Head Coach</h3>
+      <p>Doesn't field — directs. Decides who does what, in what order. This is Claude — the LLM brain!</p>
+    </div>
+  </div>
+
+  <div class="thought">
+    <p><strong>Why not just ONE agent for everything?</strong> Imagine asking your slip fielder to run in from the boundary AND bat AND keep wickets all at the same time! They'd get confused and mess up. Narrow, focused jobs = much better results. The coach (Claude) just says "you do THIS, you do THAT" — and the whole team clicks.</p>
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- CHAPTER 3: TOKENS -->
+<!-- ======================================================= -->
+<div class="ch-banner cricket">Chapter 3 — 🏏 Tokens are Like Overs in a T20!</div>
+
+<div class="section" id="tokens">
+
+  <div class="big-q">Tokens are like<br><span class="hl">overs in a T20 match!</span> 🏏</div>
+
+  <p class="story">Back to cricket for this one — because it's the perfect way to understand something called <strong>TOKENS</strong>.</p>
+
+  <p class="story">The AI doesn't read whole words. It reads in tiny chunks called tokens. A token is roughly half a word. "Cricket" = 2 tokens. "Hit that six!" = 4 tokens. Every conversation has a <strong>limit</strong> on how many tokens can fit — just like a T20 match has exactly 20 overs and no more. Once the overs run out, the innings is over!</p>
+
+  <p class="story">You have to be smart about how you use your overs. Use too many early overs on the wrong thing, and you have no overs left when you really need them. An AI conversation works exactly the same way.</p>
+
+  <!-- OVERS BOARD -->
+  <div class="overs-board">
+    <div class="overs-title">🏏 THE TOKEN SCOREBOARD — T20 MATCH (20 OVERS)</div>
+    <div class="overs-grid">
+      <div class="ob ob-sys">1</div><div class="ob ob-sys">2</div><div class="ob ob-sys">3</div>
+      <div class="ob ob-skill">4</div><div class="ob ob-skill">5</div><div class="ob ob-skill">6</div>
+      <div class="ob ob-hist">7</div><div class="ob ob-hist">8</div><div class="ob ob-hist">9</div><div class="ob ob-hist">10</div><div class="ob ob-hist">11</div>
+      <div class="ob ob-q">12</div>
+      <div class="ob ob-free">13</div><div class="ob ob-free">14</div><div class="ob ob-free">15</div>
+      <div class="ob ob-free">16</div><div class="ob ob-free">17</div><div class="ob ob-free">18</div>
+      <div class="ob ob-free">19</div><div class="ob ob-free">20</div>
+    </div>
+    <div class="overs-key">
+      <div class="ok-item"><div class="ok-dot" style="background:var(--teal)"></div> Overs 1-3: System setup (who Claude is)</div>
+      <div class="ok-item"><div class="ok-dot" style="background:var(--purple)"></div> Overs 4-6: Your skill / rules</div>
+      <div class="ok-item"><div class="ok-dot" style="background:var(--orange)"></div> Overs 7-11: Conversation so far</div>
+      <div class="ok-item"><div class="ok-dot" style="background:var(--red-ball)"></div> Over 12: Your question right now</div>
+      <div class="ok-item"><div class="ok-dot" style="background:rgba(255,255,255,0.1)"></div> Overs 13-20: FREE — Claude's thinking space!</div>
+    </div>
+  </div>
+
+  <div class="card red" style="margin: 24px 0;">
+    <span class="ico">⚠️</span>
+    <h3 style="color:var(--red-ball)">What if ALL 20 overs are used up?</h3>
+    <p>In a T20, once all 20 overs are bowled, the innings ends — no more batting! When the token limit fills up, the AI starts <strong>forgetting the beginning</strong> of the conversation to make room for new messages. It's like if the scorecard ran out of space and they had to erase the early overs to write new ones! Keep your conversations focused on one topic and you'll never run out of overs.</p>
+  </div>
+
+  <h3 style="font-family:'Fredoka One',cursive; font-size:26px; margin:32px 0 16px; color:var(--bass-body)">🎸 3 Rules — Bass Player Edition!</h3>
+
+  <div class="grid3">
+    <div class="card dark">
+      <span class="ico">🎯</span>
+      <h3 style="color:var(--bass-string)">One Song Per Set</h3>
+      <p>Don't mix topics in one chat. Just like you don't play jazz in the middle of a rock gig! One topic = one conversation.</p>
+    </div>
+    <div class="card dark">
+      <span class="ico">📝</span>
+      <h3 style="color:var(--bass-string)">Write Down the Riffs</h3>
+      <p>Save important decisions to a file after each chat. Next time, load the summary — not the whole conversation. Way fewer overs wasted!</p>
+    </div>
+    <div class="card dark">
+      <span class="ico">🚫</span>
+      <h3 style="color:var(--bass-string)">Don't Paste Whole Songs</h3>
+      <p>Never paste a huge document in. It fills up the whole setlist with one song! Put it in a reference file instead — Claude reads just what it needs.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- CHAPTER 4: CODING -->
+<!-- ======================================================= -->
+<div class="ch-banner code">Chapter 4 — 💻 Now Let's Talk About Coding!</div>
+
+<div class="section" id="coding">
+
+  <div class="big-q">Coding is like<br><span class="hl-code">writing a bass tab!</span> 🎸</div>
+
+  <p class="story">You know how a bass tab tells your fingers exactly what to do — which string, which fret, in what order? <strong>Code is exactly the same thing, but for a computer.</strong> Instead of telling your fingers what to do, you're telling the computer exactly what to do, step by step.</p>
+
+  <div class="card green" style="margin: 24px 0;">
+    <span class="ico">🎸</span>
+    <h3 style="color:var(--grass)">Bass Tab vs Code — Same Idea!</h3>
+    <p><strong>Bass Tab:</strong> G|---5---3---5---7---|<br>This tells your fingers: play fret 5, then 3, then 5, then 7, on the G string.<br><br><strong>Code:</strong> <span style="font-family:monospace; background:#e0f2fe; padding:2px 6px; border-radius:4px;">print("Hello World!")</span><br>This tells the computer: display the words "Hello World!" on screen. Exact. Precise. In order.</p>
+  </div>
+
+  <div class="sep">〰️〰️〰️</div>
+
+  <!-- FIRST CODE EXAMPLE -->
+  <h3 style="font-family:'Fredoka One',cursive; font-size:26px; margin:32px 0 16px; color:var(--purple)">Your First Python Program!</h3>
+  <p class="story">The most popular coding language right now is called <strong>Python</strong>. Why Python? Because it reads almost like English sentences! Let's look at real code:</p>
+
+  <div class="code-screen">
+    <div class="code-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="code-filename">my_first_program.py</div>
+    </div>
+    <div class="code-body">
+<span class="c-comment"># This is a comment — the computer ignores it!</span>
+<span class="c-comment"># Comments are just notes for YOU (like writing in your tab book)</span>
+
+<span class="c-comment"># Tell the computer your name</span>
+<span class="c-var">name</span> = <span class="c-string">"Aryan"</span>
+
+<span class="c-comment"># Tell it your favourite sport</span>
+<span class="c-var">sport</span> = <span class="c-string">"cricket"</span>
+
+<span class="c-comment"># Tell it your bass guitar type</span>
+<span class="c-var">bass</span> = <span class="c-string">"electric bass"</span>
+
+<span class="c-comment"># Print a message using all three!</span>
+<span class="c-func">print</span>(<span class="c-string">"Hi! My name is"</span>, <span class="c-var">name</span>)
+<span class="c-func">print</span>(<span class="c-string">"I love"</span>, <span class="c-var">sport</span>, <span class="c-string">"and playing"</span>, <span class="c-var">bass</span>)
+
+<span class="c-comment"># OUTPUT (what you see on screen):</span>
+<span class="c-output"># Hi! My name is Aryan</span>
+<span class="c-output"># I love cricket and playing electric bass</span>
+    </div>
+  </div>
+
+  <div class="thought code">
+    <p><strong>What are "variables"?</strong> In the code above, <span style="font-family:monospace; background:#e0f2fe; padding:1px 5px; border-radius:4px;">name</span>, <span style="font-family:monospace; background:#e0f2fe; padding:1px 5px; border-radius:4px;">sport</span>, and <span style="font-family:monospace; background:#e0f2fe; padding:1px 5px; border-radius:4px;">bass</span> are <strong>variables</strong>. A variable is like a box that holds information. You label the box (name it) and put something inside. In guitar terms — it's like a preset on your bass amp. You save your settings (high gain, heavy bass) and give it a name. Next time, just call the preset!</p>
+  </div>
+
+  <div class="sep">〰️〰️〰️</div>
+
+  <!-- IF STATEMENTS -->
+  <h3 style="font-family:'Fredoka One',cursive; font-size:26px; margin:32px 0 16px; color:var(--purple)">Making Decisions in Code — The <em>If Statement</em></h3>
+
+  <p class="story">The most powerful thing in coding is <strong>making decisions</strong>. "IF this happens, do THAT. Otherwise, do something else." Computers are brilliant at following these rules exactly.</p>
+
+  <div class="code-screen">
+    <div class="code-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="code-filename">cricket_decision.py</div>
+    </div>
+    <div class="code-body">
+<span class="c-comment"># The cricket situation</span>
+<span class="c-var">runs_needed</span> = <span class="c-number">12</span>
+<span class="c-var">balls_left</span>  = <span class="c-number">6</span>
+
+<span class="c-comment"># Make a decision based on the situation</span>
+<span class="c-keyword">if</span> <span class="c-var">runs_needed</span> <= <span class="c-var">balls_left</span>:
+    <span class="c-func">print</span>(<span class="c-string">"Play safe! We have time."</span>)
+<span class="c-keyword">elif</span> <span class="c-var">runs_needed</span> <= <span class="c-var">balls_left</span> * <span class="c-number">2</span>:
+    <span class="c-func">print</span>(<span class="c-string">"Hit boundaries! Need 2 runs per ball."</span>)
+<span class="c-keyword">else</span>:
+    <span class="c-func">print</span>(<span class="c-string">"Go for SIXES! Nothing to lose!"</span>)
+
+<span class="c-comment"># With runs_needed=12, balls_left=6:</span>
+<span class="c-output"># Hit boundaries! Need 2 runs per ball.</span>
+    </div>
+  </div>
+
+  <div class="card purple" style="margin: 24px 0;">
+    <span class="ico">🎸</span>
+    <h3 style="color:var(--purple)">Guitar Version of an If Statement!</h3>
+    <p>IF the crowd is quiet → play it gentle and soft<br>ELIF the crowd is warming up → add some energy<br>ELSE (crowd is going wild!) → full distortion, maximum volume 🔥<br><br>Your brain makes these decisions every gig. Code just writes them down so a computer can do the same!</p>
+  </div>
+
+  <div class="sep">〰️〰️〰️</div>
+
+  <!-- LOOPS -->
+  <h3 style="font-family:'Fredoka One',cursive; font-size:26px; margin:32px 0 16px; color:var(--purple)">Loops — Playing the Same Riff Repeatedly!</h3>
+
+  <p class="story">When you practise a bass riff, you play it again and again until it's perfect. In coding, when you want to do something many times, you use a <strong>loop</strong>. It's literally the computer repeating the same action — just like you repeating that tricky fret pattern!</p>
+
+  <div class="code-screen">
+    <div class="code-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="code-filename">bass_practice.py</div>
+    </div>
+    <div class="code-body">
+<span class="c-comment"># Practice this riff 5 times</span>
+<span class="c-keyword">for</span> <span class="c-var">practice_round</span> <span class="c-keyword">in</span> <span class="c-func">range</span>(<span class="c-number">5</span>):
+    <span class="c-func">print</span>(<span class="c-string">"Round"</span>, <span class="c-var">practice_round</span> + <span class="c-number">1</span>, <span class="c-string">": G|---5---3---5---7---|"</span>)
+
+<span class="c-output"># Round 1 : G|---5---3---5---7---|</span>
+<span class="c-output"># Round 2 : G|---5---3---5---7---|</span>
+<span class="c-output"># Round 3 : G|---5---3---5---7---|</span>
+<span class="c-output"># Round 4 : G|---5---3---5---7---|</span>
+<span class="c-output"># Round 5 : G|---5---3---5---7---|</span>
+
+<span class="c-comment"># Instead of writing it 5 times manually,</span>
+<span class="c-comment"># the loop does it for you!</span>
+    </div>
+  </div>
+
+  <div class="thought code">
+    <p><strong>This is why coders are lazy (in a good way!):</strong> A good coder never writes the same thing twice. They write it once, put it in a loop or a function, and let the computer repeat it. In bass terms — you don't re-tune your bass for each song. You tune it once and play all night!</p>
+  </div>
+
+  <div class="sep">〰️〰️〰️</div>
+
+  <!-- FUNCTIONS -->
+  <h3 style="font-family:'Fredoka One',cursive; font-size:26px; margin:32px 0 16px; color:var(--purple)">Functions — Your Saved Bass Presets!</h3>
+
+  <p class="story">Your bass amp probably has preset settings you can save — clean sound, slap bass, distortion. You set them up once and then just punch the button whenever you need that sound. In coding, a <strong>function</strong> is exactly that — you write some code once and give it a name, then call that name whenever you need it!</p>
+
+  <div class="code-screen">
+    <div class="code-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="code-filename">cricket_scorer.py</div>
+    </div>
+    <div class="code-body">
+<span class="c-comment"># Define a function (like saving a preset)</span>
+<span class="c-keyword">def</span> <span class="c-func">calculate_run_rate</span>(<span class="c-var">runs</span>, <span class="c-var">overs</span>):
+    <span class="c-var">run_rate</span> = <span class="c-var">runs</span> / <span class="c-var">overs</span>
+    <span class="c-keyword">return</span> <span class="c-var">run_rate</span>
+
+<span class="c-comment"># Now USE the function (punch the preset button!)</span>
+<span class="c-var">team_a</span> = <span class="c-func">calculate_run_rate</span>(<span class="c-number">180</span>, <span class="c-number">20</span>)  <span class="c-comment"># 180 runs in 20 overs</span>
+<span class="c-var">team_b</span> = <span class="c-func">calculate_run_rate</span>(<span class="c-number">156</span>, <span class="c-number">20</span>)  <span class="c-comment"># 156 runs in 20 overs</span>
+
+<span class="c-func">print</span>(<span class="c-string">"Team A run rate:"</span>, <span class="c-var">team_a</span>)   <span class="c-comment"># → 9.0</span>
+<span class="c-func">print</span>(<span class="c-string">"Team B run rate:"</span>, <span class="c-var">team_b</span>)   <span class="c-comment"># → 7.8</span>
+<span class="c-func">print</span>(<span class="c-string">"Team A wins!"</span>)
+    </div>
+  </div>
+
+  <div class="card green" style="margin: 24px 0;">
+    <span class="ico">🏆</span>
+    <h3 style="color:var(--grass)">Why functions are brilliant!</h3>
+    <p>Without a function, you'd have to write the run-rate formula every single time. With a function, you write it ONCE and call it as many times as you want — for any team, any match, any tournament! Write once. Use forever. That's engineering thinking. 🎯</p>
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- CHAPTER 5: BUILD SOMETHING -->
+<!-- ======================================================= -->
+<div class="ch-banner build">Chapter 5 — 🔧 Build Your Own AI Assistant!</div>
+
+<div class="section" id="build">
+
+  <div class="big-q">Put it all together —<br><span class="hl-bass">build your own AI!</span> 🚀</div>
+
+  <p class="story">Now you understand AI AND coding. Here's the amazing thing: <strong>you can build your own AI assistant using code!</strong> It won't be as big as Claude, but it will be yours, it will work, and you'll understand every single part of it.</p>
+
+  <p class="story">Let's imagine you build a <strong>"Cricket Brain"</strong> — an AI assistant that knows everything about cricket, helps you track match scores, and gives you batting advice. Here's how you'd build it step by step:</p>
+
+  <!-- BUILD STEPS -->
+  <div class="ladder">
+    <div class="rung">
+      <div class="rung-num" style="background:var(--teal)">1</div>
+      <div class="rung-content">
+        <div class="title" style="color:var(--teal)">📋 Write the Skill (The Training Manual)</div>
+        <p>In plain English, write what your Cricket Brain knows. "You are a cricket expert. You know all the rules of cricket. When someone asks for batting advice, always consider the pitch conditions first." This is your system prompt — the recipe book!</p>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rung-num" style="background:var(--purple)">2</div>
+      <div class="rung-content">
+        <div class="title" style="color:var(--purple)">💻 Write the Code (The Agent Loop)</div>
+        <p>In Python, write the loop: ask Claude your question → Claude reads the skill → Claude uses it → Claude answers. This is literally just the code we looked at, connected to the Claude API (an API is like a telephone line to Claude).</p>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rung-num" style="background:var(--grass)">3</div>
+      <div class="rung-content">
+        <div class="title" style="color:var(--grass)">🗄️ Add a Memory File</div>
+        <p>Save important things to a text file after each conversation. Next time, load the file first. Now your Cricket Brain remembers your batting average, your strongest shots, your practice history — even after you restart the computer!</p>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rung-num" style="background:var(--orange)">4</div>
+      <div class="rung-content">
+        <div class="title" style="color:var(--orange)">🔌 Connect to Real Data (The MCP Bit)</div>
+        <p>The most advanced step! Write code that lets your Cricket Brain read from a live database — real match scores, real statistics. Now when you ask "how many runs did I score this season?" it actually looks them up instead of guessing!</p>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rung-num" style="background:var(--bass-body)">5</div>
+      <div class="rung-content">
+        <div class="title" style="color:var(--bass-string)">🎸 Make It Yours</div>
+        <p>Change the skill for your bass guitar! "You are a bass guitar teacher. You know music theory. You give practice advice based on what the student is working on." Same code. Different skill. Your own Guitar Brain!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINI CODE EXAMPLE -->
+  <h3 style="font-family:'Fredoka One',cursive; font-size:24px; margin:32px 0 16px; color:var(--purple)">What the Code Actually Looks Like</h3>
+
+  <div class="code-screen">
+    <div class="code-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="code-filename">cricket_brain.py  ← this is YOUR file!</div>
+    </div>
+    <div class="code-body">
+<span class="c-comment"># Your Cricket Brain — a real AI assistant you built!</span>
+
+<span class="c-comment"># Step 1: Import the tools you need (like plugging in your bass amp)</span>
+<span class="c-keyword">import</span> <span class="c-var">anthropic</span>
+
+<span class="c-comment"># Step 2: Write your skill (the recipe book)</span>
+<span class="c-var">my_skill</span> = <span class="c-string">"""
+You are a cricket expert and bass guitar coach.
+You know everything about cricket and music.
+Always give specific, practical advice.
+Never make up statistics — if you don't know, say so.
+"""</span>
+
+<span class="c-comment"># Step 3: The agent loop — ask question, get answer</span>
+<span class="c-keyword">def</span> <span class="c-func">ask_cricket_brain</span>(<span class="c-var">question</span>):
+    <span class="c-var">client</span> = <span class="c-var">anthropic</span>.<span class="c-func">Anthropic</span>()
+
+    <span class="c-var">response</span> = <span class="c-var">client</span>.<span class="c-var">messages</span>.<span class="c-func">create</span>(
+        <span class="c-var">model</span>    = <span class="c-string">"claude-sonnet-4-6"</span>,
+        <span class="c-var">system</span>   = <span class="c-var">my_skill</span>,
+        <span class="c-var">messages</span> = [{<span class="c-string">"role"</span>: <span class="c-string">"user"</span>, <span class="c-string">"content"</span>: <span class="c-var">question</span>}]
+    )
+
+    <span class="c-keyword">return</span> <span class="c-var">response</span>.<span class="c-var">content</span>[<span class="c-number">0</span>].<span class="c-var">text</span>
+
+<span class="c-comment"># Step 4: Use it!</span>
+<span class="c-var">answer</span> = <span class="c-func">ask_cricket_brain</span>(
+    <span class="c-string">"How do I improve my cover drive technique?"</span>
+)
+<span class="c-func">print</span>(<span class="c-var">answer</span>)
+
+<span class="c-comment"># That's it! You just built an AI assistant in ~20 lines of code!</span>
+    </div>
+  </div>
+
+  <div class="thought bass">
+    <p><strong>This is REAL code.</strong> If you installed Python on your computer, got an API key from Anthropic, and ran this file — it would actually work. You would have built a real AI assistant. The code above is genuinely what professional AI developers write — just with more details added for bigger projects. You already understand the concepts. The code just writes them down in a language computers understand.</p>
+  </div>
+
+  <!-- HOW AI FITS INTO YOUR FUTURE -->
+  <h3 style="font-family:'Fredoka One',cursive; font-size:26px; margin:40px 0 16px; color:var(--grass)">🔮 How This Fits Your Future</h3>
+
+  <div class="grid3">
+    <div class="card green">
+      <span class="ico">🏏</span>
+      <h3 style="color:var(--grass)">For Cricket</h3>
+      <p>AI already analyses bowler action to predict the next delivery. Wearables track your running speed and bat swing. Your Cricket Brain could one day analyse your real match performance and suggest improvements!</p>
+    </div>
+    <div class="card dark">
+      <span class="ico">🎸</span>
+      <h3 style="color:var(--bass-string)">For Bass Guitar</h3>
+      <p>AI can transcribe any song into bass tabs. It can listen to you play and tell you where you're off beat. You could build an AI bass teacher that listens to your recordings and gives feedback!</p>
+    </div>
+    <div class="card purple">
+      <span class="ico">💻</span>
+      <h3 style="color:var(--purple)">For Engineering</h3>
+      <p>Every single AI system in the world was built by engineers who knew exactly what you now know. The concepts don't change — they just get bigger. You've already got the mental model. That's the hardest part.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- COOL IDEAS -->
+<!-- ======================================================= -->
+<div class="ch-banner" style="background: linear-gradient(135deg, #065f46, #0e7490);">Chapter 5.5 — 🌟 Cool Things YOU Could Actually Build!</div>
+
+<div class="section" id="ideas">
+
+  <div class="big-q">Ideas for your first<br><span class="hl-bass">AI projects!</span> 🚀</div>
+
+  <p class="story">Now that you understand how AI works, here are some real things you could actually build — using the skills you've just learned. Some are easy, some are harder. All of them are genuinely possible!</p>
+
+  <div class="grid3">
+
+    <div class="card dark">
+      <span class="ico">🏏</span>
+      <h3 style="color:var(--bass-string)">Cricket Stats Tracker</h3>
+      <p>Build an AI that remembers every match you play. Tell it your runs, wickets, catches. Ask it "what's my batting average this season?" or "which team do I perform best against?" — and it actually knows!</p>
+      <div style="margin-top: 12px; background: rgba(245,158,11,0.15); border-radius: 8px; padding: 8px; font-size: 12px; color: var(--bass-string);">🔧 Uses: Variables + a memory file</div>
+    </div>
+
+    <div class="card dark">
+      <span class="ico">🎸</span>
+      <h3 style="color:var(--bass-string)">Bass Tab Generator</h3>
+      <p>Describe a song to an AI and ask it to write you a bass tab to learn. "Write me a simple bass line in the style of RHCP for a beginner." It'll actually generate one you can practise!</p>
+      <div style="margin-top: 12px; background: rgba(245,158,11,0.15); border-radius: 8px; padding: 8px; font-size: 12px; color: var(--bass-string);">🔧 Uses: A skill + a simple Python script</div>
+    </div>
+
+    <div class="card dark">
+      <span class="ico">⏱️</span>
+      <h3 style="color:var(--bass-string)">Practice Timer Coach</h3>
+      <p>An AI that creates your daily practice schedule. "I have 30 minutes. I want to work on slap technique and the E minor scale." It splits the time, sets mini goals, and reminds you what to focus on!</p>
+      <div style="margin-top: 12px; background: rgba(245,158,11,0.15); border-radius: 8px; padding: 8px; font-size: 12px; color: var(--bass-string);">🔧 Uses: A skill + if statements in code</div>
+    </div>
+
+    <div class="card dark">
+      <span class="ico">🧠</span>
+      <h3 style="color:var(--bass-string)">Cricket Rules Quiz Bot</h3>
+      <p>Build a quiz game that asks you cricket rules questions. Get them right and it gets harder. Get them wrong and it explains the rule with a cool example. You could add your friends' scores too!</p>
+      <div style="margin-top: 12px; background: rgba(245,158,11,0.15); border-radius: 8px; padding: 8px; font-size: 12px; color: var(--bass-string);">🔧 Uses: A loop + if statements + score variable</div>
+    </div>
+
+    <div class="card dark">
+      <span class="ico">🎵</span>
+      <h3 style="color:var(--bass-string)">Setlist Builder</h3>
+      <p>Tell the AI the mood you want, how long the set is, and what songs you know. It builds you the perfect setlist for a gig or practice session — with the slow songs and fast songs in the right order!</p>
+      <div style="margin-top: 12px; background: rgba(245,158,11,0.15); border-radius: 8px; padding: 8px; font-size: 12px; color: var(--bass-string);">🔧 Uses: A skill with your song library</div>
+    </div>
+
+    <div class="card dark">
+      <span class="ico">📖</span>
+      <h3 style="color:var(--bass-string)">Homework Explainer</h3>
+      <p>An AI that explains any school topic using cricket or music examples. "Explain fractions using cricket run rates." "Explain electricity using how a bass pickup works." Everything suddenly makes sense!</p>
+      <div style="margin-top: 12px; background: rgba(245,158,11,0.15); border-radius: 8px; padding: 8px; font-size: 12px; color: var(--bass-string);">🔧 Uses: A skill + a simple prompt template</div>
+    </div>
+
+  </div>
+
+  <div class="thought bass">
+    <p><strong>How to actually start:</strong> Pick the easiest one on this list for you. Then ask your dad to sit with you and run the Cricket Brain code from the last chapter. Change the skill text to be about whatever you want to build. That single change — swapping the text in triple quotes — turns the Cricket Brain into ANY of the six ideas above. Seriously. That's it. You've already learned everything you need to try. 🎸</p>
+  </div>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- QUIZ -->
+<!-- ======================================================= -->
+<div class="section" id="quiz">
+
+  <div class="big-q">Quiz Time!<br><span class="hl-bass">See what you know! ⭐</span></div>
+
+  <p class="story">These questions are about everything you just learned. If you can answer them without peeking back, you genuinely understand AI and coding better than most adults!</p>
+
+  <div class="quiz">
+    <h3>🏏🎸💻 The Big Quiz!</h3>
+
+    <div class="quiz-q">
+      <span class="qnum">Question 1 — Easy</span>
+      <div class="qtxt">What is the "amnesia problem" with AI? What causes it and how do Skills and Projects fix it?</div>
+      <div class="hint">Hint: Every new chat, the AI wakes up knowing nothing about you…</div>
+    </div>
+
+    <div class="quiz-q">
+      <span class="qnum">Question 2 — Easy</span>
+      <div class="qtxt">In the band analogy, the drummer = the LLM. What does the bassist equal? What about the setlist?</div>
+      <div class="hint">Hint: The bassist provides the foundation… the setlist tells you what rules to follow…</div>
+    </div>
+
+    <div class="quiz-q">
+      <span class="qnum">Question 3 — Medium</span>
+      <div class="qtxt">Why do we use sub-agents instead of one big agent doing everything? Use the cricket fielding positions to explain.</div>
+      <div class="hint">Hint: What happens if you ask your slip fielder to also bat, keep wickets AND coach?</div>
+    </div>
+
+    <div class="quiz-q">
+      <span class="qnum">Question 4 — Medium</span>
+      <div class="qtxt">In the code examples, what is a "variable"? Give a real example using cricket or bass guitar.</div>
+      <div class="hint">Hint: Think of a labelled box that holds a value… or a saved preset on your amp…</div>
+    </div>
+
+    <div class="quiz-q">
+      <span class="qnum">Question 5 — Hard! 🌟</span>
+      <div class="qtxt">Look at the Cricket Brain code. Can you spot: (1) the skill, (2) the function, (3) where the loop happens, and (4) what you'd change to make it a "Bass Guitar Brain" instead?</div>
+      <div class="hint">Hint: The skill is the text inside triple quotes. The function starts with "def"…</div>
+    </div>
+  </div>
+
+  <div class="card yellow" style="margin: 24px 0;">
+    <span class="ico">📖</span>
+    <h3 style="color:#92400e">Answers — Check with a parent!</h3>
+    <p>
+      <strong>1.</strong> The AI forgets everything when you close the chat. Skills fix it by loading your info at the start. Projects fix it by remembering between sessions.<br><br>
+      <strong>2.</strong> Bassist = Agent (does the real work). Setlist = Skill (rules to follow).<br><br>
+      <strong>3.</strong> Narrow jobs done by specialists = much better results. You wouldn't ask your slip fielder to bat AND keep AND coach — they'd do all of them badly!<br><br>
+      <strong>4.</strong> A variable is a labelled box holding information. <code>runs_needed = 12</code> — the box is called "runs_needed" and holds the number 12. Like your amp preset called "slap bass" that holds all your settings!<br><br>
+      <strong>5.</strong> Skill = the text in triple quotes ("""..."""). Function = the <code>def ask_cricket_brain</code> bit. Loop = Claude processes the message and returns an answer (inside the API call). To make it a Bass Brain — just change the skill text to talk about bass guitar instead of cricket! That's literally it. 🎸
+    </p>
+  </div>
+
+</div>
+
+<!-- FINALE -->
+<div class="section">
+  <div class="finale">
+    <h2>You're ready to build! 🔥</h2>
+    <p>You now understand what AI is, how it works in layers (like a band), why tokens are like overs, what agents and sub-agents do, and you've read real working code.</p>
+    <p>Most importantly — you can see <strong>how your passions connect to technology.</strong> Bass guitar = understanding rhythm, timing, and systems. Cricket = understanding strategy, teamwork, and roles. Engineering = building things that actually work. AI uses all three.</p>
+    <p>Now go ask your dad to help you run that Cricket Brain code. It actually works. 🚀</p>
+    <div class="icons">🎸 🏏 💻 ⭐ 🔥</div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
