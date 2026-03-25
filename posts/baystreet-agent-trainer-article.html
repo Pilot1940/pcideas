@@ -498,7 +498,7 @@
     </div>
   </div>
 
-  <p>This is a legally precise and regulatorily significant arrangement — but to a customer receiving a call out of the blue, it is bewildering. "Why are you calling me? My loan was with Portfolio 3." An agent who cannot explain this chain clearly enough to be credible will lose the call every time.</p>
+  <p>This is a legally precise and regulatorily significant arrangement — but to a customer receiving a call out of the blue, it is bewildering. "Why are you calling me? My loan was with XYZ Bank, why dont they call me directly? What do you mean my loan was sold?" An agent who cannot explain this chain clearly enough to be credible will lose the call every time.</p>
 
   <p>These were digitally-onboarded borrowers. They were comfortable questioning a caller's authority. They had likely seen warnings about financial scams. The agent who could not explain the mechanics of debt assignment was indistinguishable, to the customer, from a fraudster.</p>
 
@@ -523,7 +523,7 @@
 
   <div class="insight-box">
     <p><strong>The "mein/MAIN" problem — why it matters</strong></p>
-    <p>In spoken Hindi, <em>मैं</em> (mein) means "I." It is one of the most frequent words in any Hinglish conversation. Agents use it constantly: <em>main XYZ bol raha hoon</em> (I am XYZ speaking), <em>main samjha sakta hoon</em> (I can explain this). It is the first word of almost every agent self-introduction.</p>
+    <p>In spoken Hindi, <em>मैं</em> (mein) means "I." It is one of the most frequent words in any Hinglish conversation. Agents use it constantly: <em>main XYZ bol raha hoon</em> (I am XYZ speaking), <em>main samjha sakta hoon</em> (I can understand). It is the first word of almost every agent self-introduction.</p>
     <p>Global English-trained TTS models see this transliterated as "mein" and pronounce it to rhyme with the English word "rain" — <strong>MAIN</strong>. To a native Hindi speaker, this sounds wrong the moment they hear it. Not subtly wrong. Jarringly wrong. It is the acoustic equivalent of a foreign accent so strong it signals immediately that the voice is neither Indian nor trained on Indian speech. No amount of otherwise natural delivery can recover from this. The customer's trust is gone before the introduction is finished.</p>
     <p>This single phonetic failure was the hardest filter to pass in the TTS evaluation — and it eliminated multiple otherwise well-reviewed providers instantly, regardless of their quality on other dimensions.</p>
     <p><strong>The fix — discovered during fine-tuning:</strong> using <strong>देवनागरी</strong> (Devanagari) script directly in the system prompt for Hindi words forces the TTS engine to process the correct phoneme, bypassing the Latin-script mispronunciation entirely. Writing <strong>मैं</strong> instead of "mein" in the prompt produces correct Hindi pronunciation. Non-obvious, and only discovered after live testing — but it made a material difference to the system's credibility on first listen.</p>
@@ -554,7 +554,7 @@
       <tr class="selected">
         <td><strong>LLM</strong></td>
         <td><strong>GPT-4.1-mini (Azure OpenAI)</strong></td>
-        <td>Deployed on Azure for data residency; temperature 0.3 for consistent persona behaviour; 300-token cap enforces 1–2 sentence rule; stronger prompt-following than Flash Lite — finalized post Bolna.ai team feedback call</td>
+        <td>Deployed on Azure as a cluster for data residency; temperature 0.3 for consistent persona behaviour; 300-token cap enforces 1–2 sentence rule; stronger prompt-following than Flash Lite</td>
         <td><span class="verdict pass">✓ Selected</span></td>
       </tr>
       <tr class="rejected">
@@ -566,8 +566,8 @@
       <tr class="layer-row"><td colspan="4">Text-to-Speech (TTS)</td></tr>
       <tr class="selected">
         <td><strong>TTS</strong></td>
-        <td><strong>ElevenLabs eleven_turbo_v2_5 "Neha P"</strong></td>
-        <td>Female Indian-accented voice; correct <em>मैं</em> pronunciation with Devanagari script in prompt; Buffer Size 230, Similarity Boost 0.5, Stability 0.45, Style Exaggeration 0; five-parameter fine-tuning control; confirmed post Bolna.ai team call</td>
+        <td><strong>ElevenLabs eleven_turbo_v2_5 "Voice N"</strong></td>
+        <td>Female Indian-accented voice; correct <em>मैं</em> pronunciation with Devanagari script in prompt; Buffer Size 230, Similarity Boost 0.5, Stability 0.45, Style Exaggeration 0; five-parameter fine-tuning control</td>
         <td><span class="verdict pass">✓ Selected</span></td>
       </tr>
       <tr class="rejected">
@@ -995,7 +995,7 @@
     <div class="cost-row target">
       <div class="cost-cell-config">
         Target (post-negotiation)
-        <span class="config-note">Volume commitment with Bolna.ai team</span>
+        <span class="config-note">Volume commitment</span>
       </div>
       <div class="cost-cell-latency">~800ms</div>
       <div class="cost-cell-quality">Excellent</div>
@@ -1225,7 +1225,7 @@
       <div class="timeline-time">Tue<br />Evening</div>
       <div class="timeline-content">
         <strong>Pre-production call with <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> team</strong>
-        <p>CTO schedules direct call with the Bolna.ai team before going to production. They review the full system: prompt structure, endpointing parameters, TTS buffer settings, and LLM behaviour under Hinglish load. Feedback leads to final stack change — ElevenLabs eleven_turbo_v2_5 confirmed over Cartesia, GPT-4.1-mini on Azure confirmed as LLM. Volume discount arrangement agreed for production deployment. System stabilised and ready for CRM integration.</p>
+        <p>Call with the Bolna.ai team before going to production. They review the full system: prompt structure, endpointing parameters, TTS buffer settings, and LLM behaviour under Hinglish load & scale. Feedback leads to final stack tweaks — ElevenLabs eleven_turbo_v2_5 confirmed over Cartesia, GPT-4.1-mini on Azure confirmed as LLM. Volume discount arrangement agreed for production deployment.</p>
       </div>
     </div>
     <div class="timeline-item">
