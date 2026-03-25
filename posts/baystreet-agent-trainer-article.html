@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNP6QSWCCZ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-VNP6QSWCCZ');
-</script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>From Problem to Production in 96 Hours — BaySys.ai</title>
@@ -69,10 +60,10 @@
     .insight-box strong { color: #2a5a1a; }
 
     /* ── STAT BLOCKS ── */
-    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 3rem 0; }
-    .stat-cell { background: white; padding: 1.5rem 1rem; text-align: center; }
-    .stat-number { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: var(--accent); line-height: 1; display: block; margin-bottom: 0.4rem; }
-    .stat-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--caption); }
+    .stat-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 3rem 0; }
+    .stat-cell { background: white; padding: 1.25rem 0.65rem; text-align: center; }
+    .stat-number { font-family: var(--serif); font-size: clamp(1.35rem, 2.8vw, 2.1rem); font-weight: 900; color: var(--accent); line-height: 1; display: block; margin-bottom: 0.4rem; }
+    .stat-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--caption); }
 
     /* ── DATA FUNNEL DIAGRAM ── */
     .funnel-figure { background: white; border: 1px solid var(--rule); margin: 2.5rem 0; overflow: hidden; }
@@ -89,6 +80,22 @@
     .funnel-alert { background: #fff0ee; border: 1px solid var(--accent); padding: 0.7rem 1.2rem; display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; width: 100%; }
     .funnel-alert-icon { font-size: 1rem; flex-shrink: 0; }
     .funnel-alert-text { font-size: 0.82rem; color: var(--accent); }
+    /* Funnel sub-segment (15K as nested subset of 104K) */
+    .funnel-subsegment { display: flex; align-items: center; gap: 0.75rem; margin: 0.3rem 0 0.3rem 2rem; background: #fff0ee; border: 1px solid var(--accent-muted); border-left: 3px solid var(--accent); padding: 0.55rem 0.9rem; width: calc(100% - 2rem); }
+    .funnel-subseg-arrow { color: var(--accent); font-size: 1.1rem; flex-shrink: 0; font-family: var(--mono); }
+    .funnel-subseg-body { flex: 1; }
+    .funnel-subseg-label { font-size: 0.82rem; display: block; margin-bottom: 0.1rem; }
+    .funnel-subseg-note { font-family: var(--mono); font-size: 0.62rem; color: var(--caption); display: block; }
+    .funnel-subseg-num { font-family: var(--serif); font-size: 1.1rem; font-weight: 900; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+    /* Chain visual (debt buyer → servicer chain) */
+    .chain-visual { display: flex; align-items: stretch; gap: 0; margin: 1.75rem 0; border: 1px solid var(--rule); overflow: hidden; flex-wrap: wrap; }
+    .chain-node { background: white; padding: 0.75rem 1rem; text-align: center; flex: 1; min-width: 100px; display: flex; flex-direction: column; justify-content: center; }
+    .chain-node.highlighted { background: var(--accent-muted); }
+    .chain-node.primary { background: var(--highlight); border-left: 3px solid var(--accent); border-right: 3px solid var(--accent); }
+    .chain-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 0.2rem; font-weight: 500; color: var(--ink); }
+    .chain-node.primary .chain-label { color: var(--accent); }
+    .chain-detail { font-size: 0.72rem; color: var(--caption); display: block; line-height: 1.3; }
+    .chain-sep { background: var(--rule); width: 1px; display: flex; align-items: center; justify-content: center; padding: 0 0.5rem; font-family: var(--mono); font-size: 0.8rem; color: var(--caption); flex-shrink: 0; }
     /* Funnel widths to create tapering effect */
     .fw-100 { background: #f5f0eb; }
     .fw-90  { background: #ede8e2; }
@@ -300,6 +307,7 @@
       .calling-card-stats { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 1rem; }
       .ui-mock-states { grid-template-columns: 1fr; }
       .persona-grid { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: repeat(3, 1fr); }
       .arch-ai-row { grid-template-columns: 1fr; }
       .rating-bands { grid-template-columns: repeat(2, 1fr); }
       .cost-grid, .cost-row { grid-template-columns: 1fr 60px 70px 60px; }
@@ -329,15 +337,15 @@
 
   <p>The pool is growing at 1.5 times annually. Projected to exceed $70 billion by 2027. Sitting inside a $1.2 trillion consumer credit market with over 400 million Indians active in the credit bureau. By any measure, this is one of the largest unsolved asset recovery challenges in any emerging economy.</p>
 
-  <p>The conventional approach is to hire people and make calls. An operation managing the assets BaySys.ai manages would, by industry benchmarks, employ 300 to 400 people. BaySys.ai does it with 16 at headquarters. That difference — not a rounding error, a structural one — is the thesis made visible.</p>
+  <p>The conventional approach is to hire people and make calls. An operation managing the assets <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> manages would, by industry benchmarks, employ 300 to 400 people. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> does it with 16 at headquarters. That difference — not a rounding error, a structural one — is the thesis made visible.</p>
 
-  <p>When BaySys.ai's founding team began acquiring distressed consumer debt portfolios, they arrived with a clear and contrarian reading of the market. The obvious thesis — hire field agents, maximise call volume, extract payments through persistence — was not the one they believed in.</p>
+  <p>When <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s founding team began acquiring distressed consumer debt portfolios, they arrived with a clear and contrarian reading of the market. The obvious thesis — hire field agents, maximise call volume, extract payments through persistence — was not the one they believed in.</p>
 
   <h3>The Dormant 80%</h3>
 
   <p>The industry operates on an assumption: roughly 8 to 15 per cent of a late-stage distressed portfolio is contactable and collectible in any given cycle. Everyone prices portfolios on this assumption. The remaining 75 to 80 per cent is not written off — it is simply treated as worth nothing.</p>
 
-  <p>BaySys.ai's founding team looked at that 80 per cent and saw something different. Not a write-off, but an option. A person who defaulted two years ago is not the same person today. Life events happen — a new job, a relative's financial assistance, a changed personal situation, a regulatory pressure the customer had not previously understood. The 80 per cent that looks dormant today is a population in motion. The question is not whether anyone in it will ever pay. It is whether, when they are ready, you are the organisation they can find and trust.</p>
+  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s founding team looked at that 80 per cent and saw something different. Not a write-off, but an option. A person who defaulted two years ago is not the same person today. Life events happen — a new job, a relative's financial assistance, a changed personal situation, a regulatory pressure the customer had not previously understood. The 80 per cent that looks dormant today is a population in motion. The question is not whether anyone in it will ever pay. It is whether, when they are ready, you are the organisation they can find and trust.</p>
 
   <p>That requires not harassment at scale, but intelligent, trust-building engagement at low cost — automated enough to be economical across hundreds of thousands of accounts, personal enough to convert when the moment arrives.</p>
 
@@ -347,7 +355,7 @@
 
   <p>Calling these customers with a human agent using a script written for branch-originated borrowers is a categorical mismatch. The customer expects digital engagement because that is how the relationship began. An AI voice system that reaches them on the same device, with the same level of convenience they used when they borrowed, is not a compromise on the customer experience. It is the correct customer experience.</p>
 
-  <p>BaySys.ai is, today, managing over $700 million in distressed assets across four portfolios — 650,000 customer accounts — with a 16-person headquarters team and a cost-to-collect below 29 per cent against a sector average meaningfully higher. The IRR on acquired portfolios exceeds 40 per cent.</p>
+  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is, today, managing over $700 million in distressed assets across four portfolios — 650,000 customer accounts — with a 16-person headquarters team and a cost-to-collect below 29 per cent against a sector average meaningfully higher. The IRR on acquired portfolios exceeds 40 per cent.</p>
 
   <div class="stat-row">
     <div class="stat-cell">
@@ -374,7 +382,7 @@
 
   <h3>The Team Behind the Thesis</h3>
 
-  <p>The founding team's credibility is not theoretical. One co-founder previously built one of India's largest consumer lending platforms — scaling it to $730 million in valuation with 3.5 million customers before its acquisition. Another built India's largest digital lending platform from the ground up, raising over $120 million. A third served as founding co-CEO of a major Indian fintech conglomerate's operating arm and co-founded India's first credit bureau. These are people who built the infrastructure through which many of the borrowers in BaySys.ai's portfolios originally took their loans.</p>
+  <p>The founding team's credibility is not theoretical. One co-founder previously built one of India's largest consumer lending platforms — scaling it to $730 million in valuation with 3.5 million customers before its acquisition. Another built India's largest digital lending platform from the ground up, raising over $120 million. A third served as founding co-CEO of a major Indian fintech conglomerate's operating arm and co-founded India's first credit bureau. These are people who built the infrastructure through which many of the borrowers in <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s portfolios originally took their loans.</p>
 
   <p>This is the story of what happened when this team encountered a crisis — and what co-located founders with modern AI tools could build in less than four days.</p>
 
@@ -383,7 +391,7 @@
   <!-- ═══ PART 2: THE PROBLEM ═══ -->
   <h2>5 PM, Monday. A signal in the data.</h2>
 
-  <p>BaySys.ai had been running AI-led introductory calls across its customer base to establish a foundational metric: contactability. An AI voice bot — not a human agent, but an automated system that introduced BaySys.ai, verified identity, and asked a simple question — was calling customers across different segments of the 650,000-account portfolio.</p>
+  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> had been running AI-led introductory calls across its customer base to establish a foundational metric: contactability. An AI voice bot — not a human agent, but an automated system that introduced <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>, verified identity, and asked a simple question — was calling customers across different segments of the 650,000-account portfolio.</p>
 
   <p>The headline result was striking. Across the full base, roughly 40 per cent of customers picked up the phone. But raw pickup rates are noisy. Robocalls get answered and hung up in under three seconds. The team cut the data by call duration: calls under ten seconds were discarded as non-contacts and re-run. What remained — calls where a customer had engaged with the bot for more than ten seconds — was the real signal.</p>
 
@@ -424,20 +432,17 @@
           </div>
         </div>
       </div>
-      <div class="funnel-arrow"><span class="funnel-arrow-icon">↓</span></div>
-      <div class="funnel-filter">Segment: paid prime — customers with at least one prior payment to BaySys.ai</div>
-      <div class="funnel-arrow"><span class="funnel-arrow-icon">↓</span></div>
-      <div class="funnel-step">
-        <div class="funnel-bar fw-50">
-          <span class="funnel-bar-label">Paid prime segment (highest conversion potential)</span>
-          <div style="text-align:right;">
-            <span class="funnel-bar-num">~15,000</span>
-            <span class="funnel-bar-sub">prior payers</span>
-          </div>
+      <!-- 15K as sub-segment of 104K — not a sequential step -->
+      <div class="funnel-subsegment">
+        <span class="funnel-subseg-arrow">↳</span>
+        <div class="funnel-subseg-body">
+          <span class="funnel-subseg-label">of which — <strong>paid prime segment</strong></span>
+          <span class="funnel-subseg-note">customers with ≥1 prior payment to <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> · sub-segment of the 104K, not a downstream step</span>
         </div>
+        <span class="funnel-subseg-num">~15,000</span>
       </div>
       <div class="funnel-arrow"><span class="funnel-arrow-icon">↓</span></div>
-      <div class="funnel-filter">Cross-filter: &gt;10s engagement within paid prime</div>
+      <div class="funnel-filter">Intersection: paid prime (≥1 prior payment) within engaged base (&gt;10s) → outbound assignment</div>
       <div class="funnel-arrow"><span class="funnel-arrow-icon">↓</span></div>
       <div class="funnel-step">
         <div class="funnel-bar fw-35" style="border-left:4px solid var(--accent);">
@@ -455,9 +460,9 @@
       </div>
     </div>
   </div>
-  <p class="fig-cap"><strong>Figure 1.</strong> The data filtration path from 650,000 total accounts to the 4,000 live, actionable contacts that surfaced the training crisis. The paid prime segment — customers who had already engaged once — represented the highest-value targets in the portfolio. Their underperformance under manual calling was the signal that forced immediate action.</p>
+  <p class="fig-cap"><strong>Figure 1.</strong> The data filtration path from 650,000 total accounts to the 4,000 live, actionable contacts that surfaced the training crisis. The ~15,000 paid prime segment is a sub-segment <em>within</em> the 104,000 engaged contacts — customers who both stayed on the line for over ten seconds AND had made at least one prior payment. The 4,000 actionable contacts are the intersection of these two criteria: engaged AND paid prime. Their underperformance under manual calling was the signal that forced immediate action.</p>
 
-  <p>In the <strong>paid prime segment</strong> — approximately 15,000 customers who had previously made at least one payment to BaySys.ai — this cleaner dataset identified around 4,000 live, engaged contacts. These were customers who had heard the bot, stayed on the line, and interacted. They were, by any reasonable measure, reachable and potentially willing to engage.</p>
+  <p>In the <strong>paid prime segment</strong> — approximately 15,000 customers who had previously made at least one payment to <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> — this cleaner dataset identified around 4,000 live, engaged contacts. These were customers who had heard the bot, stayed on the line, and interacted. They were, by any reasonable measure, reachable and potentially willing to engage.</p>
 
   <p>These 4,000 were moved to manual calling. Human agents were assigned the list. The expectation was a conversion rate at least consistent with the portfolio's baseline. What came back was worse — meaningfully worse.</p>
 
@@ -466,10 +471,34 @@
   <p>What they heard was not a data problem. It was a training problem — and a deeper one than anyone had anticipated.</p>
 
   <div class="pullquote">
-    <p>"Customers were suspicious this was a scam. Agents couldn't explain why the originating bank had sold the account to a debt buyer — or why BaySys.ai, as the collection servicer, had the right to call them. They were losing the customer in the first 30 seconds."</p>
+    <p>"Customers were suspicious this was a scam. Agents couldn't explain why the originating bank had sold the account to a debt buyer — or why <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>, as the licensed collection servicer, had the right to call them. They were losing the customer in the first ninety seconds."</p>
   </div>
 
-  <p>BaySys.ai's role in this chain matters. For context, when a bank sells a distressed loan portfolio, it sells to a <strong>debt buyer</strong> — a licensed, RBI-regulated entity that acquires the underlying receivables. BaySys.ai is the <strong>collection servicer</strong>: that calls customers on the debt buyer's behalf. This is a legally precise and regulatorily significant arrangement, but to a customer receiving a call out of the blue, it is bewildering. "Why are you calling me? My loan was with XYZ Bank, why dont they call me?." An agent who cannot answer this clearly — who cannot explain the assignment chain with enough specificity to be credible — will lose the call every time.</p>
+  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s role in this chain matters for context. When a bank sells a distressed loan portfolio, it sells to a <strong>debt buyer</strong> — a licensed entity that acquires the underlying receivables. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is the <strong>collection servicer</strong>: the RBI-regulated entity that calls customers on the debt buyer's behalf.</p>
+
+  <div class="chain-visual">
+    <div class="chain-node">
+      <span class="chain-label">Originating Bank</span>
+      <span class="chain-detail">Sold distressed loan portfolio</span>
+    </div>
+    <div class="chain-sep">→</div>
+    <div class="chain-node highlighted">
+      <span class="chain-label">Debt Buyer</span>
+      <span class="chain-detail">Acquires receivables · licensed</span>
+    </div>
+    <div class="chain-sep">→</div>
+    <div class="chain-node primary">
+      <span class="chain-label">BaySys.ai</span>
+      <span class="chain-detail">Collection servicer · RBI-regulated · calls customers</span>
+    </div>
+    <div class="chain-sep">→</div>
+    <div class="chain-node">
+      <span class="chain-label">Customer</span>
+      <span class="chain-detail">"Why are you calling me?"</span>
+    </div>
+  </div>
+
+  <p>This is a legally precise and regulatorily significant arrangement — but to a customer receiving a call out of the blue, it is bewildering. "Why are you calling me? My loan was with Portfolio 3." An agent who cannot explain this chain clearly enough to be credible will lose the call every time.</p>
 
   <p>These were digitally-onboarded borrowers. They were comfortable questioning a caller's authority. They had likely seen warnings about financial scams. The agent who could not explain the mechanics of debt assignment was indistinguishable, to the customer, from a fraudster.</p>
 
@@ -497,6 +526,7 @@
     <p>In spoken Hindi, <em>मैं</em> (mein) means "I." It is one of the most frequent words in any Hinglish conversation. Agents use it constantly: <em>main XYZ bol raha hoon</em> (I am XYZ speaking), <em>main samjha sakta hoon</em> (I can explain this). It is the first word of almost every agent self-introduction.</p>
     <p>Global English-trained TTS models see this transliterated as "mein" and pronounce it to rhyme with the English word "rain" — <strong>MAIN</strong>. To a native Hindi speaker, this sounds wrong the moment they hear it. Not subtly wrong. Jarringly wrong. It is the acoustic equivalent of a foreign accent so strong it signals immediately that the voice is neither Indian nor trained on Indian speech. No amount of otherwise natural delivery can recover from this. The customer's trust is gone before the introduction is finished.</p>
     <p>This single phonetic failure was the hardest filter to pass in the TTS evaluation — and it eliminated multiple otherwise well-reviewed providers instantly, regardless of their quality on other dimensions.</p>
+    <p><strong>The fix — discovered during fine-tuning:</strong> using <strong>देवनागरी</strong> (Devanagari) script directly in the system prompt for Hindi words forces the TTS engine to process the correct phoneme, bypassing the Latin-script mispronunciation entirely. Writing <strong>मैं</strong> instead of "mein" in the prompt produces correct Hindi pronunciation. Non-obvious, and only discovered after live testing — but it made a material difference to the system's credibility on first listen.</p>
   </div>
 
   <h3>The Model Evaluation</h3>
@@ -523,28 +553,28 @@
       <tr class="layer-row"><td colspan="4">Language Model (LLM)</td></tr>
       <tr class="selected">
         <td><strong>LLM</strong></td>
-        <td><strong>Google Gemini 3.1 Flash Lite (Preview)</strong></td>
-        <td>Lowest end-to-end latency at this cost point; temperature 0.3 for consistent persona behaviour; 300-token cap enforces 1–2 sentence response rule</td>
-        <td><span class="verdict pass">✓ Selected</span></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Gemini 3.1 Flash (non-Lite) / GPT-4.1-mini</td>
-        <td>Higher prompt-following quality; acceptable fallback if persona fidelity degrades under Lite</td>
-        <td><span class="verdict fallback">↑ Fallback</span></td>
-      </tr>
-      <tr class="layer-row"><td colspan="4">Text-to-Speech (TTS)</td></tr>
-      <tr class="selected">
-        <td><strong>TTS</strong></td>
-        <td><strong>Cartesia sonic-3 "Gurpreet"</strong></td>
-        <td>Correct <em>mein</em> pronunciation; Indian-accented male voice; buffer size 130 (below default 200) for snappier response; speed rate 1.1; optimised for 8kHz output</td>
+        <td><strong>GPT-4.1-mini (Azure OpenAI)</strong></td>
+        <td>Deployed on Azure for data residency; temperature 0.3 for consistent persona behaviour; 300-token cap enforces 1–2 sentence rule; stronger prompt-following than Flash Lite — finalized post Bolna.ai team feedback call</td>
         <td><span class="verdict pass">✓ Selected</span></td>
       </tr>
       <tr class="rejected">
         <td></td>
-        <td>ElevenLabs eleven_turbo_v2_5</td>
-        <td>Rich tuning controls (5 parameters); viable audio quality on PSTN; higher per-minute cost</td>
-        <td><span class="verdict fallback">↑ Viable fallback</span></td>
+        <td>Google Gemini 3.1 Flash Lite (Preview)</td>
+        <td>Lowest latency at this cost point; evaluated as initial choice; acceptable persona fidelity but replaced for stronger instruction-following</td>
+        <td><span class="verdict fallback">↑ Evaluated</span></td>
+      </tr>
+      <tr class="layer-row"><td colspan="4">Text-to-Speech (TTS)</td></tr>
+      <tr class="selected">
+        <td><strong>TTS</strong></td>
+        <td><strong>ElevenLabs eleven_turbo_v2_5 "Neha P"</strong></td>
+        <td>Female Indian-accented voice; correct <em>मैं</em> pronunciation with Devanagari script in prompt; Buffer Size 230, Similarity Boost 0.5, Stability 0.45, Style Exaggeration 0; five-parameter fine-tuning control; confirmed post Bolna.ai team call</td>
+        <td><span class="verdict pass">✓ Selected</span></td>
+      </tr>
+      <tr class="rejected">
+        <td></td>
+        <td>Cartesia sonic-3 "Gurpreet"</td>
+        <td>Indian-accented male voice; Buffer Size 130, Speed Rate 1.1; evaluated as initial choice — fewer fine-tuning controls than ElevenLabs; replaced after live testing</td>
+        <td><span class="verdict fallback">↑ Evaluated</span></td>
       </tr>
       <tr class="rejected">
         <td></td>
@@ -611,15 +641,15 @@
       </div>
       <div class="arch-ai-cell">
         <span class="arch-ai-label">LLM</span>
-        <span class="arch-ai-provider">Google Gemini</span>
-        <span class="arch-ai-model">3.1 Flash Lite</span>
+        <span class="arch-ai-provider">GPT-4.1-mini</span>
+        <span class="arch-ai-model">Azure OpenAI</span>
         <span class="arch-ai-model">~200–300ms</span>
       </div>
       <div class="arch-ai-cell">
         <span class="arch-ai-label">TTS</span>
-        <span class="arch-ai-provider">Cartesia sonic-3</span>
-        <span class="arch-ai-model">"Gurpreet" voice</span>
-        <span class="arch-ai-model">~100–150ms</span>
+        <span class="arch-ai-provider">ElevenLabs</span>
+        <span class="arch-ai-model">eleven_turbo_v2_5</span>
+        <span class="arch-ai-model">"Neha P" · ~100–150ms</span>
       </div>
     </div>
 
@@ -636,7 +666,7 @@
       </div>
     </div>
   </div>
-  <p class="fig-cap"><strong>Figure 2.</strong> The selected voice AI architecture. Plivo handles India PSTN telephony; Bolna.ai orchestrates the session, manages turn-taking, and fires the post-call webhook; Deepgram nova-3 handles Hinglish STT; Gemini 3.1 Flash Lite (Preview) runs the persona LLM at 0.3 temperature; Cartesia sonic-3 produces 8kHz-native TTS audio with correct Hinglish phonetics. Three deliberate constraints shaped every selection decision: 8kHz PSTN audio, Hinglish pronunciation accuracy, and sub-800ms end-to-end latency.</p>
+  <p class="fig-cap"><strong>Figure 2.</strong> The selected voice AI architecture. Plivo handles India PSTN telephony; <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> orchestrates the session, manages turn-taking, and fires the post-call webhook; Deepgram nova-3 handles Hinglish STT; GPT-4.1-mini on Azure runs the persona LLM at 0.3 temperature; ElevenLabs eleven_turbo_v2_5 "Neha P" produces TTS audio with correct Hinglish phonetics. Three deliberate constraints shaped every selection decision: 8kHz PSTN audio, Hinglish pronunciation accuracy, and sub-800ms end-to-end latency.</p>
 
   <div class="section-rule"><span>The Build</span></div>
 
@@ -645,7 +675,7 @@
 
   <p>What the CTO began building at 10 PM on Monday was not a prototype. It was a production-grade AI trainer designed to do one thing with extraordinary precision: simulate a real Indian debt resolution call, at every difficulty level, with a scoring engine that could tell an agent exactly where they failed and why.</p>
 
-  <p>The system was built around a set of carefully engineered customer personas — each representing a real archetype from BaySys.ai's portfolio. Not generic characters, but fully specified individuals: age, occupation, city, loan product, days past due, previous contact history, language preference, and a defined psychological profile describing how they would respond to different agent approaches.</p>
+  <p>The system was built around a set of carefully engineered customer personas — each representing a real archetype from <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s portfolio. Not generic characters, but fully specified individuals: age, occupation, city, loan product, days past due, previous contact history, language preference, and a defined psychological profile describing how they would respond to different agent approaches.</p>
 
   <p>Each persona was configured with five escalation levels — L1 through L5 — where L1 represented a cooperative customer nearly ready to pay, and L5 represented a hostile customer convinced the entire call was a scam, weaponising every ambiguity against the agent. The L5 persona was designed to break agents who were not fully prepared. That was the point.</p>
 
@@ -740,7 +770,7 @@
 
   <h3>The Full Training Persona Library — 9 AI Debtors</h3>
 
-  <p>With the go-ahead given, the next task was to expand the system from a single persona to a full library. Rather than building each persona manually, the CTO wrote an AI script to generate the full variant matrix automatically — each specification fed into <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> programmatically, producing a complete training library in two to three hours. By 12:30 PM on Tuesday, six personas were live. The library subsequently expanded to nine.</p>
+  <p>With the go-ahead given, the next task was to expand the system from a single persona to a full library. This required a dedicated tool — and the CTO had anticipated it. Before writing a single persona specification, he had built what the team calls the <strong>Persona Spawner</strong>: a purpose-built script that generates the complete persona configuration matrix, formats each persona as a structured <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a>-compatible specification, and uploads the full set programmatically to the platform's API. The Persona Spawner was the first thing built after the architectural decision. Without a systematic generation tool, expanding from one persona to nine would have required configuring each agent profile by hand inside the Bolna.ai interface — hours of error-prone manual work for what should be a scripted operation. With it, the full variant matrix was generated and deployed in two to three hours. By 12:30 PM on Tuesday, six personas were live. The library expanded to nine by end of day.</p>
 
   <!-- FIGURE 3: Persona Grid -->
   <div class="persona-grid">
@@ -852,8 +882,8 @@
       <div class="criterion-row"><span class="criterion-num">1</span><span class="criterion-text"><strong>Time greeting</strong> — Greeted the customer appropriately for time of day</span></div>
       <div class="criterion-row"><span class="criterion-num">2</span><span class="criterion-text"><strong>Self-introduction</strong> — Introduced themselves by name before asking any question</span></div>
       <div class="criterion-row"><span class="criterion-num">3</span><span class="criterion-text"><strong>Bank context</strong> — Named the specific originating bank and loan or card product</span></div>
-      <div class="criterion-row"><span class="criterion-num">4</span><span class="criterion-text"><strong>Debt assignment</strong> — Explained that the account was acquired by a debt buyer and that BaySys.ai is the licensed collection servicer now managing it</span></div>
-      <div class="criterion-row"><span class="criterion-num">5</span><span class="criterion-text"><strong>Licensed status</strong> — Stated that BaySys.ai operates under a licensed, RBI-regulated framework</span></div>
+      <div class="criterion-row"><span class="criterion-num">4</span><span class="criterion-text"><strong>Debt assignment</strong> — Explained that the account was acquired by a debt buyer and that <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is the licensed collection servicer now managing it</span></div>
+      <div class="criterion-row"><span class="criterion-num">5</span><span class="criterion-text"><strong>Licensed status</strong> — Stated that <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> operates under a licensed, RBI-regulated framework</span></div>
     </div>
     <div class="domain-block">
       <div class="domain-header">
@@ -874,7 +904,7 @@
         <span class="domain-max">Max 4 pts — 2 criteria</span>
       </div>
       <div class="criterion-row"><span class="criterion-num">13</span><span class="criterion-text"><strong>No OTP confirmed</strong> — Explicitly confirmed not asking for OTP, password, card number, or any sensitive data</span></div>
-      <div class="criterion-row"><span class="criterion-num">14</span><span class="criterion-text"><strong>Verification offered</strong> — Offered an independent verification route (BaySys.ai helpline, website, or RBI registry)</span></div>
+      <div class="criterion-row"><span class="criterion-num">14</span><span class="criterion-text"><strong>Verification offered</strong> — Offered an independent verification route (<a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> helpline, website, or RBI registry)</span></div>
     </div>
     <div class="rubric-total">
       <span style="letter-spacing:0.1em;text-transform:uppercase;font-family:var(--mono);font-size:0.75rem;">Total — 14 criteria × 2 pts each</span>
@@ -917,6 +947,8 @@
 
   <p>This mattered enormously. The scoring rubric was sound, the prompts were well-calibrated, and the AI was applying consistent judgement across varied conversation styles and escalation levels. The system was not a black box. It was a validated measurement tool.</p>
 
+  <p>Before moving to CRM integration, the CTO did something not strictly required but operationally correct: he scheduled a direct call with the <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> team. The call covered the full system — prompt architecture, endpointing parameters, TTS buffer tuning, and LLM behaviour under Hinglish load conditions. The Bolna.ai team had seen these configurations across many deployments and knew exactly where the failure modes lived. Their feedback was specific and actionable: revise the TTS provider from Cartesia to ElevenLabs for richer fine-tuning control, move the LLM to GPT-4.1-mini on Azure for stronger prompt-following, and adjust several timing parameters to reduce perceived latency. The call also closed a volume discount arrangement for production-scale deployment. The final stack — ElevenLabs eleven_turbo_v2_5 "Neha P," GPT-4.1-mini on Azure, Deepgram nova-3 — was confirmed in that conversation.</p>
+
   <div class="section-rule"><span>The Economics</span></div>
 
   <!-- ═══ PART 7: COST ═══ -->
@@ -945,7 +977,7 @@
     <div class="cost-row selected">
       <div class="cost-cell-config">
         <strong>Selected configuration</strong><span class="cost-cell-badge">CHOSEN</span>
-        <span class="config-note">Deepgram + Gemini Flash Lite + Cartesia sonic-3</span>
+        <span class="config-note">Deepgram + GPT-4.1-mini (Azure) + ElevenLabs eleven_turbo_v2_5</span>
       </div>
       <div class="cost-cell-latency">~800ms</div>
       <div class="cost-cell-quality">Excellent</div>
@@ -1000,13 +1032,13 @@
 
   <p>But a manual pilot through a standalone interface is not a production system. Production means integration into the CRM that every agent opens at the start of their shift. It means the training workflow is the first thing an agent does before touching a live customer account — not an optional exercise accessed via a separate link. It means the system decides, based on the warm-up scores, whether the agent is qualified to proceed to live calls or should be held back.</p>
 
-  <p>Here is the context that makes what follows remarkable. BaySys.ai runs four engineers across its entire technology operation. Those four engineers are responsible for the CRM managing $700 million in live assets, the data pipelines feeding portfolio analytics, the agent management tooling, and the day-to-day operational infrastructure of a 16-person company managing 650,000 accounts. This is not a team with spare capacity. Each engineer is running at full utilisation on systems that cannot be deprioritised. When a crisis arrives, there is no one to redirect. The CTO could not tap the engineering team for this build — the engineering team was already keeping the operation alive. The build had to be done by the one person who both understood the architecture and had time that could be temporarily reprioritised: himself.</p>
+  <p>Here is the context that makes what follows remarkable. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> runs four engineers across its entire technology operation. Those four engineers are responsible for the CRM managing $700 million in live assets, the data pipelines feeding portfolio analytics, the agent management tooling, and the day-to-day operational infrastructure of a 16-person company managing 650,000 accounts. This is not a team with spare capacity. Each engineer is running at full utilisation on systems that cannot be deprioritised. When a crisis arrives, there is no one to redirect. The CTO could not tap the engineering team for this build — the engineering team was already keeping the operation alive. The build had to be done by the one person who both understood the architecture and had time that could be temporarily reprioritised: himself.</p>
 
   <p>He had been awake for over 40 hours. He had personally built and configured the <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> trainer from scratch overnight on Monday. He was 45 years old and had not personally written a module of this size in over a decade. He had been travelling continuously for a month.</p>
 
   <p>He decided to sleep.</p>
 
-  <p>This was the correct decision. Over the past month, the CTO had built out a comprehensive AI development environment: Claude Code configured with deep context about the BaySys.ai codebase, a skills library for schema documentation and project management artefacts, and a set of code review agents that enforced quality standards without requiring human supervision of every line. When he started writing the CRM integration module at 6 AM on Wednesday morning — rested, with clear context — he was working with an AI pair-programmer that understood the BaySys.ai architecture, the build rules, and the integration constraints.</p>
+  <p>This was the correct decision. Over the past month, the CTO had built out a comprehensive AI development environment: Claude Code configured with deep context about the <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> codebase, a skills library for schema documentation and project management artefacts, and a set of code review agents that enforced quality standards without requiring human supervision of every line. When he started writing the CRM integration module at 6 AM on Wednesday morning — rested, with clear context — he was working with an AI pair-programmer that understood the <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> architecture, the build rules, and the integration constraints.</p>
 
   <p>By 2 PM, the standalone module was complete: 129 tests passing, zero ruff findings, a Django app that plugged into the CRM with three backend changes and five React component additions.</p>
 
@@ -1018,7 +1050,7 @@
       <div class="ui-mock-state">
         <div class="mock-state-label">State 1 — Briefing</div>
         <div class="mock-crm-nav">
-          <span class="mock-nav-logo">BaySys.ai CRM</span>
+          <span class="mock-nav-logo"><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> CRM</span>
           <div class="mock-nav-sep"></div>
           <span class="mock-nav-item">Accounts</span>
           <span class="mock-nav-item active">Practice Calls</span>
@@ -1053,7 +1085,7 @@
       <div class="ui-mock-state">
         <div class="mock-state-label">State 2 — Call in Progress</div>
         <div class="mock-crm-nav">
-          <span class="mock-nav-logo">BaySys.ai CRM</span>
+          <span class="mock-nav-logo"><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> CRM</span>
           <div class="mock-nav-sep"></div>
           <span class="mock-nav-item">Accounts</span>
           <span class="mock-nav-item active">Practice Calls</span>
@@ -1081,7 +1113,7 @@
       <div class="ui-mock-state">
         <div class="mock-state-label">State 3 — Scorecard</div>
         <div class="mock-crm-nav">
-          <span class="mock-nav-logo">BaySys.ai CRM</span>
+          <span class="mock-nav-logo"><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> CRM</span>
           <div class="mock-nav-sep"></div>
           <span class="mock-nav-item">Accounts</span>
           <span class="mock-nav-item active">Practice Calls</span>
@@ -1158,7 +1190,7 @@
       <div class="timeline-time">Mon<br />5–10 PM</div>
       <div class="timeline-content">
         <strong>Research &amp; model evaluation</strong>
-        <p>Full stack evaluation: STT, LLM, TTS assessed against 8kHz PSTN and Hinglish accuracy. Sarvam rejected (robotic). ElevenLabs viable but higher cost. Deepgram + Cartesia + Gemini Flash Lite selected. <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> selected as orchestration layer — cost and latency trade-off knowingly accepted.</p>
+        <p>Full stack evaluation: STT, LLM, TTS assessed against 8kHz PSTN and Hinglish accuracy. Sarvam rejected (robotic). Deepgram selected for STT. Initial build uses Cartesia + Gemini Flash Lite — refined after Bolna.ai team call to ElevenLabs eleven_turbo_v2_5 + GPT-4.1-mini (Azure). <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> selected as orchestration layer — cost and latency trade-off knowingly accepted.</p>
       </div>
     </div>
     <div class="timeline-item">
@@ -1178,8 +1210,8 @@
     <div class="timeline-item">
       <div class="timeline-time">Tue<br />12:30 PM</div>
       <div class="timeline-content">
-        <strong>Full persona library live</strong>
-        <p>AI-generated variant script populates <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> with 9 personas: male/female/South Indian, PL/CC, DPD &gt;200.</p>
+        <strong>Full persona library live via Persona Spawner</strong>
+        <p>CTO's Persona Spawner tool generates and uploads full variant matrix to <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> API. 6 personas live by 12:30 PM; library expands to 9 by evening. Male v1, Female v1, South Indian v1. All DPD &gt;200.</p>
       </div>
     </div>
     <div class="timeline-item">
@@ -1187,6 +1219,13 @@
       <div class="timeline-content">
         <strong>98% validation achieved</strong>
         <p>~30 test calls. CEO manual scoring vs. AI output: 98% match across 10 validated calls.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">Tue<br />Evening</div>
+      <div class="timeline-content">
+        <strong>Pre-production call with <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> team</strong>
+        <p>CTO schedules direct call with the Bolna.ai team before going to production. They review the full system: prompt structure, endpointing parameters, TTS buffer settings, and LLM behaviour under Hinglish load. Feedback leads to final stack change — ElevenLabs eleven_turbo_v2_5 confirmed over Cartesia, GPT-4.1-mini on Azure confirmed as LLM. Volume discount arrangement agreed for production deployment. System stabilised and ready for CRM integration.</p>
       </div>
     </div>
     <div class="timeline-item">
@@ -1231,7 +1270,7 @@
 
   <p>When experienced people who trust each other, understand the domain deeply, and are physically co-located get access to modern AI tools — this is what becomes possible. Not incremental improvement. Not a project completed slightly faster. A fundamentally different operating capability.</p>
 
-  <p>BaySys.ai is managing 650,000 customer accounts with 16 people at headquarters. A dormant portfolio that the market prices as worth nothing. A cost-to-collect below 29 per cent. That combination is not a limitation. It is the proof.</p>
+  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is managing 650,000 customer accounts with 16 people at headquarters. A dormant portfolio that the market prices as worth nothing. A cost-to-collect below 29 per cent. That combination is not a limitation. It is the proof.</p>
 
   <!-- Audio placeholder -->
   <div style="background:white;border:1px dashed var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 2rem;text-align:center;gap:0.6rem;margin:3rem 0;">
@@ -1246,36 +1285,6 @@
 <footer class="article-footer">
   <p>BaySys.ai &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Technology &amp; Operations</p>
 </footer>
-
-
-<!-- Share Widget -->
-<style>
-#pc-share-float{position:fixed;left:max(16px,calc(50% - 460px));top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:8px;opacity:0;pointer-events:none;transition:opacity 0.4s;}
-#pc-share-float.pc-share-visible{opacity:1;pointer-events:auto;}
-#pc-share-bottom{display:none;max-width:740px;margin:3em auto 0;padding:0 24px 60px;}
-@media(max-width:960px){#pc-share-float{display:none!important;}#pc-share-bottom{display:block;}}
-</style>
-<div id="pc-share-float">
-  <a href="#" onclick="window.open('https://wa.me/?text='+encodeURIComponent(document.title+' — '+window.location.href),'_blank');return false;" title="Share on WhatsApp" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#25D366;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,0.15);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-  <a href="#" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(window.location.href),'_blank');return false;" title="Share on X" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#000;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,0.15);"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-  <a href="#" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(window.location.href)+'&title='+encodeURIComponent(document.title),'_blank');return false;" title="Share on LinkedIn" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#0A66C2;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,0.15);"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-  <button id="pc-copy-btn" onclick="pcShareCopy()" title="Copy link" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--bg-card,#fff);color:var(--text,#1A1A18);border:1px solid var(--border,#E0DED8);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.10);transition:background 0.2s,color 0.2s,border-color 0.2s;"><svg id="pc-copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><svg id="pc-copy-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
-</div>
-<div id="pc-share-bottom">
-  <div style="border-top:1px solid var(--border,#E0DED8);padding-top:2em;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-    <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary,#8A8983);">Share</span>
-    <div style="display:flex;gap:8px;align-items:center;">
-      <a href="#" onclick="window.open('https://wa.me/?text='+encodeURIComponent(document.title+' — '+window.location.href),'_blank');return false;" title="Share on WhatsApp" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#25D366;color:#fff;text-decoration:none;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-      <a href="#" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(window.location.href),'_blank');return false;" title="Share on X" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#000;color:#fff;text-decoration:none;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-      <a href="#" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(window.location.href)+'&title='+encodeURIComponent(document.title),'_blank');return false;" title="Share on LinkedIn" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#0A66C2;color:#fff;text-decoration:none;flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-      <button id="pc-copy-btn-m" onclick="pcShareCopy('pc-copy-btn-m','pc-copy-icon-m','pc-copy-check-m')" title="Copy link" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--bg-alt,#F2F0EB);color:var(--text,#1A1A18);border:1px solid var(--border,#E0DED8);cursor:pointer;flex-shrink:0;transition:background 0.2s,color 0.2s,border-color 0.2s;"><svg id="pc-copy-icon-m" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><svg id="pc-copy-check-m" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
-    </div>
-  </div>
-</div>
-<script>
-window.addEventListener('scroll',function(){var f=document.getElementById('pc-share-float');if(f){if(window.scrollY>300){f.classList.add('pc-share-visible');}else{f.classList.remove('pc-share-visible');}}});
-function pcShareCopy(b,i,c){b=b||'pc-copy-btn';i=i||'pc-copy-icon';c=c||'pc-copy-check';navigator.clipboard.writeText(window.location.href).then(function(){var btn=document.getElementById(b);document.getElementById(i).style.display='none';document.getElementById(c).style.display='block';btn.style.background='#3B6D11';btn.style.color='#fff';btn.style.borderColor='#3B6D11';setTimeout(function(){document.getElementById(i).style.display='block';document.getElementById(c).style.display='none';btn.style.background='';btn.style.color='';btn.style.borderColor='';},2000);});}
-</script>
 
 </body>
 </html>
