@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNP6QSWCCZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VNP6QSWCCZ');
+</script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>From Problem to Production in 96 Hours — BaySys.ai</title>
@@ -167,7 +176,7 @@
     .eval-table .layer-row td { background: #f0ede8; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--caption); padding: 0.35rem 1rem; font-weight: 500; }
 
     /* ── PERSONA CARDS (no scroll) ── */
-    .persona-grid { margin: 2rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+    .persona-grid { margin: 2rem 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
     .persona-card { background: white; padding: 1rem 1.1rem; }
     .persona-card:hover { background: #faf8f4; }
     .pc-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
@@ -176,6 +185,11 @@
     .pc-tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.1rem 0.4rem; border: 1px solid var(--rule); color: var(--caption); white-space: nowrap; }
     .pc-tag.dpd { color: var(--accent); border-color: var(--accent-muted); background: var(--accent-muted); }
     .pc-tag.voice { background: #eaf0e8; border-color: #c0d0b8; color: #3a6030; }
+    .pc-tag.level-l1 { background: #dcfce7; border-color: #86efac; color: #166534; font-weight: 600; }
+    .pc-tag.level-l2 { background: #ecfccb; border-color: #bef264; color: #3f6212; font-weight: 600; }
+    .pc-tag.level-l3 { background: #fef9c3; border-color: #fde047; color: #854d0e; font-weight: 600; }
+    .pc-tag.level-l4 { background: #ffedd5; border-color: #fdba74; color: #9a3412; font-weight: 600; }
+    .pc-tag.level-l5 { background: #fee2e2; border-color: #fca5a5; color: #991b1b; font-weight: 600; }
     .pc-challenge { font-size: 0.78rem; color: #3a3530; font-style: italic; line-height: 1.4; }
 
     /* ── SCORECARD ── */
@@ -197,6 +211,38 @@
     .rating-band.good .band-name, .rating-band.good .band-range { color: #5a7a3a; }
     .rating-band.needs-work .band-name, .rating-band.needs-work .band-range { color: #b07820; }
     .rating-band.poor .band-name, .rating-band.poor .band-range { color: var(--accent); }
+
+    /* ── VERSION TRACK (persona debug iterations) ── */
+    .version-track { margin: 2.5rem 0; border: 1px solid var(--rule); background: white; overflow: hidden; }
+    .version-track-header { background: #1a1612; color: #e8e0d5; padding: 0.65rem 1.25rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; display: flex; justify-content: space-between; }
+    .version-track-header .vt-label { color: var(--accent); }
+    .vt-row { display: grid; grid-template-columns: 70px 1fr; gap: 0; border-bottom: 1px solid var(--rule); }
+    .vt-row:last-child { border-bottom: none; }
+    .vt-ver { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; padding: 0.65rem 1rem; background: #f5f0eb; display: flex; align-items: flex-start; justify-content: center; color: var(--accent); border-right: 1px solid var(--rule); padding-top: 0.75rem; }
+    .vt-fix { padding: 0.65rem 1.25rem; font-size: 0.84rem; color: #3a3530; }
+    .vt-fix strong { font-weight: 500; color: var(--ink); }
+    .vt-fix .vt-tag { font-family: var(--mono); font-size: 0.6rem; padding: 0.1rem 0.4rem; border: 1px solid var(--rule); color: var(--caption); margin-right: 0.4rem; vertical-align: middle; }
+    .vt-fix .vt-tag.bug { border-color: var(--accent-muted); color: var(--accent); background: var(--accent-muted); }
+    .vt-fix .vt-tag.lang { border-color: #c0d0b8; color: #3a6030; background: #eaf0e8; }
+    /* Failure mode chips */
+    .failure-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.25rem 0; }
+    .failure-chip { background: white; border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 0.45rem 0.75rem; font-size: 0.8rem; flex: 1; min-width: 180px; }
+    .failure-chip .fc-name { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.2rem; }
+    .failure-chip .fc-desc { font-size: 0.78rem; color: #3a3530; display: block; line-height: 1.35; }
+
+    /* ── AUDIO PLAYERS ── */
+    .call-players { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 3rem 0; }
+    .call-player { background: white; padding: 0; overflow: hidden; }
+    .call-player-header { background: #1a1612; color: #e8e0d5; padding: 0.65rem 1.25rem; display: flex; justify-content: space-between; align-items: center; }
+    .call-player-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .call-player-badge { font-family: var(--mono); font-size: 0.58rem; padding: 0.15rem 0.5rem; border: 1px solid #4a4440; color: var(--accent); }
+    .call-player-body { padding: 1rem 1.25rem 1.25rem; }
+    .call-player-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .call-player-meta { font-family: var(--mono); font-size: 0.65rem; color: var(--caption); margin-bottom: 0.85rem; letter-spacing: 0.04em; }
+    .call-player-desc { font-size: 0.8rem; color: #3a3530; margin-bottom: 0.85rem; line-height: 1.4; }
+    .call-player audio { width: 100%; height: 36px; outline: none; }
+    .call-player audio::-webkit-media-controls-panel { background: var(--paper); }
+    @media (max-width: 640px) { .call-players { grid-template-columns: 1fr; } }
 
     /* ── SCORE VISUAL ── */
     .score-visual { display: flex; align-items: center; gap: 2rem; margin: 2rem 0; padding: 1.5rem; background: white; border: 1px solid var(--rule); }
@@ -474,7 +520,7 @@
     <p>"Customers were suspicious this was a scam. Agents couldn't explain why the originating bank had sold the account to a debt buyer — or why <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>, as the licensed collection servicer, had the right to call them. They were losing the customer in the first ninety seconds."</p>
   </div>
 
-  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s role in this chain matters for context. When a bank sells a distressed loan portfolio, it sells to a <strong>debt buyer</strong> — a licensed entity that acquires the underlying receivables. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is the <strong>collection servicer</strong>: the entity that calls customers on the debt buyer's behalf.</p>
+  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s role in this chain matters for context. When a bank sells a distressed loan portfolio, it sells to a <strong>debt buyer</strong> — a licensed entity that acquires the underlying receivables. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is the <strong>collection servicer</strong>: the RBI-regulated entity that calls customers on the debt buyer's behalf.</p>
 
   <div class="chain-visual">
     <div class="chain-node">
@@ -498,7 +544,7 @@
     </div>
   </div>
 
-  <p>This is a legally precise and regulatorily significant arrangement — but to a customer receiving a call out of the blue, it is bewildering. "Why are you calling me? My loan was with XYZ Bank, why dont they call me directly? What do you mean my loan was sold?" An agent who cannot explain this chain clearly enough to be credible will lose the call every time.</p>
+  <p>This is a legally precise and regulatorily significant arrangement — but to a customer receiving a call out of the blue, it is bewildering. "Why are you calling me? My loan was with Portfolio 3." An agent who cannot explain this chain clearly enough to be credible will lose the call every time.</p>
 
   <p>These were digitally-onboarded borrowers. They were comfortable questioning a caller's authority. They had likely seen warnings about financial scams. The agent who could not explain the mechanics of debt assignment was indistinguishable, to the customer, from a fraudster.</p>
 
@@ -523,7 +569,7 @@
 
   <div class="insight-box">
     <p><strong>The "mein/MAIN" problem — why it matters</strong></p>
-    <p>In spoken Hindi, <em>मैं</em> (mein) means "I." It is one of the most frequent words in any Hinglish conversation. Agents use it constantly: <em>main XYZ bol raha hoon</em> (I am XYZ speaking), <em>main samjha sakta hoon</em> (I can understand). It is the first word of almost every agent self-introduction.</p>
+    <p>In spoken Hindi, <em>मैं</em> (mein) means "I." It is one of the most frequent words in any Hinglish conversation. Agents use it constantly: <em>main XYZ bol raha hoon</em> (I am XYZ speaking), <em>main samjha sakta hoon</em> (I can explain this). It is the first word of almost every agent self-introduction.</p>
     <p>Global English-trained TTS models see this transliterated as "mein" and pronounce it to rhyme with the English word "rain" — <strong>MAIN</strong>. To a native Hindi speaker, this sounds wrong the moment they hear it. Not subtly wrong. Jarringly wrong. It is the acoustic equivalent of a foreign accent so strong it signals immediately that the voice is neither Indian nor trained on Indian speech. No amount of otherwise natural delivery can recover from this. The customer's trust is gone before the introduction is finished.</p>
     <p>This single phonetic failure was the hardest filter to pass in the TTS evaluation — and it eliminated multiple otherwise well-reviewed providers instantly, regardless of their quality on other dimensions.</p>
     <p><strong>The fix — discovered during fine-tuning:</strong> using <strong>देवनागरी</strong> (Devanagari) script directly in the system prompt for Hindi words forces the TTS engine to process the correct phoneme, bypassing the Latin-script mispronunciation entirely. Writing <strong>मैं</strong> instead of "mein" in the prompt produces correct Hindi pronunciation. Non-obvious, and only discovered after live testing — but it made a material difference to the system's credibility on first listen.</p>
@@ -554,7 +600,7 @@
       <tr class="selected">
         <td><strong>LLM</strong></td>
         <td><strong>GPT-4.1-mini (Azure OpenAI)</strong></td>
-        <td>Deployed on Azure as a cluster for data residency; temperature 0.3 for consistent persona behaviour; 300-token cap enforces 1–2 sentence rule; stronger prompt-following than Flash Lite</td>
+        <td>Deployed on Azure for data residency; temperature 0.3 for consistent persona behaviour; 300-token cap enforces 1–2 sentence rule; stronger prompt-following than Flash Lite — finalized post Bolna.ai team feedback call</td>
         <td><span class="verdict pass">✓ Selected</span></td>
       </tr>
       <tr class="rejected">
@@ -566,8 +612,8 @@
       <tr class="layer-row"><td colspan="4">Text-to-Speech (TTS)</td></tr>
       <tr class="selected">
         <td><strong>TTS</strong></td>
-        <td><strong>ElevenLabs eleven_turbo_v2_5 "Voice N"</strong></td>
-        <td>Female Indian-accented voice; correct <em>मैं</em> pronunciation with Devanagari script in prompt; Buffer Size 230, Similarity Boost 0.5, Stability 0.45, Style Exaggeration 0; five-parameter fine-tuning control</td>
+        <td><strong>ElevenLabs eleven_turbo_v2_5 "Neha P"</strong></td>
+        <td>Female Indian-accented voice; correct <em>मैं</em> pronunciation with Devanagari script in prompt; Buffer Size 230, Similarity Boost 0.5, Stability 0.45, Style Exaggeration 0; five-parameter fine-tuning control; confirmed post Bolna.ai team call</td>
         <td><span class="verdict pass">✓ Selected</span></td>
       </tr>
       <tr class="rejected">
@@ -778,7 +824,8 @@
       <div class="pc-name">Rajesh Gupta</div>
       <div class="pc-demo">43 · Accounts Supervisor · Kanpur, UP</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">Male v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l3">L3</span>
         <span class="pc-tag">Hinglish</span>
         <span class="pc-tag dpd">243 CC / 238 PL DPD</span>
       </div>
@@ -788,7 +835,8 @@
       <div class="pc-name">Arjun Mehra</div>
       <div class="pc-demo">31 · Sales Executive (Pharma) · Ahmedabad</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">Male v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l2">L2</span>
         <span class="pc-tag">English-Hinglish</span>
         <span class="pc-tag dpd">218 CC / 210 PL DPD</span>
       </div>
@@ -798,7 +846,8 @@
       <div class="pc-name">Ravi Krishnamurthy</div>
       <div class="pc-demo">45 · IT Project Manager · Bangalore</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">Male v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l5">L5</span>
         <span class="pc-tag">English-Tamil-Hinglish</span>
         <span class="pc-tag dpd">234 CC / 226 PL DPD</span>
       </div>
@@ -808,7 +857,8 @@
       <div class="pc-name">Imran Sheikh</div>
       <div class="pc-demo">36 · Textile Wholesaler · Hyderabad</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">Male v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l4">L4</span>
         <span class="pc-tag">Urdu-Hinglish</span>
         <span class="pc-tag dpd">233 CC / 227 PL DPD</span>
       </div>
@@ -818,7 +868,8 @@
       <div class="pc-name">Karthikeyan Subramanian</div>
       <div class="pc-demo">45 · IT Project Manager · Bangalore</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">South Indian v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l2">L2</span>
         <span class="pc-tag">English-Tamil-Hinglish</span>
         <span class="pc-tag dpd">222 CC / 215 PL DPD</span>
       </div>
@@ -828,7 +879,8 @@
       <div class="pc-name">Sunita Kapoor</div>
       <div class="pc-demo">44 · Housewife · Lucknow</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">Female v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l3">L3</span>
         <span class="pc-tag">Hindi-Hinglish</span>
         <span class="pc-tag dpd">222 CC / 215 PL DPD</span>
       </div>
@@ -838,7 +890,8 @@
       <div class="pc-name">Nasreen Ansari</div>
       <div class="pc-demo">41 · English Teacher · Mumbai (Bandra)</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">Female v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l1">L1</span>
         <span class="pc-tag">Urdu-Hinglish</span>
         <span class="pc-tag dpd">228 CC / 220 PL DPD</span>
       </div>
@@ -848,7 +901,8 @@
       <div class="pc-name">Rekha Desai</div>
       <div class="pc-demo">38 · Catering Business Owner · Pune</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">Female v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l3">L3</span>
         <span class="pc-tag">Marathi-Hinglish</span>
         <span class="pc-tag dpd">218 CC / 211 PL DPD</span>
       </div>
@@ -858,7 +912,8 @@
       <div class="pc-name">Lakshmi Nair</div>
       <div class="pc-demo">48 · School Principal · Thrissur, Kerala</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">South Indian v1</span>
+        <span class="pc-tag voice">v8.5</span>
+        <span class="pc-tag level-l4">L4</span>
         <span class="pc-tag">Tamil-Hinglish-English</span>
         <span class="pc-tag dpd">208 CC / 201 PL DPD</span>
       </div>
@@ -866,6 +921,114 @@
     </div>
   </div>
   <p class="fig-cap"><strong>Figure 3.</strong> The full training persona library: 9 AI debtors across 3 voice profiles (Male v1, Female v1, South Indian v1). All personas carry DPD &gt;200, reflecting accounts that have received a formal legal notice. Each operates across all 5 difficulty levels, covering personal loan and credit card scenarios. Difficulty is not visible to agents — the system assigns it server-side based on progression history.</p>
+
+  <div class="section-rule"><span>The Debug Loop</span></div>
+
+  <!-- ═══ PART 4b: PERSONA DEBUG ═══ -->
+  <h2>Generating a Persona Takes Minutes. Making It Behave Takes Days.</h2>
+
+  <p>The Persona Spawner generates the specification. What it cannot do is verify that the AI behaves correctly once the specification is deployed to <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> and a real caller starts talking. That verification required a different kind of work — methodical, iterative, and considerably less glamorous than the build narrative suggests.</p>
+
+  <p>Every test call through the system produces two outputs. The first is what any participant would expect: a voice conversation. The second is what made this testing methodology unusually rigorous — a structured JSON file containing the full call transcript, the 28-point scorecard with each criterion's result, the AI's extracted metadata (bank name, product type, difficulty level), a free-text coaching note, and a call outcome classification. This machine-readable artifact of every call made it possible to do something that most teams do not do: treat prompt debugging as engineering work, not guesswork.</p>
+
+  <p>The CTO uploaded the JSON transcript from each test call into a dedicated testing session and analysed it line by line — not listening to audio, but reading the AI's exact output against what the persona specification required. The output is exact and unambiguous. A call that scores 20 out of 28 leaves a record of precisely which 4 criteria failed, in which domain, with a coaching note generated in the same pass:</p>
+
+  <!-- Figure: Real JSON trace from actual test call — Loan-ea9e82c2 -->
+  <div class="code-block" style="font-size:0.74rem;line-height:1.75;position:relative;">
+    <div style="color:var(--accent);font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid #3a3530;">Figure — Bolna.ai call trace · Actual JSON · Sunita Kapoor · Portfolio 2 PL · L3 · 4m 45s · 25 Mar 2026</div>
+    <span class="comment">// each event carries timestamp, component, provider, and data</span><br />
+    <span class="comment">// the full call stack is visible in the trace — STT, LLM, TTS with latency implied by timestamps</span><br /><br />
+    { <span class="key">"created_at"</span>: <span class="val-str">"16:39:32"</span>, <span class="key">"component"</span>: <span class="val-str">"synthesizer"</span>, <span class="key">"provider"</span>: <span class="val-str">"elevenlabs"</span>, <span class="key">"data"</span>: <span class="val-str">"Hello?"</span> },<br />
+    { <span class="key">"created_at"</span>: <span class="val-str">"16:39:36"</span>, <span class="key">"component"</span>: <span class="val-str">"transcriber"</span>, <span class="key">"provider"</span>: <span class="val-str">"deepgram"</span>,&nbsp;&nbsp; <span class="key">"data"</span>: <span class="val-str">"सुनीता जी से बात हो रही है"</span> },<br />
+    { <span class="key">"created_at"</span>: <span class="val-str">"16:39:36"</span>, <span class="key">"component"</span>: <span class="val-str">"llm"</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="key">"provider"</span>: <span class="val-str">"azure/gpt-4.1-mini"</span>, <span class="key">"type"</span>: <span class="val-str">"request"</span> },<br />
+    { <span class="key">"created_at"</span>: <span class="val-str">"16:39:38"</span>, <span class="key">"component"</span>: <span class="val-str">"synthesizer"</span>, <span class="key">"provider"</span>: <span class="val-str">"elevenlabs"</span>, <span class="key">"data"</span>: <span class="val-str">"हाँ जी, सुनिता कपूर — क्या बात है?"</span> },<br />
+    <span class="comment">// ... 104 events across 4m 45s of live call ...</span><br />
+    { <span class="key">"created_at"</span>: <span class="val-str">"16:44:16"</span>, <span class="key">"component"</span>: <span class="val-str">"synthesizer"</span>, <span class="key">"provider"</span>: <span class="val-str">"elevenlabs"</span>, <span class="key">"data"</span>: <span class="val-str">"अच्छा जी, रखती हूँ।"</span> },<br /><br />
+    <span class="comment">// post-call scorecard — spoken by persona, then logged</span><br />
+    <span class="comment">// TRAINING SCORECARD — Sunita Kapoor (Portfolio 2) | PL | L3 | DPD: 215</span><br /><br />
+    <span class="comment">// INTRODUCTION QUALITY</span><br />
+    <span class="val-pass">PASS</span>&nbsp; 1. Greeted customer basis time of day<br />
+    <span class="val-pass">PASS</span>&nbsp; 2. Introduced self before asking any other question<br />
+    <span class="val-pass">PASS</span>&nbsp; 3. Set context — Portfolio 2 loan<br />
+    <span class="val-pass">PASS</span>&nbsp; 4. Explained account taken over by debt buyer (licensed ARC)<br />
+    <span class="val-pass">PASS</span>&nbsp; 5. Mentioned RBI-licensed entity<br /><br />
+    <span class="comment">// CALL QUALITY</span><br />
+    <span class="val-pass">PASS</span>&nbsp; 6–12. All call quality criteria<br /><br />
+    <span class="comment">// SCAM-TRUST HANDLING</span><br />
+    <span class="val-pass">PASS</span>&nbsp; 13. Confirmed not asking for OTP / password<br />
+    <span class="val-pass">PASS</span>&nbsp; 14. Offered independent verification route<br /><br />
+    <span class="comment">// TOTAL: 28 / 28 · coaching note: "Strong call. Trust challenge held correctly for L3.</span><br />
+    <span class="comment">//  Agent navigated privacy section well before moving to engagement."</span>
+  </div>
+
+  <p>What emerged from reading these artifacts systematically was a taxonomy of failure modes that could not have been anticipated from the prompt text alone:</p>
+
+  <div class="failure-chips">
+    <div class="failure-chip">
+      <span class="fc-name">Loop bug</span>
+      <span class="fc-desc">Scripted example lines in a section became a script. The AI repeated the same response verbatim two or three times when the caller kept pressing.</span>
+    </div>
+    <div class="failure-chip">
+      <span class="fc-name">Section skip</span>
+      <span class="fc-desc">A section requiring 2–3 conversational turns was compressed into a single half-sentence, then the persona jumped forward. The emotional arc collapsed.</span>
+    </div>
+    <div class="failure-chip">
+      <span class="fc-name">Role confusion</span>
+      <span class="fc-desc">A role-integrity guardrail ("you are the customer, not the agent") misfired on legitimate caller statements, producing an unnatural preamble mid-conversation.</span>
+    </div>
+    <div class="failure-chip">
+      <span class="fc-name">Company-name bridge</span>
+      <span class="fc-desc">When an agent mentioned the originating bank but not the debt buyer's name, the persona had no defined behaviour — it guessed, inconsistently.</span>
+    </div>
+    <div class="failure-chip">
+      <span class="fc-name">Hindi naturalness</span>
+      <span class="fc-desc">Specific Hinglish constructions that sounded grammatically correct in text were unnatural in speech. Required word-by-word correction, not structural rewriting.</span>
+    </div>
+    <div class="failure-chip">
+      <span class="fc-name">Product confusion</span>
+      <span class="fc-desc">A persona using the word "loan" when the caller had opened with "credit card." Caught immediately by a native speaker; would not appear in automated text scoring.</span>
+    </div>
+  </div>
+
+  <p>Each failure produced exactly one fix. Not a structural rewrite — a targeted change to the specific instruction or example that caused the problem. The version was incremented. The call was run again. The fix was confirmed or revised. This is the work that prompt engineering actually is, when it is done with the discipline of a software engineering process rather than the intuition of a content editor.</p>
+
+  <div class="version-track">
+    <div class="version-track-header">
+      <span class="vt-label">Sunita Kapoor Persona — Iteration Log</span>
+      <span>5 versions · ~3 hours of live call testing</span>
+    </div>
+    <div class="vt-row">
+      <div class="vt-ver">v8.1</div>
+      <div class="vt-fix"><span class="vt-tag bug">Bug</span><strong>Structural rewrite.</strong> Sections 1–4 rebuilt as behavioural instructions rather than scripted responses. Email address leak and role reversal guardrails added.</div>
+    </div>
+    <div class="vt-row">
+      <div class="vt-ver">v8.2</div>
+      <div class="vt-fix"><span class="vt-tag bug">Bug</span><strong>Loop fix + Section 4 skip fix.</strong> Section 5 examples labelled as tone guides, not a script. Rule 7 added: no repeated response. Section 4 requires 2–3 turns minimum. <span class="vt-tag lang">Hindi</span> Three Hinglish corrections applied.</div>
+    </div>
+    <div class="vt-row">
+      <div class="vt-ver">v8.3</div>
+      <div class="vt-fix"><span class="vt-tag bug">Bug</span><strong>Company-name bridge.</strong> If caller mentions originating bank but not the debt buyer's company name, Sunita now asks "आप किस company से call कर रहे हैं?" within 1–2 turns. Section 3 trigger loosened from requiring both names together to activating whenever the debt buyer's name is introduced, in any turn.</div>
+    </div>
+    <div class="vt-row">
+      <div class="vt-ver">v8.4</div>
+      <div class="vt-fix"><span class="vt-tag bug">Bug</span><strong>Product awareness + closing repetition.</strong> Product-specific instruction added to Phase 1 (loan vs. credit card). Section 5 and Section 6 closings differentiated to prevent duplicate Ramesh deferral.</div>
+    </div>
+    <div class="vt-row">
+      <div class="vt-ver">v8.5</div>
+      <div class="vt-fix"><span class="vt-tag bug">Bug</span><strong>Name-confusion absorption fix.</strong> One sentence added: even if the caller explains the company name in the same breath, the persona does not absorb the explanation — it stays on the unfamiliar name for the full Phase 1 response. Realistic: a person latches on to a strange word and misses the rest of the sentence.</div>
+    </div>
+  </div>
+
+  <p>With one persona validated to v8.5, the question became: how do you validate the other eight without making eighteen more phone calls? Eighteen calls — nine personas, two products each — at five to six minutes apiece is two hours of manual testing. And it only catches the bugs that surface in any given run of that specific call.</p>
+
+  <p>The answer was to separate the voice layer from the behaviour layer. The failure modes being hunted — loops, section skips, role confusion, product errors — are all LLM output problems. They have nothing to do with TTS voice quality or PSTN telephony. The same model that runs inside <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> can be called directly via the Azure API. A Python script that sends each persona's system prompt alongside a fixed, scripted agent conversation — designed to probe each known failure mode — and checks the response for the known anti-patterns can run all nine personas in seconds. Not a replacement for live call testing, but a first filter that catches the mechanical failures before a human ever picks up the phone.</p>
+
+  <p>With the testing infrastructure in place, the Persona Spawner changes character entirely. It is no longer just a tool for generating nine personas. It is a production line. The Spawner generates the specification, the testing script validates it against the full battery of known failure patterns, and the agent is deployed to <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a>'s API — all programmatically. A persona that would have taken hours to configure, test by phone call, debug, and redeploy can now go from specification to validated deployment in minutes. The same process that produced nine personas can produce a hundred. Different banks, different products, different emotional archetypes, different regional languages — each one generated from the same template logic, each one tested against the same LLM that will run it in production (currently GPT-4.1-mini on Azure), each one deployed without a human touching the <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> interface.</p>
+
+  <div class="insight-box">
+    <p><strong>Why this matters beyond this build</strong></p>
+    <p>The structured JSON output that made this debugging workflow possible is not incidental — it was an explicit design requirement. A voice AI system that produces only audio is auditable only by listening. A system that produces a timestamped, structured record of every call — transcript, score, metadata, outcome — is auditable at scale. That distinction becomes significant the moment you consider running this not as a training system for 250 agents, but as a customer-facing system operating across 650,000 accounts.</p>
+  </div>
 
   <div class="section-rule"><span>The Scorecard</span></div>
 
@@ -995,7 +1158,7 @@
     <div class="cost-row target">
       <div class="cost-cell-config">
         Target (post-negotiation)
-        <span class="config-note">Volume commitment</span>
+        <span class="config-note">Volume commitment with Bolna.ai team</span>
       </div>
       <div class="cost-cell-latency">~800ms</div>
       <div class="cost-cell-quality">Excellent</div>
@@ -1225,7 +1388,7 @@
       <div class="timeline-time">Tue<br />Evening</div>
       <div class="timeline-content">
         <strong>Pre-production call with <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> team</strong>
-        <p>Call with the Bolna.ai team before going to production. They review the full system: prompt structure, endpointing parameters, TTS buffer settings, and LLM behaviour under Hinglish load & scale. Feedback leads to final stack tweaks — ElevenLabs eleven_turbo_v2_5 confirmed over Cartesia, GPT-4.1-mini on Azure confirmed as LLM. Volume discount arrangement agreed for production deployment.</p>
+        <p>CTO schedules direct call with the Bolna.ai team before going to production. They review the full system: prompt structure, endpointing parameters, TTS buffer settings, and LLM behaviour under Hinglish load. Feedback leads to final stack change — ElevenLabs eleven_turbo_v2_5 confirmed over Cartesia, GPT-4.1-mini on Azure confirmed as LLM. Volume discount arrangement agreed for production deployment. System stabilised and ready for CRM integration.</p>
       </div>
     </div>
     <div class="timeline-item">
@@ -1272,19 +1435,75 @@
 
   <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is managing 650,000 customer accounts with 16 people at headquarters. A dormant portfolio that the market prices as worth nothing. A cost-to-collect below 29 per cent. That combination is not a limitation. It is the proof.</p>
 
-  <!-- Audio placeholder -->
-  <div style="background:white;border:1px dashed var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 2rem;text-align:center;gap:0.6rem;margin:3rem 0;">
-    <span style="font-size:1.8rem;opacity:0.3;">🎙️</span>
-    <span style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--caption);">Sample Call Recording</span>
-    <span style="font-size:0.85rem;color:var(--caption);max-width:360px;">First 4 AM test call — Rajesh Gupta persona, L2 difficulty, 289 seconds. The call that started this.</span>
+  <div class="call-players">
+    <div class="call-player">
+      <div class="call-player-header">
+        <span class="call-player-label">Recording 1 — Day 0</span>
+        <span class="call-player-badge">4:07 AM · MON</span>
+      </div>
+      <div class="call-player-body">
+        <div class="call-player-title">The 4 AM Call</div>
+        <div class="call-player-meta">Rajesh Gupta · Portfolio 3 Credit Card · L2 · 289s · Initial build</div>
+        <div class="call-player-desc">The first production-quality call from the system. Sent to the company WhatsApp group at 4 AM with the JSON score. One failure: agent did not self-identify by name at opening. This is the call that proved the system was real.</div>
+        <audio controls preload="none">
+          <source src="Day0Call_Rajesh-4AM.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+    <div class="call-player">
+      <div class="call-player-header">
+        <span class="call-player-label">Recording 2 — Prompt v8.4</span>
+        <span class="call-player-badge">28 / 28</span>
+      </div>
+      <div class="call-player-body">
+        <div class="call-player-title">After the Debug Loop</div>
+        <div class="call-player-meta">Sunita Kapoor · Portfolio 2 PL · L3 · 285s · GPT-4.1-mini · ElevenLabs "Neha P"</div>
+        <div class="call-player-desc">The same exercise after five rounds of prompt iteration. Trust challenge runs correctly for L3, privacy section holds 2–3 turns, engagement section progresses without loops. Full stack: azure/gpt-4.1-mini + ElevenLabs eleven_turbo_v2_5 + Deepgram nova-3.</div>
+        <audio controls preload="none">
+          <source src="GPT4.1_AzureC_11Labs_NP_DeepgramNova3-PromptV8.4-SunitaRBL-Loan.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
   </div>
-  <p class="fig-cap"><strong>Recording.</strong> The first production-quality call from the system, recorded at approximately 4:07 AM Tuesday morning. Rajesh Gupta persona, Portfolio 3 credit card, 289 seconds. Score: 20/28 (initial prototype rubric). One failure: agent did not self-identify by name at opening. <em>[Audio embed to be added]</em></p>
+  <p class="fig-cap"><strong>Recordings.</strong> Left: the first validated call at 4 AM — proof the system worked, sent to the team before sunrise. Right: the same scenario after five iterations of the prompt debug loop. The difference is audible: trust challenge depth, natural section transitions, no looping. Both calls over PSTN via Plivo at 8kHz.</p>
 
 </main>
 
 <footer class="article-footer">
   <p>BaySys.ai &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Technology &amp; Operations</p>
 </footer>
+
+
+<!-- Share Widget -->
+<style>
+#pc-share-float{position:fixed;left:max(16px,calc(50% - 460px));top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:8px;opacity:0;pointer-events:none;transition:opacity 0.4s;}
+#pc-share-float.pc-share-visible{opacity:1;pointer-events:auto;}
+#pc-share-bottom{display:none;max-width:740px;margin:3em auto 0;padding:0 24px 60px;}
+@media(max-width:960px){#pc-share-float{display:none!important;}#pc-share-bottom{display:block;}}
+</style>
+<div id="pc-share-float">
+  <a href="#" onclick="window.open('https://wa.me/?text='+encodeURIComponent(document.title+' — '+window.location.href),'_blank');return false;" title="Share on WhatsApp" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#25D366;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,0.15);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+  <a href="#" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(window.location.href),'_blank');return false;" title="Share on X" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#000;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,0.15);"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+  <a href="#" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(window.location.href)+'&title='+encodeURIComponent(document.title),'_blank');return false;" title="Share on LinkedIn" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#0A66C2;color:#fff;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,0.15);"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+  <button id="pc-copy-btn" onclick="pcShareCopy()" title="Copy link" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--bg-card,#fff);color:var(--text,#1A1A18);border:1px solid var(--border,#E0DED8);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.10);transition:background 0.2s,color 0.2s,border-color 0.2s;"><svg id="pc-copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><svg id="pc-copy-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+</div>
+<div id="pc-share-bottom">
+  <div style="border-top:1px solid var(--border,#E0DED8);padding-top:2em;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary,#8A8983);">Share</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <a href="#" onclick="window.open('https://wa.me/?text='+encodeURIComponent(document.title+' — '+window.location.href),'_blank');return false;" title="Share on WhatsApp" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#25D366;color:#fff;text-decoration:none;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      <a href="#" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(window.location.href),'_blank');return false;" title="Share on X" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#000;color:#fff;text-decoration:none;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="#" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(window.location.href)+'&title='+encodeURIComponent(document.title),'_blank');return false;" title="Share on LinkedIn" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#0A66C2;color:#fff;text-decoration:none;flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <button id="pc-copy-btn-m" onclick="pcShareCopy('pc-copy-btn-m','pc-copy-icon-m','pc-copy-check-m')" title="Copy link" style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--bg-alt,#F2F0EB);color:var(--text,#1A1A18);border:1px solid var(--border,#E0DED8);cursor:pointer;flex-shrink:0;transition:background 0.2s,color 0.2s,border-color 0.2s;"><svg id="pc-copy-icon-m" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg><svg id="pc-copy-check-m" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+    </div>
+  </div>
+</div>
+<script>
+window.addEventListener('scroll',function(){var f=document.getElementById('pc-share-float');if(f){if(window.scrollY>300){f.classList.add('pc-share-visible');}else{f.classList.remove('pc-share-visible');}}});
+function pcShareCopy(b,i,c){b=b||'pc-copy-btn';i=i||'pc-copy-icon';c=c||'pc-copy-check';navigator.clipboard.writeText(window.location.href).then(function(){var btn=document.getElementById(b);document.getElementById(i).style.display='none';document.getElementById(c).style.display='block';btn.style.background='#3B6D11';btn.style.color='#fff';btn.style.borderColor='#3B6D11';setTimeout(function(){document.getElementById(i).style.display='block';document.getElementById(c).style.display='none';btn.style.background='';btn.style.color='';btn.style.borderColor='';},2000);});}
+</script>
 
 </body>
 </html>
