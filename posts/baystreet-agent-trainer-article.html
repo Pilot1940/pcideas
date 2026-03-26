@@ -230,6 +230,14 @@
     .failure-chip .fc-name { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.2rem; }
     .failure-chip .fc-desc { font-size: 0.78rem; color: #3a3530; display: block; line-height: 1.35; }
 
+    /* ── SCRIPT TYPES ── */
+    .script-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+    @media (max-width: 640px) { .script-types { grid-template-columns: 1fr; } }
+    .script-type { border: 1px solid var(--rule); padding: 1rem 1.1rem; background: white; }
+    .st-id { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.35rem; }
+    .st-name { font-size: 0.88rem; font-weight: 700; color: #1a1612; display: block; margin-bottom: 0.35rem; }
+    .st-desc { font-size: 0.76rem; color: #5a5045; line-height: 1.45; }
+
     /* ── AUDIO PLAYERS ── */
     .call-players { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 3rem 0; }
     .call-player { background: white; padding: 0; overflow: hidden; }
@@ -1021,7 +1029,46 @@
 
   <p>With one persona validated to v8.5, the question became: how do you validate the other eight without making eighteen more phone calls? Eighteen calls — nine personas, two products each — at five to six minutes apiece is two hours of manual testing. And it only catches the bugs that surface in any given run of that specific call.</p>
 
-  <p>The answer was to separate the voice layer from the behaviour layer. The failure modes being hunted — loops, section skips, role confusion, product errors — are all LLM output problems. They have nothing to do with TTS voice quality or PSTN telephony. The same model that runs inside <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> can be called directly via the Azure API. A Python script that sends each persona's system prompt alongside a fixed, scripted agent conversation — designed to probe each known failure mode — and checks the response for the known anti-patterns can run all nine personas in seconds. Not a replacement for live call testing, but a first filter that catches the mechanical failures before a human ever picks up the phone.</p>
+  <p>The answer was to separate the voice layer from the behaviour layer. Every failure mode being hunted — loops, section skips, role confusion — is an LLM output problem. The same model that runs inside <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> can be called directly via API. The CTO built a Python regression harness: load a persona prompt, inject a difficulty level, replay a hand-crafted caller script turn by turn, record every response as raw JSON. No phone call. No audio.</p>
+
+  <p>Six scripts, each targeting a distinct failure mode:</p>
+
+  <div class="script-types">
+    <div class="script-type">
+      <span class="st-id">Script 01 · Positive control</span>
+      <span class="st-name">The ideal agent</span>
+      <span class="st-desc">Full journey in sequence. Baseline — if a persona fails this, the prompt is fundamentally broken.</span>
+    </div>
+    <div class="script-type">
+      <span class="st-id">Script 02 · Adversarial</span>
+      <span class="st-name">Scam-heavy caller</span>
+      <span class="st-desc">Three fraud challenges before anything else. Tests emotional hold under sustained trust pressure.</span>
+    </div>
+    <div class="script-type">
+      <span class="st-id">Script 03 · Stress test</span>
+      <span class="st-name">Weak agent</span>
+      <span class="st-desc">No intro — straight to payment demand. Tests character hold when the caller gives the persona nothing to work with.</span>
+    </div>
+    <div class="script-type">
+      <span class="st-id">Script 04 · Guard test</span>
+      <span class="st-name">Company name withheld</span>
+      <span class="st-desc">Caller circles the company name for five turns without stating it. Debtor must hold in the trust-challenge phase — premature advancement is a failure.</span>
+    </div>
+    <div class="script-type">
+      <span class="st-id">Scripts 05a &amp; 05b · Exception test</span>
+      <span class="st-name">Devanagari name input</span>
+      <span class="st-desc">Turn 1 contains the debtor's name in Devanagari — exactly as Deepgram transcribes it from audio. Persona must respond normally, not loop on its own name.</span>
+    </div>
+    <div class="script-type">
+      <span class="st-id">Script 06 · Character test</span>
+      <span class="st-name">Misgendering throughout</span>
+      <span class="st-desc">Caller addresses female personas as "sir" for the entire call. Correct or ignore — but don't break character.</span>
+    </div>
+  </div>
+
+  <p>The run model is GPT-4.1-mini — identical to production, 420 times per full sweep. The analysis pass uses Claude Opus 4.6 with extended thinking: prompt debugging is a deep but finite analytical problem, and it runs once per batch, not per conversation. A batch runner handles the full matrix in ~30 minutes with a <code>--dry-run</code> flag to preview scope before spending credits. Script 04 was the highest-signal run — it caught the premature trigger immediately, a one-line fix applied across all thirteen files. Scripts 05a/b confirmed the Devanagari exception clause. Script 06 passed clean, no change needed.</p>
+
+  <p>The scale difference is worth stating plainly. 420 test combinations at five minutes each is 35 hours of phone calls. The harness runs them in 30 minutes. But the more important point is that the harness existed at all before go-live. Most builders would ship, wait for something to break in production, and fix it then. Building a regression harness before the system is live — covering known failure modes, edge cases, and persona-specific exceptions — is the kind of foresight that only comes from having seen what production incidents look like. It is not on any AI tutorial checklist. It comes from two decades of making systems production-ready.</p>
 
   <p>With the testing infrastructure in place, the Persona Spawner changes character entirely. It is no longer just a tool for generating nine personas. It is a production line. The Spawner generates the specification, the testing script validates it against the full battery of known failure patterns, and the agent is deployed to <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a>'s API — all programmatically. A persona that would have taken hours to configure, test by phone call, debug, and redeploy can now go from specification to validated deployment in minutes. The same process that produced nine personas can produce a hundred. Different banks, different products, different emotional archetypes, different regional languages — each one generated from the same template logic, each one tested against the same LLM that will run it in production (currently GPT-4.1-mini on Azure), each one deployed without a human touching the <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> interface.</p>
 
