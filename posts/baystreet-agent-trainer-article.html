@@ -190,6 +190,7 @@
     .pc-tag.level-l3 { background: #fef9c3; border-color: #fde047; color: #854d0e; font-weight: 600; }
     .pc-tag.level-l4 { background: #ffedd5; border-color: #fdba74; color: #9a3412; font-weight: 600; }
     .pc-tag.level-l5 { background: #fee2e2; border-color: #fca5a5; color: #991b1b; font-weight: 600; }
+    .pc-tag.level-range { background: #f3f0ea; border-color: var(--rule); color: var(--caption); font-size: 0.65rem; letter-spacing: 0.04em; }
     .pc-challenge { font-size: 0.78rem; color: #3a3530; font-style: italic; line-height: 1.4; }
 
     /* ── SCORECARD ── */
@@ -525,10 +526,10 @@
   <p>What they heard was not a data problem. It was a training problem — and a deeper one than anyone had anticipated.</p>
 
   <div class="pullquote">
-    <p>"Customers were suspicious this was a scam. Agents couldn't explain why the originating bank had sold the account to a debt buyer — or why <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>, as the licensed collection servicer, had the right to call them. They were losing the customer in the first ninety seconds."</p>
+    <p>"Customers were suspicious this was a scam. Agents couldn't explain why the originating bank had sold the account to a debt buyer — or why <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>, as the collection servicer, had the right to call them. They were losing the customer in the first ninety seconds."</p>
   </div>
 
-  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s role in this chain matters for context. When a bank sells a distressed loan portfolio, it sells to a <strong>debt buyer</strong> — a licensed entity that acquires the underlying receivables. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is the <strong>collection servicer</strong>: the RBI-regulated entity that calls customers on the debt buyer's behalf.</p>
+  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a>'s role in this chain matters for context. When a bank sells a distressed loan portfolio, it sells to a <strong>debt buyer</strong> — a licensed entity that acquires the underlying receivables. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is the <strong>collection servicer</strong>: the entity that calls customers on the debt buyer's behalf.</p>
 
   <div class="chain-visual">
     <div class="chain-node">
@@ -543,7 +544,7 @@
     <div class="chain-sep">→</div>
     <div class="chain-node primary">
       <span class="chain-label">BaySys.ai</span>
-      <span class="chain-detail">Collection servicer · RBI-regulated · calls customers</span>
+      <span class="chain-detail">Collection servicer · calls customers</span>
     </div>
     <div class="chain-sep">→</div>
     <div class="chain-node">
@@ -581,6 +582,7 @@
     <p>Global English-trained TTS models see this transliterated as "mein" and pronounce it to rhyme with the English word "rain" — <strong>MAIN</strong>. To a native Hindi speaker, this sounds wrong the moment they hear it. Not subtly wrong. Jarringly wrong. It is the acoustic equivalent of a foreign accent so strong it signals immediately that the voice is neither Indian nor trained on Indian speech. No amount of otherwise natural delivery can recover from this. The customer's trust is gone before the introduction is finished.</p>
     <p>This single phonetic failure was the hardest filter to pass in the TTS evaluation — and it eliminated multiple otherwise well-reviewed providers instantly, regardless of their quality on other dimensions.</p>
     <p><strong>The fix — discovered during fine-tuning:</strong> using <strong>देवनागरी</strong> (Devanagari) script directly in the system prompt for Hindi words forces the TTS engine to process the correct phoneme, bypassing the Latin-script mispronunciation entirely. Writing <strong>मैं</strong> instead of "mein" in the prompt produces correct Hindi pronunciation. Non-obvious, and only discovered after live testing — but it made a material difference to the system's credibility on first listen.</p>
+    <p>The same principle extends to every regional language in the library. The Tamil-speaking persona (Karthikeyan) uses words like <em>seri</em> (okay), <em>illa</em> (no), <em>aiyyo</em> (exasperation) — common in Tamil-Hinglish conversation. Written in Roman script, ElevenLabs reads them as English and mispronounces every one. Written in Tamil script — <strong>சரி</strong>, <strong>இல்ல</strong>, <strong>ஐயோ</strong> — the engine handles them correctly. The rule is consistent: wherever a regional language word appears in a spoken response, it should be written in its native script, not transliterated.</p>
   </div>
 
   <h3>The Model Evaluation</h3>
@@ -832,8 +834,8 @@
       <div class="pc-name">Rajesh Gupta</div>
       <div class="pc-demo">43 · Accounts Supervisor · Kanpur, UP</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l3">L3</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Hinglish</span>
         <span class="pc-tag dpd">243 CC / 238 PL DPD</span>
       </div>
@@ -843,8 +845,8 @@
       <div class="pc-name">Arjun Mehra</div>
       <div class="pc-demo">31 · Sales Executive (Pharma) · Ahmedabad</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l2">L2</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">English-Hinglish</span>
         <span class="pc-tag dpd">218 CC / 210 PL DPD</span>
       </div>
@@ -854,8 +856,8 @@
       <div class="pc-name">Ravi Krishnamurthy</div>
       <div class="pc-demo">45 · IT Project Manager · Bangalore</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l5">L5</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">English-Tamil-Hinglish</span>
         <span class="pc-tag dpd">234 CC / 226 PL DPD</span>
       </div>
@@ -865,8 +867,8 @@
       <div class="pc-name">Imran Sheikh</div>
       <div class="pc-demo">36 · Textile Wholesaler · Hyderabad</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l4">L4</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Urdu-Hinglish</span>
         <span class="pc-tag dpd">233 CC / 227 PL DPD</span>
       </div>
@@ -876,8 +878,8 @@
       <div class="pc-name">Karthikeyan Subramanian</div>
       <div class="pc-demo">45 · IT Project Manager · Bangalore</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l2">L2</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">English-Tamil-Hinglish</span>
         <span class="pc-tag dpd">222 CC / 215 PL DPD</span>
       </div>
@@ -887,8 +889,8 @@
       <div class="pc-name">Sunita Kapoor</div>
       <div class="pc-demo">44 · Housewife · Lucknow</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l3">L3</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Hindi-Hinglish</span>
         <span class="pc-tag dpd">222 CC / 215 PL DPD</span>
       </div>
@@ -898,8 +900,8 @@
       <div class="pc-name">Nasreen Ansari</div>
       <div class="pc-demo">41 · English Teacher · Mumbai (Bandra)</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l1">L1</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Urdu-Hinglish</span>
         <span class="pc-tag dpd">228 CC / 220 PL DPD</span>
       </div>
@@ -909,8 +911,8 @@
       <div class="pc-name">Rekha Desai</div>
       <div class="pc-demo">38 · Catering Business Owner · Pune</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l3">L3</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Marathi-Hinglish</span>
         <span class="pc-tag dpd">218 CC / 211 PL DPD</span>
       </div>
@@ -920,8 +922,8 @@
       <div class="pc-name">Lakshmi Nair</div>
       <div class="pc-demo">48 · School Principal · Thrissur, Kerala</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.5</span>
-        <span class="pc-tag level-l4">L4</span>
+        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Tamil-Hinglish-English</span>
         <span class="pc-tag dpd">208 CC / 201 PL DPD</span>
       </div>
@@ -1066,9 +1068,9 @@
     </div>
   </div>
 
-  <p>The run model is GPT-4.1-mini — identical to production, 420 times per full sweep. The analysis pass uses Claude Opus 4.6 with extended thinking: prompt debugging is a deep but finite analytical problem, and it runs once per batch, not per conversation. A batch runner handles the full matrix in ~30 minutes with a <code>--dry-run</code> flag to preview scope before spending credits. Script 04 was the highest-signal run — it caught the premature trigger immediately, a one-line fix applied across all thirteen files. Scripts 05a/b confirmed the Devanagari exception clause. Script 06 passed clean, no change needed.</p>
+  <p>The run model is GPT-4.1-mini — identical to production, 360 times per full sweep. The analysis pass uses Claude Opus 4.6 with extended thinking: prompt debugging is a deep but finite analytical problem, and it runs once per batch, not per conversation. A batch runner handles the full matrix in ~35 minutes with a <code>--dry-run</code> flag to preview scope before spending credits. Script 04 was the highest-signal run — it caught the premature trigger immediately, a one-line fix applied across all thirteen files. Scripts 05a/b confirmed the Devanagari exception clause. Script 06 passed clean, no change needed.</p>
 
-  <p>The scale difference is worth stating plainly. 420 test combinations at five minutes each is 35 hours of phone calls. The harness runs them in 30 minutes. But the more important point is that the harness existed at all before go-live. Most builders would ship, wait for something to break in production, and fix it then. Building a regression harness before the system is live — covering known failure modes, edge cases, and persona-specific exceptions — is the kind of foresight that only comes from having seen what production incidents look like. It is not on any AI tutorial checklist. It comes from two decades of making systems production-ready.</p>
+  <p>The scale difference is worth stating plainly. 360 test combinations at five minutes each is 30 hours of phone calls. The harness runs them in 35 minutes. But the more important point is that the harness existed at all before go-live. Most builders would ship, wait for something to break in production, and fix it then. Building a regression harness before the system is live — covering known failure modes, edge cases, and persona-specific exceptions — is the kind of foresight that only comes from having seen what production incidents look like. It is not on any AI tutorial checklist. It comes from two decades of making systems production-ready.</p>
 
   <p>With the testing infrastructure in place, the Persona Spawner changes character entirely. It is no longer just a tool for generating nine personas. It is a production line. The Spawner generates the specification, the testing script validates it against the full battery of known failure patterns, and the agent is deployed to <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a>'s API — all programmatically. A persona that would have taken hours to configure, test by phone call, debug, and redeploy can now go from specification to validated deployment in minutes. The same process that produced nine personas can produce a hundred. Different banks, different products, different emotional archetypes, different regional languages — each one generated from the same template logic, each one tested against the same LLM that will run it in production (currently GPT-4.1-mini on Azure), each one deployed without a human touching the <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> interface.</p>
 
@@ -1092,8 +1094,8 @@
       <div class="criterion-row"><span class="criterion-num">1</span><span class="criterion-text"><strong>Time greeting</strong> — Greeted the customer appropriately for time of day</span></div>
       <div class="criterion-row"><span class="criterion-num">2</span><span class="criterion-text"><strong>Self-introduction</strong> — Introduced themselves by name before asking any question</span></div>
       <div class="criterion-row"><span class="criterion-num">3</span><span class="criterion-text"><strong>Bank context</strong> — Named the specific originating bank and loan or card product</span></div>
-      <div class="criterion-row"><span class="criterion-num">4</span><span class="criterion-text"><strong>Debt assignment</strong> — Explained that the account was acquired by a debt buyer and that <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is the licensed collection servicer now managing it</span></div>
-      <div class="criterion-row"><span class="criterion-num">5</span><span class="criterion-text"><strong>Licensed status</strong> — Stated that <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> operates under a licensed, RBI-regulated framework</span></div>
+      <div class="criterion-row"><span class="criterion-num">4</span><span class="criterion-text"><strong>Debt assignment</strong> — Explained that the account was acquired by a debt buyer and that <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is the collection servicer now managing it</span></div>
+      <div class="criterion-row"><span class="criterion-num">5</span><span class="criterion-text"><strong>Licensed status</strong> — Stated that <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> operates under an RBI-regulated ecosystem</span></div>
     </div>
     <div class="domain-block">
       <div class="domain-header">
