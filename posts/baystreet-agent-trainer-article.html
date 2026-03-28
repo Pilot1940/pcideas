@@ -447,7 +447,7 @@ These are people who built the infrastructure through which many of the borrower
   <!-- ═══ PART 2: THE PROBLEM ═══ -->
   <h2>5 PM, Monday. A signal in the data.</h2>
 
-  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> had been running an automated AI voice bot across its 650,000-account portfolio: dialling customers, identifying who picks up and is willing to talk, then flagging them for human follow-up. The goal was a foundational metric: contactability.</p>
+  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> had been running an automated AI voice bot across its full portfolio: dialling customers, identifying who picks up and is willing to talk, then flagging them for human follow-up. The goal was a foundational metric: contactability.</p>
 
   <p>The headline result: roughly 40% of customers answered. But raw pickup rates are noisy — robocalls get hung up in seconds. The team filtered to calls over ten seconds. Those were the real signal.</p>
 
@@ -559,11 +559,11 @@ These are people who built the infrastructure through which many of the borrower
   <!-- ═══ PART 3: ARCHITECTURE ═══ -->
   <h2>How do you train 250 agents overnight?</h2>
 
-  <p>The 5 PM Monday question was deceptively simple. Traditional training—one-on-one roleplays, manual scoring, feedback—takes weeks for 250 agents across multiple geographies. Weeks wasn't an option.</p>
+  <p>The 5 PM Monday question was simple. Traditional training — roleplays, manual scoring, feedback — takes weeks for 250 agents across multiple geographies. Weeks wasn't an option.</p>
 
-  <p>What was needed was a system that could simulate a realistic customer conversation, adapt its difficulty to challenge the agent, score performance automatically against a defined rubric, and do all of this over a <strong>normal phone line</strong> — the same GSM/PSTN infrastructure that agents use every day. An agent training on a web interface is not training for the real environment. If the system could not operate convincingly over a mobile call, it was not a training system.</p>
+  <p>What was needed: simulate realistic customer conversations, adapt difficulty, score automatically — all over a <strong>normal phone line</strong>. The same GSM/PSTN infrastructure agents use every day. An agent training on a web interface is not training for the real environment.</p>
 
-  <p>The CTO—a 25-year financial services architect who built the agents' CRM—spent 5-10 PM Monday on exhaustive research using AI tools to analyze the voice AI stack.</p>
+  <p>The CTO — a 25-year financial services architect who built the agents' CRM — spent Monday 5-10 PM researching the voice AI stack.</p>
 
   <h3>The Technical Constraint Nobody Talks About</h3>
 
@@ -573,11 +573,10 @@ These are people who built the infrastructure through which many of the borrower
 
   <div class="insight-box">
     <p><strong>The "mein/MAIN" problem — why it matters</strong></p>
-    <p>In spoken Hindi, <em>मैं</em> (mein) means "I." It is one of the most frequent words in any Hinglish conversation. Agents use it constantly: <em>main XYZ bol raha hoon</em> (I am XYZ speaking), <em>main samjha sakta hoon</em> (I can explain this). It is the first word of almost every agent self-introduction.</p>
-    <p>Global English-trained TTS models see this transliterated as "mein" and pronounce it to rhyme with the English word "rain" — <strong>MAIN</strong>. To a native Hindi speaker, this sounds wrong the moment they hear it. Not subtly wrong. Jarringly wrong. It is the acoustic equivalent of a foreign accent so strong it signals immediately that the voice is neither Indian nor trained on Indian speech. No amount of otherwise natural delivery can recover from this. The customer's trust is gone before the introduction is finished.</p>
-    <p>This single phonetic failure was the hardest filter to pass in the TTS evaluation — and it eliminated multiple otherwise well-reviewed providers instantly, regardless of their quality on other dimensions.</p>
-    <p><strong>The fix — discovered during fine-tuning:</strong> using <strong>देवनागरी</strong> (Devanagari) script directly in the system prompt for Hindi words forces the TTS engine to process the correct phoneme, bypassing the Latin-script mispronunciation entirely. Writing <strong>मैं</strong> instead of "mein" in the prompt produces correct Hindi pronunciation. Non-obvious, and only discovered after live testing — but it made a material difference to the system's credibility on first listen.</p>
-    <p>The same principle extends to every regional language in the library. The Tamil-speaking persona (Karthikeyan) uses words like <em>seri</em> (okay), <em>illa</em> (no), <em>aiyyo</em> (exasperation) — common in Tamil-Hinglish conversation. Written in Roman script, ElevenLabs reads them as English and mispronounces every one. Written in Tamil script — <strong>சரி</strong>, <strong>இல்ல</strong>, <strong>ஐயோ</strong> — the engine handles them correctly. The rule is consistent: wherever a regional language word appears in a spoken response, it should be written in its native script, not transliterated.</p>
+    <p>In spoken Hindi, <em>मैं</em> (mein) means "I" — one of the most frequent words in any Hinglish conversation, and the first word of almost every agent self-introduction.</p>
+    <p>Global English-trained TTS models see this transliterated as "mein" and pronounce it to rhyme with "rain" — <strong>MAIN</strong>. To a native Hindi speaker, it sounds jarringly wrong the moment they hear it: a foreign accent so strong it signals immediately the voice is not Indian. The customer's trust is gone before the introduction is finished. This single failure eliminated multiple otherwise well-reviewed TTS providers.</p>
+    <p><strong>The fix — discovered during fine-tuning:</strong> writing <strong>मैं</strong> in <strong>देवनागरी</strong> (Devanagari) script directly in the system prompt forces the TTS engine to process the correct phoneme. Non-obvious, and only discovered after live testing.</p>
+    <p>The same principle applies to every regional language in the library. Tamil words like <em>seri</em> (okay), <em>illa</em> (no), <em>aiyyo</em> (exasperation) — written in Roman script, ElevenLabs mispronounces every one. Written in Tamil script — <strong>சரி</strong>, <strong>இல்ல</strong>, <strong>ஐயோ</strong> — the engine handles them correctly. The rule: wherever a regional language word appears, write it in native script, not transliterated.</p>
   </div>
 
   <h3>The Model Evaluation</h3>
@@ -642,8 +641,7 @@ These are people who built the infrastructure through which many of the borrower
 
   <div class="insight-box">
     <p><strong>On choosing an orchestration platform over building raw</strong></p>
-    <p>Selecting <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> was a deliberate trade-off, entered into with clear eyes. The team understood two things going in. First, using an orchestration layer means paying a margin on top of the underlying AI provider costs — you are not calling Deepgram, Gemini, and Cartesia directly at their API rates. Second, routing audio through an additional infrastructure layer adds latency. Every audio packet travels to Bolna.ai's servers before being distributed to the STT, LLM, and TTS providers and returned. This is measurable overhead, not theoretical.</p>
-    <p></p>
+    <p>Selecting <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> was a deliberate trade-off. Two things were clear going in. First, an orchestration layer means paying a margin over direct API costs — you are not calling Deepgram, GPT-4.1-mini, and ElevenLabs at their API rates. Second, routing audio through an additional layer adds latency — every packet travels to Bolna.ai's servers before reaching STT, LLM, and TTS providers. Measurable overhead, accepted for a 7-day build timeline.</p>
   </div>
 
   <!-- FIGURE 2: Redesigned Architecture Diagram -->
@@ -819,9 +817,9 @@ These are people who built the infrastructure through which many of the borrower
 
   <p>The sprint and decision happened in a shared office. Co-founders could ask questions and resolve disagreements in seconds. Remote teams build. Co-located teams build fast and right.</p>
 
-  <h3>The Full Training Persona Library — 9 AI Debtors</h3>
+  <h3>The Full Training Persona Library — 6 AI Debtors</h3>
 
-  <p>With the go-ahead given, the next task was to expand the system from a single persona to a full library. This required a dedicated tool — and the CTO had anticipated it. Before writing a single persona specification, he had built what the team calls the <strong>Persona Spawner</strong>: a purpose-built script that generates the complete persona configuration matrix, formats each persona as a structured <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a>-compatible specification, and uploads the full set programmatically to the platform's API. The Persona Spawner was the first thing built after the architectural decision. Without a systematic generation tool, expanding from one persona to nine would have required configuring each agent profile by hand inside the Bolna.ai interface — hours of error-prone manual work for what should be a scripted operation. With it, the full variant matrix was generated and deployed in two to three hours. By 12:30 PM on Tuesday, six personas were live. The library expanded to nine by end of day.</p>
+  <p>Before writing a single persona specification, the CTO built what the team calls the <strong>Persona Spawner</strong>: a script that generates the complete persona configuration matrix, formats each as a structured <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a>-compatible specification, and uploads the full set programmatically to the platform's API. Without it, each profile would need manual configuration inside the interface — hours of error-prone work. With it, the full library was generated and deployed in two to three hours. By 12:30 PM on Tuesday, six personas were live.</p>
 
   <!-- FIGURE 3: Persona Grid -->
   <div class="persona-grid">
@@ -870,17 +868,6 @@ These are people who built the infrastructure through which many of the borrower
       <div class="pc-challenge">Community-reputation minded. Casual deferrer — always meaning to fix it. What matters is how the situation looks to family and neighbours.</div>
     </div>
     <div class="persona-card">
-      <div class="pc-name">Karthikeyan Subramanian</div>
-      <div class="pc-demo">45 · IT Project Manager · Bangalore</div>
-      <div class="pc-tags">
-        <span class="pc-tag voice">v8.7</span>
-        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
-        <span class="pc-tag">English-Tamil-Hinglish</span>
-        <span class="pc-tag dpd">222 CC / 215 PL DPD</span>
-      </div>
-      <div class="pc-challenge">Analytical deferrer. XLRI MBA. Has read the legal notice carefully, waiting for the right moment. Challenges agent on regulatory procedure.</div>
-    </div>
-    <div class="persona-card">
       <div class="pc-name">Sunita Kapoor</div>
       <div class="pc-demo">44 · Housewife · Lucknow</div>
       <div class="pc-tags">
@@ -902,41 +889,17 @@ These are people who built the infrastructure through which many of the borrower
       </div>
       <div class="pc-challenge">Deeply private. Debt from daughter's kidney treatment — undisclosed to family. Fear of disclosure is stronger than fear of the debt itself.</div>
     </div>
-    <div class="persona-card">
-      <div class="pc-name">Rekha Desai</div>
-      <div class="pc-demo">38 · Catering Business Owner · Pune</div>
-      <div class="pc-tags">
-        <span class="pc-tag voice">v8.7</span>
-        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
-        <span class="pc-tag">Marathi-Hinglish</span>
-        <span class="pc-tag dpd">218 CC / 211 PL DPD</span>
-      </div>
-      <div class="pc-challenge">Settlement-focused. "Settlement option kya hai?" asked in every prior call — never got an answer. Wants to resolve on her terms.</div>
-    </div>
-    <div class="persona-card">
-      <div class="pc-name">Lakshmi Nair</div>
-      <div class="pc-demo">48 · School Principal · Thrissur, Kerala</div>
-      <div class="pc-tags">
-        <span class="pc-tag voice">v8.7</span>
-        <span class="pc-tag level-range">L1–L5 · System-Managed</span>
-        <span class="pc-tag">Tamil-Hinglish-English</span>
-        <span class="pc-tag dpd">208 CC / 201 PL DPD</span>
-      </div>
-      <div class="pc-challenge">Dignity guard. Accustomed to being the authority in a room. Disengages immediately if an agent sounds like they are reading from a script.</div>
-    </div>
   </div>
-  <p class="fig-cap"><strong>Figure 3.</strong> The full training persona library: 9 AI debtors across 3 voice profiles (Male v1, Female v1, South Indian v1). All personas carry DPD &gt;200, reflecting accounts that have received a formal legal notice. Each operates across all 5 difficulty levels, covering personal loan and credit card scenarios. Difficulty is not visible to agents — the system assigns it server-side based on progression history.</p>
+  <p class="fig-cap"><strong>Figure 3.</strong> Six representative personas from the training library, across 3 voice profiles (Male v1, Female v1, South Indian v1). All carry DPD &gt;200 (post-legal-notice accounts). Each operates across all 5 difficulty levels, covering personal loan and credit card scenarios. Difficulty is not visible to agents — the system assigns it server-side based on progression history.</p>
 
   <div class="section-rule"><span>The Debug Loop</span></div>
 
   <!-- ═══ PART 4b: PERSONA DEBUG ═══ -->
   <h2>Generating a Persona Takes Minutes. Making It Behave Takes Days.</h2>
 
-  <p>The Persona Spawner generates the specification. What it cannot do is verify that the AI behaves correctly once the specification is deployed to <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> and a real caller starts talking. That verification required a different kind of work — methodical, iterative, and considerably less glamorous than the build narrative suggests.</p>
+  <p>The Persona Spawner generates the specification. What it cannot do is verify that the AI behaves correctly once deployed and a real caller starts talking. That verification required different work — methodical, iterative, less glamorous than the build narrative suggests.</p>
 
-  <p>Every call produced two outputs: voice conversation plus structured JSON with transcript, scorecard, metadata, coaching note, outcome. This machine-readable artifact enabled treating prompt debugging as engineering work, not guesswork.</p>
-
-  <p>The CTO analyzed each JSON transcript line by line—reading AI output against persona specs. A 20/28 score revealed exactly which 4 criteria failed, in which domain, with coaching notes.</p>
+  <p>Every call produced two outputs: voice conversation plus structured JSON with transcript, scorecard, metadata, coaching note, and outcome. Critically, each event in the JSON trace shows which stack component fired — synthesizer (ElevenLabs TTS), transcriber (Deepgram STT), or LLM (Azure/GPT-4.1-mini) — with timestamps, making it trivial to pinpoint where in the conversation stack a failure occurred. This machine-readable artifact enabled treating prompt debugging as engineering, not guesswork. A 20/28 score revealed exactly which criteria failed, in which domain, with coaching notes.</p>
 
   <!-- Figure: Real JSON trace from actual test call — Loan-ea9e82c2 -->
   <div class="code-block" style="font-size:0.74rem;line-height:1.75;position:relative;">
@@ -1024,9 +987,7 @@ These are people who built the infrastructure through which many of the borrower
     </div>
   </div>
 
-  <p>With one persona validated, how to validate eight others without 18 more phone calls? That's 2+ hours of manual testing catching only bugs that surface in specific runs.</p>
-
-  <p>The answer was to separate the voice layer from the behaviour layer. Every failure mode being hunted — loops, section skips, role confusion — is an LLM output problem. The same model that runs inside <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> can be called directly via API. The CTO built a Python regression harness: load a persona prompt, inject a difficulty level, replay a hand-crafted caller script turn by turn, record every response as raw JSON. No phone call. No audio.</p>
+  <p>With one persona validated, how to validate the rest without hours of manual phone calls? The answer: separate voice from behaviour. Every failure mode — loops, section skips, role confusion — is an LLM output problem. The CTO built a Python regression harness: load a persona prompt, inject difficulty, replay a caller script turn by turn, record every response as raw JSON. No phone call. No audio.</p>
 
   <p>Six scripts, each targeting a distinct failure mode:</p>
 
@@ -1063,15 +1024,15 @@ These are people who built the infrastructure through which many of the borrower
     </div>
   </div>
 
-  <p>The run model is GPT-4.1-mini — identical to production, 360 times per full sweep. The analysis pass uses Claude Opus 4.6 with extended thinking: prompt debugging is a deep but finite analytical problem, and it runs once per batch, not per conversation. A batch runner handles the full matrix in ~35 minutes with a <code>--dry-run</code> flag to preview scope before spending credits. Script 04 was the highest-signal run — it caught the premature trigger immediately, a one-line fix applied across all thirteen files. Scripts 05a/b confirmed the Devanagari exception clause. Script 06 passed clean, no change needed.</p>
+  <p>The run model is GPT-4.1-mini — identical to production, 360 combos per full sweep. The analysis pass uses Claude Opus 4.6 with extended thinking. A batch runner handles the full matrix in ~35 minutes. Script 04 was the highest-signal run — it caught a premature trigger immediately, a one-line fix across all persona files. Scripts 05a/b confirmed the Devanagari exception. Script 06 passed clean.</p>
 
-  <p>Scale: 360 test combos at 5 min each = 30 hours phone testing; the harness ran them in 35 minutes. More importantly, the harness existed before go-live. Most teams ship, then fix production breaks. Pre-live regression harnesses covering known failure modes come from decades of production-ready systems work.</p>
+  <p>Scale: 360 test combos at 5 min each = 30 hours of phone testing; the harness ran them in 35 minutes. More importantly, it existed before go-live — most teams ship first and fix production breaks later.</p>
 
-  <p>With the testing infrastructure in place, the Persona Spawner changes character entirely. It is no longer just a tool for generating nine personas. It is a production line. The Spawner generates the specification, the testing script validates it against the full battery of known failure patterns, and the agent is deployed to <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a>'s API — all programmatically. A persona that would have taken hours to configure, test by phone call, debug, and redeploy can now go from specification to validated deployment in minutes. The same process that produced nine personas can produce a hundred. Different banks, different products, different emotional archetypes, different regional languages — each one generated from the same template logic, each one tested against the same LLM that will run it in production (currently GPT-4.1-mini on Azure), each one deployed without a human touching the <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> interface.</p>
+  <p>With testing infrastructure in place, the Persona Spawner becomes a production line. Specification → automated validation → API deployment, all programmatic. A persona goes from spec to validated deployment in minutes. The same process that produced six personas can produce a hundred — different banks, products, emotional archetypes, regional languages — each tested against the same LLM running in production.</p>
 
   <div class="insight-box">
     <p><strong>Why this matters beyond this build</strong></p>
-    <p>Structured JSON output wasn't incidental—it was an explicit requirement. Audio-only systems are only auditable by listening. Timestamped, structured records enable scale auditing. This distinction is critical for customer-facing deployment across 650,000 accounts.</p>
+    <p>Structured JSON output wasn't incidental — it was an explicit requirement. Audio-only systems are only auditable by listening. Timestamped, structured records enable auditing at scale.</p>
   </div>
 
   <div class="section-rule"><span>The Scorecard</span></div>
@@ -1227,7 +1188,7 @@ These are people who built the infrastructure through which many of the borrower
   <p>At $0.08/min, 250 agents doing 5-6 min daily = ~$100-120/day for entire training. Human-led training at this scale isn't comparable. The AI advantage is scale and reach.</p>
 
   <div class="aside-box">
-    <p><strong>The broader implication:</strong> These figures are for the training system only — agents practising before their shift. The broader question the team is actively exploring is what a similar architecture would cost deployed as a customer-facing tool: an AI that handles introductory calls, objection handling, and payment bridging across the full 650,000-account base and the dormant 80% beyond it. The economics of that deployment — and its implications for the industry — are a separate story.</p>
+    <p><strong>The broader implication:</strong> These figures are for the training system only — agents practising before their shift. The broader question the team is actively exploring is what a similar architecture would cost deployed as a customer-facing tool: an AI that handles introductory calls, objection handling, and payment bridging across the full account base and the dormant 80% beyond it. The economics of that deployment — and its implications for the industry — are a separate story.</p>
   </div>
 
   <div class="section-rule"><span>The CRM Integration</span></div>
@@ -1239,7 +1200,7 @@ These are people who built the infrastructure through which many of the borrower
 
   <p>But standalone pilots aren't production systems. Production means CRM integration as the first workflow before live calls—not optional, separate access. The system gates live call eligibility based on warm-up scores.</p>
 
-  <p>Here is the context that makes what follows remarkable. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> runs four engineers across its entire technology operation. Those four engineers are responsible for the CRM managing $700 million in live assets, the data pipelines feeding portfolio analytics, the agent management tooling, and the day-to-day operational infrastructure of a 16-person company managing 650,000 accounts. This is not a team with spare capacity. Each engineer is running at full utilisation on systems that cannot be deprioritised. When a crisis arrives, there is no one to redirect. The CTO could not tap the engineering team for this build — the engineering team was already keeping the operation alive. The build had to be done by the one person who both understood the architecture and had time that could be temporarily reprioritised: himself.</p>
+  <p>Here is the context that makes what follows remarkable. <a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> runs four engineers across its entire technology operation. Those four engineers are responsible for the CRM managing live assets, the data pipelines feeding portfolio analytics, the agent management tooling, and the day-to-day operational infrastructure that keeps the entire operation running. This is not a team with spare capacity. Each engineer is running at full utilisation on systems that cannot be deprioritised. When a crisis arrives, there is no one to redirect. The CTO could not tap the engineering team for this build — the engineering team was already keeping the operation alive. The build had to be done by the one person who both understood the architecture and had time that could be temporarily reprioritised: himself.</p>
 
   <p>He had been awake for over 40 hours. He had personally built and configured the <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> trainer from scratch overnight on Monday. He was 45 years old and had not personally written a module of this size in over a decade. He had been travelling continuously for a month.</p>
 
@@ -1251,136 +1212,85 @@ These are people who built the infrastructure through which many of the borrower
 
   <p>The finished system—Django backend, React UI, Bolna integration, CRM adapter, 360-test harness—totals ~16,000 lines, 152 automated tests. A 4-5 person team would quote 6-8 weeks; this was 96 hours solo, end-to-end.</p>
 
-  <!-- FIGURE 6: CRM UI Mock -->
-  <div class="ui-mock-wrapper">
-    <div class="ui-mock-label">Figure 6 — CRM Trainer Interface: Agent View (Mockup)</div>
-    <div class="ui-mock-states">
-
-      <div class="ui-mock-state">
-        <div class="mock-state-label">State 1 — Briefing</div>
-        <div class="mock-crm-nav">
-          <span class="mock-nav-logo"><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> CRM</span>
-          <div class="mock-nav-sep"></div>
-          <span class="mock-nav-item">Accounts</span>
-          <span class="mock-nav-item active">Practice Calls</span>
-          <span class="mock-nav-item">History</span>
-        </div>
-        <div class="mock-trainer-header">
-          <span class="mock-trainer-title">Practice Calls <span class="mock-trainer-badge">AI Trainer</span></span>
-        </div>
-        <div class="mock-briefing">
-          <div class="mock-briefing-card">
-            <div class="mock-persona-name">Rajesh Gupta</div>
-            <div class="mock-persona-meta">43 yrs · Accounts Supervisor · Kanpur, UP</div>
-            <div class="mock-persona-brief">Polite deferrer. 7 previous calls — always "main dekhta hoon", never paid. Genuine scam suspicion.</div>
-            <div class="mock-stats-row">
-              <div>
-                <div class="mock-stat"><span class="ms-label">Product</span><span class="ms-val">Credit Card</span></div>
-                <div class="mock-stat"><span class="ms-label">Outstanding</span><span class="ms-val">₹72,000</span></div>
-                <div class="mock-stat"><span class="ms-label">DPD</span><span class="ms-val">243</span></div>
-              </div>
-              <div>
-                <div class="mock-stat"><span class="ms-label">Missed</span><span class="ms-val">8 min.</span></div>
-                <div class="mock-stat"><span class="ms-label">Portfolio</span><span class="ms-val">Portfolio 3</span></div>
-                <div class="mock-stat"><span class="ms-label">Prior calls</span><span class="ms-val">7</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="mock-system-note">Difficulty set by system — varies each call based on your history.</div>
-          <div class="mock-dial-btn">▷ Start Practice Call</div>
-        </div>
-      </div>
-
-      <div class="ui-mock-state">
-        <div class="mock-state-label">State 2 — Call in Progress</div>
-        <div class="mock-crm-nav">
-          <span class="mock-nav-logo"><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> CRM</span>
-          <div class="mock-nav-sep"></div>
-          <span class="mock-nav-item">Accounts</span>
-          <span class="mock-nav-item active">Practice Calls</span>
-          <span class="mock-nav-item">History</span>
-        </div>
-        <div class="mock-trainer-header">
-          <span class="mock-trainer-title">Practice Calls <span class="mock-trainer-badge">AI Trainer</span></span>
-        </div>
-        <div class="mock-incall">
-          <div class="mock-live-indicator">
-            <div class="mock-live-dot"></div>
-            <span class="mock-live-label">Call in Progress</span>
-            <span class="mock-live-timer">02:47</span>
-          </div>
-          <div class="mock-call-card">
-            <div class="mock-call-name">Rajesh Gupta</div>
-            <div class="mock-call-meta">Credit Card · Portfolio 3</div>
-            <div class="mock-call-status">The AI debtor is calling your registered number. Conduct the call as you would with a real customer.</div>
-          </div>
-          <div class="mock-polling-bar"><div class="mock-polling-fill"></div></div>
-          <div style="font-family:var(--mono);font-size:0.53rem;color:#6b6560;margin-top:0.3rem;">Waiting for score…</div>
-        </div>
-      </div>
-
-      <div class="ui-mock-state">
-        <div class="mock-state-label">State 3 — Scorecard</div>
-        <div class="mock-crm-nav">
-          <span class="mock-nav-logo"><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> CRM</span>
-          <div class="mock-nav-sep"></div>
-          <span class="mock-nav-item">Accounts</span>
-          <span class="mock-nav-item active">Practice Calls</span>
-          <span class="mock-nav-item">History</span>
-        </div>
-        <div class="mock-trainer-header">
-          <span class="mock-trainer-title">Practice Calls <span class="mock-trainer-badge">AI Trainer</span></span>
-        </div>
-        <div class="mock-scorecard">
-          <div class="mock-score-header">
-            <span class="mock-score-badge">20/28</span>
-            <span class="mock-score-label">GOOD</span>
-          </div>
-          <div class="mock-domain">
-            <div class="mock-domain-header">
-              <span>Introduction Quality</span>
-              <span class="domain-score">6 / 10</span>
-            </div>
-            <div class="mock-criteria-grid">
-              <div class="mock-criterion"><span class="check pass">✓</span> Time greeting</div>
-              <div class="mock-criterion"><span class="check fail">✗</span> Self-intro</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> Bank context</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> Debt assignment</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> Licensed status</div>
-            </div>
-          </div>
-          <div class="mock-domain">
-            <div class="mock-domain-header">
-              <span>Call Quality</span>
-              <span class="domain-score">10 / 14</span>
-            </div>
-            <div class="mock-criteria-grid">
-              <div class="mock-criterion"><span class="check pass">✓</span> No fumble</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> No harsh lang.</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> Answered Qs</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> Cust. satisfied</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> Moved fwd</div>
-              <div class="mock-criterion"><span class="check fail">✗</span> Closing remark</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> Regulatory</div>
-            </div>
-          </div>
-          <div class="mock-domain">
-            <div class="mock-domain-header">
-              <span>Scam-Trust</span>
-              <span class="domain-score">4 / 4</span>
-            </div>
-            <div class="mock-criteria-grid">
-              <div class="mock-criterion"><span class="check pass">✓</span> No OTP</div>
-              <div class="mock-criterion"><span class="check pass">✓</span> Verification</div>
-            </div>
-          </div>
-          <div class="mock-coaching"><strong>Coaching:</strong> Introduce yourself by name at the very start of the call — before asking any question. The customer needs to know who they are speaking with.</div>
-        </div>
-      </div>
-
+  <!-- FIGURE 6: Real CRM Trainer UI — Call Briefing -->
+  <div style="background:var(--paper);border:1px solid var(--rule);margin:2.5rem 0;overflow:hidden;max-width:620px;margin-left:auto;margin-right:auto;">
+    <!-- CALL BRIEFING header -->
+    <div style="display:flex;align-items:center;gap:0.75rem;padding:0.9rem 1.5rem;border-bottom:1px solid var(--rule);">
+      <span style="flex:1;border-top:1px dashed var(--rule);"></span>
+      <span style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--caption);white-space:nowrap;">Call Briefing</span>
+      <span style="flex:1;border-top:1px dashed var(--rule);"></span>
     </div>
+
+    <!-- Intro script accordion -->
+    <div style="margin:0.75rem 1.25rem;background:white;border:1px solid var(--rule);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.6rem;">
+      <span style="font-size:0.9rem;">📋</span>
+      <span style="font-size:0.82rem;font-weight:500;">Intro script</span>
+      <span style="font-size:0.78rem;color:var(--caption);"> — say this at the start of every call</span>
+      <span style="margin-left:auto;font-size:0.75rem;color:var(--caption);">∨</span>
+    </div>
+
+    <!-- Dark persona card -->
+    <div style="background:#1a1612;margin:0.75rem 1.25rem;padding:1.25rem 1.5rem;color:#e8e0d5;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <span style="font-family:var(--serif);font-size:1.6rem;font-weight:900;color:white;">Rekha Desai</span>
+          <span style="font-size:0.9rem;color:#6b6560;margin-left:0.5rem;">↻</span>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:#6b6560;margin-bottom:0.25rem;">Age · Sex</div>
+          <div style="border:1px solid #4a4440;padding:0.3rem 0.6rem;font-family:var(--mono);font-size:0.82rem;color:white;">38 · F</div>
+        </div>
+      </div>
+      <div style="font-family:var(--mono);font-size:0.72rem;color:#6b6560;margin-top:0.5rem;letter-spacing:0.05em;">Catering Business Owner · Pune</div>
+    </div>
+
+    <!-- Two-column: Situation + Behaviour | Stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;padding:1rem 1.25rem 0.5rem;">
+      <!-- Left: Situation + Behaviour -->
+      <div>
+        <div style="border-left:3px solid var(--accent);padding-left:0.75rem;margin-bottom:1.25rem;">
+          <div style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;">Situation</div>
+          <p style="font-size:0.8rem;line-height:1.5;margin:0;">PL for business expansion, CC for working capital during growth. Major wedding contract and two corporate tiffin accounts fell through same quarter.</p>
+        </div>
+        <div style="border-left:3px solid var(--accent);padding-left:0.75rem;">
+          <div style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;">Behaviour</div>
+          <p style="font-size:0.8rem;line-height:1.5;margin:0;">Still operating; timing is the problem. Stayed engaged across prior calls — exploring resolution, not avoiding. Understands numbers, pushes back on settlement without clear breakdown. Come with specific OTS figure and rationale; will negotiate if terms make business sense.</p>
+        </div>
+      </div>
+      <!-- Right: Stats table -->
+      <div>
+        <table style="width:100%;border-collapse:collapse;font-size:0.78rem;">
+          <tr style="border-bottom:1px dotted var(--rule);"><td style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--caption);padding:0.4rem 0;">Outstanding</td><td style="text-align:right;font-family:var(--mono);font-weight:500;padding:0.4rem 0;">₹3,50,000</td></tr>
+          <tr style="border-bottom:1px dotted var(--rule);"><td style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--caption);padding:0.4rem 0;">Bank</td><td style="text-align:right;font-family:var(--mono);font-weight:500;padding:0.4rem 0;">Axis Bank</td></tr>
+          <tr style="border-bottom:1px dotted var(--rule);"><td style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--caption);padding:0.4rem 0;">Product</td><td style="text-align:right;font-family:var(--mono);font-weight:500;padding:0.4rem 0;">Personal Loan</td></tr>
+          <tr style="border-bottom:1px dotted var(--rule);"><td style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--caption);padding:0.4rem 0;">Overdue</td><td style="text-align:right;font-family:var(--mono);font-weight:500;padding:0.4rem 0;">₹75,000</td></tr>
+          <tr style="border-bottom:1px dotted var(--rule);"><td style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--caption);padding:0.4rem 0;">DPD</td><td style="text-align:right;font-family:var(--mono);font-weight:500;padding:0.4rem 0;">211 days</td></tr>
+          <tr style="border-bottom:1px dotted var(--rule);"><td style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--caption);padding:0.4rem 0;">Missed EMIs</td><td style="text-align:right;font-family:var(--mono);font-weight:500;padding:0.4rem 0;">6</td></tr>
+          <tr style="border-bottom:1px dotted var(--rule);"><td style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--caption);padding:0.4rem 0;">Prior Calls</td><td style="text-align:right;font-family:var(--mono);font-weight:500;padding:0.4rem 0;">6</td></tr>
+          <tr><td style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--caption);padding:0.4rem 0;">Legal Notice (days ago)</td><td style="text-align:right;font-family:var(--mono);font-weight:500;padding:0.4rem 0;">35</td></tr>
+        </table>
+
+        <!-- Call Goal -->
+        <div style="background:#eaf4ff;border:1px solid #c0d8f0;padding:0.75rem 1rem;margin-top:0.75rem;">
+          <div style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:#2a6aa0;margin-bottom:0.35rem;">🎯 Call Goal</div>
+          <p style="font-size:0.78rem;line-height:1.45;margin:0;">Get a <strong>Promise to Pay</strong> — a specific date ("I'll pay by Friday") or a callback commitment. If they stall, offer a follow-up slot before closing.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone + Start Practice Call button -->
+    <div style="display:flex;margin:1rem 1.25rem 0;gap:0;overflow:hidden;border-radius:3px;">
+      <div style="background:white;border:1px solid var(--accent);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
+        <span style="color:var(--accent);font-size:0.85rem;">📞</span>
+        <span style="font-family:var(--mono);font-size:0.82rem;color:var(--ink);">+9190000000</span>
+      </div>
+      <div style="background:var(--accent);color:white;flex:1;padding:0.7rem 1rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;font-family:var(--sans);font-size:0.88rem;font-weight:500;">
+        🎙 Start Practice Call
+      </div>
+    </div>
+    <div style="text-align:center;padding:0.6rem 1.25rem 1rem;font-size:0.72rem;color:var(--caption);">📞 Your phone will ring — answer within 30 seconds</div>
   </div>
-  <p class="fig-cap"><strong>Figure 6.</strong> The CRM trainer interface across three states: briefing card (agent sees persona background and portfolio context; difficulty level is not shown), in-call (live polling for score), and scorecard (28-point result with domain breakdown and single coaching note). Agents must clear their warm-up score threshold before the system unlocks access to live customer accounts for the day.</p>
+  <p class="fig-cap"><strong>Figure 6.</strong> The live CRM trainer interface — call briefing view. Agents see the persona's situation, behavioural profile, financial details, and a specific call goal before dialling. Difficulty level is assigned server-side and not visible. Agents must clear their warm-up score threshold before the system unlocks access to live customer accounts for the day.</p>
 
   <div class="section-rule"><span>The Deployment</span></div>
 
