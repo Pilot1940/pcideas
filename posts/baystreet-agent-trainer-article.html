@@ -613,7 +613,7 @@
       </tr>
       <tr class="rejected">
         <td></td>
-        <td>Google Gemini 3.1 Flash Lite (Preview)</td>
+        <td>Google Gemini 2.0 Flash Lite (Preview)</td>
         <td>Lowest latency at this cost point; evaluated as initial choice; acceptable persona fidelity but replaced for stronger instruction-following</td>
         <td><span class="verdict fallback">↑ Evaluated</span></td>
       </tr>
@@ -853,7 +853,7 @@
       <div class="pc-name">Ravi Krishnamurthy</div>
       <div class="pc-demo">45 · IT Project Manager · Bangalore</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag voice">v8.8</span>
         <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">English-Tamil-Hinglish</span>
         <span class="pc-tag dpd">234 CC / 226 PL DPD</span>
@@ -864,7 +864,7 @@
       <div class="pc-name">Imran Sheikh</div>
       <div class="pc-demo">36 · Textile Wholesaler · Hyderabad</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag voice">v8.8</span>
         <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Urdu-Hinglish</span>
         <span class="pc-tag dpd">233 CC / 227 PL DPD</span>
@@ -875,7 +875,7 @@
       <div class="pc-name">Sunita Kapoor</div>
       <div class="pc-demo">44 · Housewife · Lucknow</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag voice">v8.9</span>
         <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Hindi-Hinglish</span>
         <span class="pc-tag dpd">222 CC / 215 PL DPD</span>
@@ -886,7 +886,7 @@
       <div class="pc-name">Nasreen Ansari</div>
       <div class="pc-demo">41 · English Teacher · Mumbai (Bandra)</div>
       <div class="pc-tags">
-        <span class="pc-tag voice">v8.7</span>
+        <span class="pc-tag voice">v8.9</span>
         <span class="pc-tag level-range">L1–L5 · System-Managed</span>
         <span class="pc-tag">Urdu-Hinglish</span>
         <span class="pc-tag dpd">228 CC / 220 PL DPD</span>
@@ -1212,7 +1212,7 @@
 
   <p>By 2 PM: 129 tests passing, zero ruff findings. A Django app with three backend changes and five React components.</p>
 
-  <p>The finished system—Django backend, React UI, Bolna integration, CRM adapter, 360-test harness—totals ~16,000 lines, 152 automated tests. A 4-5 person team would quote 6-8 weeks; this was 96 hours solo, end-to-end.</p>
+  <p>The finished system—Django backend, React UI, Bolna integration, CRM adapter, 360-test harness—totals ~16,000 lines, 160 automated tests. A 4-5 person team would quote 6-8 weeks; this was 96 hours solo, end-to-end.</p>
 
   <!-- FIGURE 6: Real CRM Trainer UI — Call Briefing -->
   <div style="background:var(--paper);border:1px solid var(--rule);margin:2.5rem 0;overflow:hidden;max-width:620px;margin-left:auto;margin-right:auto;">
@@ -1345,8 +1345,8 @@
     <div class="timeline-item">
       <div class="timeline-time">Tue<br />Evening</div>
       <div class="timeline-content">
-        <strong>Pre-production call with <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> team</strong>
-        <p>CTO schedules direct call with the Bolna.ai team before going to production. They review the full system: prompt structure, endpointing parameters, TTS buffer settings, and LLM behaviour under Hinglish load. Feedback leads to final stack change — ElevenLabs eleven_turbo_v2_5 confirmed over Cartesia, GPT-4.1-mini on Azure confirmed as LLM. Volume discount arrangement agreed for production deployment. System stabilised and ready for CRM integration.</p>
+        <strong>Standalone trainer validated, manual pilot begins</strong>
+        <p>Agents dialling in via Bolna.ai interface, receiving callbacks from the AI trainer, scores coming back clean. System working — ready for production hardening.</p>
       </div>
     </div>
     <div class="timeline-item">
@@ -1354,6 +1354,13 @@
       <div class="timeline-content">
         <strong>CRM module built</strong>
         <p>CTO builds standalone Django integration module with AI pair-programmer. 129 tests, 0 ruff findings. Developer handover ready.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">Wed<br />Evening</div>
+      <div class="timeline-content">
+        <strong>Pre-production call with <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> team</strong>
+        <p>CTO schedules direct call with the Bolna.ai team before going to production. They review the full system: prompt structure, endpointing parameters, TTS buffer settings, and LLM behaviour under Hinglish load. Feedback leads to final stack change — ElevenLabs eleven_turbo_v2_5 confirmed over Cartesia, GPT-4.1-mini on Azure confirmed as LLM. Volume discount arrangement agreed for production deployment.</p>
       </div>
     </div>
     <div class="timeline-item">
@@ -1379,19 +1386,17 @@
 
   <p>It would be easy to read this story as a story about AI. About a clever technology that compressed a weeks-long project into four days. And that reading is not wrong — the tools mattered enormously. <a href="https://bolna.ai" target="_blank" rel="noopener">Bolna.ai</a> as an orchestration layer, Claude Code as an AI pair-programmer, the research and reasoning tools that compressed five hours of architectural analysis into an evening — without these, the timeline was not possible.</p>
 
-  <p>But the more important story is about what AI requires to work at this level. The technology did not decide that the problem was worth solving at 5 PM on a Monday. It did not recognise the acoustic constraints of 8kHz PSTN telephony and understand why they changed the TTS evaluation criteria. It did not catch the <em>mein/MAIN</em> pronunciation failure mode that ruled out entire categories of TTS providers. It did not design a scoring rubric that mapped precisely to the failure modes of Indian collections agents handling debt assignment objections for the first time. It did not know that a 100-millisecond latency trade-off was acceptable in a training context but not in a customer-facing one.</p>
+  <p>But the more important story is about what AI requires to work at this level.</p>
 
-  <p>Every decision needed someone who spent years in this industry: the 25-year CTO, CEO listening to breaks, collections head knowing agent failures, co-founders who built the original lending infrastructure.</p>
+  <p>The technology did not decide at 5 PM on a Monday that this problem was worth solving. It did not hear a collections call break down and know — from years of listening — exactly which sentence lost the customer. It did not recognise that 8kHz PSTN telephony changes TTS evaluation criteria in ways no benchmark captures. It did not catch the <em>mein/MAIN</em> pronunciation failure that ruled out entire provider categories in a single test call. It did not design a scoring rubric mapped to the precise failure modes of Indian collections agents encountering debt assignment objections for the first time. It did not know that 100 milliseconds of latency is acceptable in training but unacceptable when a real customer is on the line. It did not understand that a woman in Lucknow will not discuss her husband's debt with a stranger who opens the call wrong.</p>
+
+  <p>A CTO with 25 years in financial technology knew the architecture. A CEO who personally listens to call recordings every morning knew the customer. A collections head who built the agency network knew where agents break. Co-founders who wrote the original lending platform knew every data constraint. Every one of them was in the same room, at 2 AM, making decisions with no tickets filed, no alignment meetings scheduled, no escalation chains invoked. That is not a process optimisation. That is a precondition.</p>
 
   <div class="pullquote">
     <p>"AI does not replace experience. It multiplies it. In the hands of people who know what they are building and why, it compresses months into days. In the hands of people who do not, it produces fast nonsense."</p>
   </div>
 
-  <p>One more thing: done in a shared office by a team working together years, founders present for every decision. Speed came from absent coordination friction—no tickets, escalation, or alignment meetings blocking 2 AM decisions.</p>
-
-  <p>When experienced, trusting co-located people with domain depth get modern AI tools—this becomes possible. Not incremental improvement. A fundamentally different capability.</p>
-
-  <p><a href="https://baysys.ai" target="_blank" rel="noopener">BaySys.ai</a> is managing 650,000 customer accounts with 16 people at headquarters. A dormant portfolio that the market prices as worth nothing. A cost-to-collect below 29%. That combination is not a limitation. It is the proof.</p>
+  <p>When experienced, trusting, co-located people with deep domain knowledge get modern AI tools — the result is not incremental improvement. It is a fundamentally different capability. This is what that looks like: 96 hours, one builder, 160 tests, a system training 250 agents overnight on portfolios the market prices as worth nothing.</p>
 
   <div class="call-players">
     <div class="call-player">
