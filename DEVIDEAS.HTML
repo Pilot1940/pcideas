@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dev's Math Website [it knows only addition]</title>
+</head>
+
+<body>
+
+<h1>Dev's Math Calculator</h1>
+
+<input type="text" id="question" placeholder="Type math here">
+<button onclick="answerQuestion()">Solve</button>
+
+<h1 id="answer"></h1>
+
+<script>
+function answerQuestion() {
+    let q = document.getElementById("question").value;
+    let result = eval(q);
+    document.getElementById("answer").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
