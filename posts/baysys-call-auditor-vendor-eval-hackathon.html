@@ -67,7 +67,7 @@ body {
 }
 .hero h1 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(24px, 5vw, 32px);
+  font-size: 32px;
   font-weight: 700;
   color: var(--ink);
   line-height: 1.25;
@@ -88,7 +88,7 @@ body {
 /* ── Section headings ── */
 h2 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(19px, 3.5vw, 22px);
+  font-size: 22px;
   font-weight: 600;
   color: var(--ink);
   margin: 48px 0 8px;
@@ -270,7 +270,8 @@ hr {
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
-  .hero { padding: 32px 0 28px; }
+  .hero h1 { font-size: 24px; }
+  h2 { font-size: 19px; }
   .page-wrapper { padding: 0 16px 48px; }
   table { font-size: 12px; }
   th, td { padding: 6px 8px; }
@@ -366,48 +367,63 @@ hr {
 
 <!-- ═══ 4. SCORING RUBRIC ═══ -->
 <h2>4. The scoring rubric</h2>
-<p>Every call is scored against <strong>20 parameters</strong> across 6 categories for a maximum of <strong>110 points</strong>. Seven parameters carry a <span class="tag tag-fatal">FATAL</span> flag — any single FATAL violation means the call <strong>fails</strong>, regardless of total score.</p>
+<p>Every call is scored against the <strong>UVARCL Collections Call Quality Scorecard v2</strong> — 19 parameters across 5 groups, maximum <strong>100 points</strong> (weighted by group). Seven parameters carry a <span class="tag tag-fatal">FATAL</span> flag — any single FATAL = the call <strong>fails</strong>, regardless of total score.</p>
 
+<h3>Group weights</h3>
+<table>
+<thead>
+<tr><th>Group</th><th>Weight</th><th>Focus</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Introduction Quality</strong></td><td>20%</td><td>Greeting, self-ID, bank context, ARC identity, RPV</td></tr>
+<tr><td><strong>Call Quality</strong></td><td>45%</td><td>Fluency, no abuse, objection handling, de-escalation, PTP, closing</td></tr>
+<tr><td><strong>Compliance &amp; RBI</strong></td><td>25%</td><td>Calling hours, TCP, misrepresentation, consequences</td></tr>
+<tr><td><strong>Scam &amp; Trust Handling</strong></td><td>10%</td><td>No OTP/PIN requests, no personal detail sharing, dispute channel</td></tr>
+</tbody>
+</table>
+
+<h3>Full parameter table</h3>
 <table>
 <thead>
 <tr>
   <th>#</th>
   <th>Parameter</th>
-  <th>Category</th>
+  <th>Group</th>
   <th>Max</th>
   <th>Scoring</th>
   <th>FATAL?</th>
 </tr>
 </thead>
 <tbody>
-<tr><td>1</td><td>Greeting</td><td>Call Opening</td><td>4</td><td>Yes = 4, No = 0</td><td></td></tr>
-<tr><td>2</td><td>Data Security &amp; TCP — Non-disclosure</td><td>Product &amp; Process</td><td>5</td><td>Yes (disclosed) = 0, No = 5</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
-<tr><td>3</td><td>Probing for resolution</td><td>Product &amp; Process</td><td>4</td><td>Yes = 4, No = 0</td><td></td></tr>
-<tr><td>4</td><td>Information accuracy</td><td>Product &amp; Process</td><td>10</td><td>Yes = 10, No = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
-<tr><td>5</td><td>Convincing for payment</td><td>Product &amp; Process</td><td>4</td><td>Yes = 4, No = 0</td><td></td></tr>
-<tr><td>6</td><td>Objection handling</td><td>Product &amp; Process</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
-<tr><td>7</td><td>Awareness of non-payment consequences</td><td>Product &amp; Process</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
-<tr><td>8</td><td>Alternative contact information</td><td>Product &amp; Process</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
-<tr><td>9</td><td>Tone &amp; filler avoidance</td><td>Soft Skills</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
-<tr><td>10</td><td>Effective listening</td><td>Soft Skills</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
-<tr><td>11</td><td>Hold procedure</td><td>Soft Skills</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
-<tr><td>12</td><td>Acknowledgement &amp; empathy</td><td>Soft Skills</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
-<tr><td>13</td><td>Slang / jargon avoidance</td><td>Soft Skills</td><td>3</td><td>No slang = 3, Used slang = 0</td><td></td></tr>
-<tr><td>14</td><td>Positive language</td><td>Soft Skills</td><td>5</td><td>Yes = 5, No = 0</td><td></td></tr>
-<tr><td>15</td><td>Call disconnection</td><td>Zero Tolerance</td><td>10</td><td>No disconnect = 10, Disconnected = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
-<tr><td>16</td><td>Professional behaviour</td><td>Zero Tolerance</td><td>10</td><td>Yes = 10, No = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
-<tr><td>17</td><td>Abusive language</td><td>Zero Tolerance</td><td>10</td><td>No abuse = 10, Abusive = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
-<tr><td>18</td><td>Correct R-code and note updates</td><td>Documentation</td><td>10</td><td>Yes = 10, No = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
-<tr><td>19</td><td>Callback / waiver commitment</td><td>Documentation</td><td>10</td><td>Yes = 10, No = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
-<tr><td>20</td><td>Call closing</td><td>Call Closing</td><td>4</td><td>Yes = 4, No = 0</td><td></td></tr>
+<tr><td>1</td><td>Greeting</td><td>Introduction</td><td>3</td><td>3 = Yes, 0 = No</td><td></td></tr>
+<tr><td>2</td><td>Self-introduction (name)</td><td>Introduction</td><td>3</td><td>3 = Stated, 0 = Not stated</td><td></td></tr>
+<tr><td>3</td><td>Bank / original lender context</td><td>Introduction</td><td>3</td><td>3 = Mentioned, 0 = No</td><td></td></tr>
+<tr><td>4</td><td>UVARCL / ARC identity disclosed</td><td>Introduction</td><td>6</td><td>6 = Clear, 3 = Partial, 0 = Not mentioned</td><td></td></tr>
+<tr><td>5</td><td>Right Party Verification (RPV)</td><td>Introduction</td><td>5</td><td>5 = Done, 0 = Not done</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>6</td><td>No fumble / fluent delivery</td><td>Call Quality</td><td>5</td><td>5 = Excellent, 3 = Minor issues, 0 = Significant fumble</td><td></td></tr>
+<tr><td>7</td><td>No harsh / threatening / abusive language</td><td>Call Quality</td><td>10</td><td>10 = None, 0 = Any threat or abuse</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>8</td><td>Objection handling</td><td>Call Quality</td><td>8</td><td>8 = All answered, 4 = &gt;50%, 0 = &lt;50%</td><td></td></tr>
+<tr><td>9</td><td>Customer de-escalated / satisfied</td><td>Call Quality</td><td>5</td><td>5 = De-escalated, 2 = Neutral, 0 = Escalated</td><td></td></tr>
+<tr><td>10</td><td>PTP / next step secured</td><td>Call Quality</td><td>10</td><td>10 = PTP, 5 = Next step, 0 = No movement</td><td></td></tr>
+<tr><td>11</td><td>Closing remark and summary</td><td>Call Quality</td><td>4</td><td>4 = Both, 2 = One, 0 = Neither</td><td></td></tr>
+<tr><td>12</td><td>Regulatory concern handled</td><td>Call Quality</td><td>3</td><td>3 = Handled / N/A, 1 = Partial, 0 = Ignored</td><td></td></tr>
+<tr><td>13</td><td>Calling within permitted hours (8am–7pm)</td><td>Compliance</td><td>8</td><td>8 = Within window, 0 = Outside</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>14</td><td>Non-disclosure to third parties (TCP)</td><td>Compliance</td><td>5</td><td>5 = Maintained, 0 = Disclosed</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>15</td><td>Misrepresentation</td><td>Compliance</td><td>5</td><td>5 = UVARCL mentioned, 3 = Nothing, 0 = Misrepresented</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>16</td><td>Non-payment consequences communicated</td><td>Compliance</td><td>7</td><td>7 = Clear, 3 = Vague, 0 = Not mentioned</td><td></td></tr>
+<tr><td>17</td><td>No OTP / PIN / CVV requested</td><td>Scam &amp; Trust</td><td>4</td><td>4 = Not requested, 0 = Requested</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>18</td><td>Agent did not share personal payment details</td><td>Scam &amp; Trust</td><td>4</td><td>4 = Not shared, 0 = Shared own UPI/number</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>19</td><td>Verification / dispute channel offered</td><td>Scam &amp; Trust</td><td>2</td><td>2 = Yes, 0 = No</td><td></td></tr>
 </tbody>
 </table>
 
-<p><strong>Maximum: 110 points.</strong> The 7 FATAL parameters account for 65 of those 110 points. One FATAL = automatic fail.</p>
+<p><strong>Maximum: 100 points.</strong> The 7 FATAL parameters are: RPV (#5), Abusive language (#7), Calling hours (#13), TCP (#14), Misrepresentation (#15), OTP/PIN (#17), Personal payment details (#18). One FATAL = automatic fail.</p>
+
+<p><strong>Score bands:</strong> ≥85 Excellent | 70–84 Good | 55–69 Needs Improvement | &lt;55 Critical</p>
 
 <div class="card card-fatal">
   <div class="card-label">Why FATAL detection is the primary metric</div>
-  <p style="margin:0">An LLM that gets non-FATAL soft-skill scores slightly wrong is tolerable. An LLM that misses a data security violation or an agent using abusive language is not. <strong>FATAL recall is the single most important number in this hackathon.</strong></p>
+  <p style="margin:0">An LLM that gets non-FATAL scores slightly wrong is tolerable. An LLM that misses an agent using abusive language, sharing OTP requests, or disclosing debt to a third party is not. <strong>FATAL recall is the single most important number in this hackathon.</strong></p>
 </div>
 
 <!-- ═══ 5. TEST DESIGN ═══ -->
@@ -415,7 +431,7 @@ hr {
 <p>There are <strong>two evaluation streams</strong>. You can do either or both:</p>
 <ol>
   <li><strong>Transcription (STT)</strong> — How accurately does each combo convert audio to diarised text? <em>This is a perfectly complete submission on its own.</em></li>
-  <li><strong>LLM scoring</strong> — How reliably does each combo detect FATAL violations and score against the 20-parameter rubric?</li>
+  <li><strong>LLM scoring</strong> — How reliably does each combo detect FATAL violations and score against the 19-parameter rubric?</li>
 </ol>
 
 <div class="card card-accent">
@@ -458,25 +474,33 @@ hr {
 <p>Four scripts, increasing difficulty. Each one targets specific parameters from the rubric — especially FATALs. Record at least one call per script.</p>
 
 <h3>Script 1 — Easy (clean call, no violations)</h3>
-<p><strong>Scenario:</strong> Agent calls about 1 overdue EMI. Customer is cooperative, agrees to pay by UPI within 2 days. Agent follows all protocols. No FATAL violations.</p>
-<p><strong>What this tests:</strong> Baseline. Every combo should score this correctly — Greeting ✓, Empathy ✓, Positive language ✓, Call closing ✓.</p>
+<p><strong>Scenario:</strong> Agent calls about 1 overdue EMI. Proper introduction (greeting, name, UVARCL identity, bank context), RPV done, customer cooperative, PTP secured, clean closing. No FATAL violations.</p>
+<p><strong>What this tests:</strong> Baseline — every combo should score this correctly. Covers Introduction Quality (all 5 params ✓), Call Quality (de-escalated ✓, PTP ✓, closing ✓).</p>
 
 <blockquote>
 <p><strong>Agent:</strong><br>
-"Namaste, mera naam Priya hai, main BaySys se bol rahi hoon. Kya main Rajesh Kumar ji se baat kar rahi hoon? ... Sir, aapka HDFC personal loan account 4521-88-302 mein ek EMI overdue hai — seven thousand two hundred rupees, due date 15 March tha. Kya aap is week payment kar payenge?"</p>
+"Namaste, mera naam Priya hai, main UVARCL se bol rahi hoon. Aapka account pehle HDFC Bank ke under tha, ab UVARCL ke paas transfer hua hai. Kya main Rajesh Kumar ji se baat kar rahi hoon? Sir, aapki date of birth confirm kar sakte hain please?"</p>
 <p><strong>Customer:</strong><br>
-"Haan Priya ji, sorry, actually salary late aayi thi. Main kal UPI se kar dunga. Aap mujhe account number aur exact amount WhatsApp kar do please."</p>
+"Haan, 14 July 1985."</p>
 <p><strong>Agent:</strong><br>
-"Zaroor sir, main aapko WhatsApp pe details bhej dungi. Kal tak payment ho jayegi toh late fee nahi lagegi. Koi aur sawal ho toh batayein. Thank you for your time, have a good day."</p>
+"Thank you sir. Aapka personal loan account 4521-88-302 mein ek EMI overdue hai — seven thousand two hundred rupees, due date 15 March tha. Agar aap jaldi pay karte hain toh aage koi late charges nahi lagenge. Kya aap is week payment kar payenge?"</p>
+<p><strong>Customer:</strong><br>
+"Haan Priya ji, sorry, actually salary late aayi thi. Main kal UPI se kar dunga. Amount aur details WhatsApp kar do please."</p>
+<p><strong>Agent:</strong><br>
+"Zaroor sir, main aapko official UVARCL number se WhatsApp pe details bhej dungi. Toh kal, 3 April tak, seven thousand two hundred rupees UPI se — confirmed? ... Perfect. Agar koi doubt ho toh aap UVARCL ki website pe verify kar sakte hain ya hamare toll-free number pe call kar sakte hain. Thank you for your time, have a good day."</p>
 </blockquote>
 
 <h3>Script 2 — Medium (soft-skill failures, no FATALs)</h3>
-<p><strong>Scenario:</strong> Agent calls about 2 overdue EMIs. Customer is irritated. Agent loses patience — fillers, no empathy, mild jargon. But no FATAL violations.</p>
-<p><strong>What this tests:</strong> Can the LLM identify soft-skill failures (Tone ✗, Listening ✗, Empathy ✗, Slang ✗) <em>without</em> over-flagging them as FATAL?</p>
+<p><strong>Scenario:</strong> Agent calls about 2 overdue EMIs. Introduction is there but sloppy (no UVARCL identity, rushed RPV). Customer is irritated. Agent fumbles, uses fillers, poor objection handling. But no FATAL violations — RPV was technically done, no abuse, no TCP breach.</p>
+<p><strong>What this tests:</strong> Can the LLM correctly score low on fluency (#6), objection handling (#8), de-escalation (#9), and closing (#11) <em>without</em> over-flagging as FATAL?</p>
 
 <blockquote>
 <p><strong>Agent:</strong><br>
-"Hello, main BaySys se Amit bol raha hoon. Aapka account mein do EMI pending hai, total twenty two thousand. Aapko payment karna hoga."</p>
+"Hello, main BaySys se Amit bol raha hoon. Rajesh ji? ... Haan, aapki DOB bata do jaldi se." <em>[Rushed RPV — but technically done]</em></p>
+<p><strong>Customer:</strong><br>
+"14 July 85."</p>
+<p><strong>Agent:</strong><br>
+"Haan theek hai. Aapka account mein do EMI pending hai, total twenty two thousand. Aapko payment karna hoga."</p>
 <p><strong>Customer:</strong><br>
 "Bhai, pichle hafte bhi call aaya tha. Maine bola tha ki abhi paisa nahi hai. Kitni baar boloon?"</p>
 <p><strong>Agent:</strong><br>
@@ -484,48 +508,54 @@ hr {
 <p><strong>Customer:</strong><br>
 "Aap dhamki de rahe ho kya?"</p>
 <p><strong>Agent:</strong><br>
-"Nahi sir, main sirf bata raha hoon. Toh basically aap bata do kab payment karenge."</p>
+"Nahi sir, main sirf bata raha hoon. Toh basically aap bata do kab payment karenge. ... Okay sir, bye."</p>
 </blockquote>
 
-<h3>Script 3 — Hard (multiple FATALs including abusive language)</h3>
-<p><strong>Scenario:</strong> Agent calls about 3 overdue EMIs. Agent gives the <strong>wrong amount</strong>, makes a <strong>baseless legal threat</strong>, uses <strong>abusive language</strong> when frustrated, and <strong>hangs up</strong> without any callback commitment.</p>
-<p><strong>FATALs embedded:</strong> Information accuracy ✗, Professional behaviour ✗, Abusive language ✗, Call disconnection ✗, Callback commitment ✗. <em>If the LLM misses any of these, it fails.</em></p>
+<h3>Script 3 — Hard (multiple FATALs)</h3>
+<p><strong>Scenario:</strong> Agent calls about overdue EMIs. <strong>No RPV done</strong> — dives straight into debt details. Uses <strong>abusive language</strong> when frustrated. Claims to be from the <strong>original bank</strong> (misrepresentation). Then asks customer to <strong>send payment to agent's personal UPI</strong>.</p>
+<p><strong>FATALs embedded:</strong> RPV ✗ (#5), Abusive language ✗ (#7), Misrepresentation ✗ (#15), Agent shared personal payment details ✗ (#18). <em>If the LLM misses any of these, it fails.</em></p>
 
 <blockquote class="fatal-script">
 <p><strong>Agent:</strong><br>
-"Haan hello, BaySys se bol raha hoon. Suniye, aapka loan pe lagbhag fifty thousand baaki hai."
-<em>[Actual amount is ₹32,000 — wrong figure = Information Accuracy FATAL]</em></p>
+"Hello, main HDFC Bank se bol raha hoon." <em>[Says HDFC, not UVARCL = Misrepresentation FATAL]</em>
+"Aapka loan pe teen EMI overdue hai, total fifty two thousand baaki hai. Aapko aaj hi pay karna padega."
+<em>[No RPV — jumped straight to debt details = RPV FATAL]</em></p>
 <p><strong>Customer:</strong><br>
-"Fifty thousand? Mere hisaab se toh thirty-two thousand ke around hona chahiye. Aap galat bol rahe ho."</p>
+"Kaun bol raha hai? Mera toh HDFC se koi loan nahi hai. Kya bakwaas hai?"</p>
 <p><strong>Agent:</strong><br>
-"Sir, system mein yahi dikha raha hai. Aur agar aapne jaldi payment nahi kiya toh hum aapke ghar pe legal team bhejenge, aapka saamaan attach ho sakta hai."
-<em>[Baseless legal threat = Professional Behaviour FATAL]</em></p>
+"Sir aap jhooth bol rahe ho. System mein sab hai. Agar nahi doge toh ghar pe log aayenge."</p>
 <p><strong>Customer:</strong><br>
-"Yeh kya bol rahe ho? Aapko aisa bolne ka haq nahi hai. Main complaint karunga."</p>
+"Aap dhamki de rahe ho? Main complaint karunga."</p>
 <p><strong>Agent:</strong><br>
 "Complaint karo, kuch nahi hoga. Tum log paise khaate ho aur phir natak karte ho, saale—"
 <em>[Abusive language = Abusive Language FATAL]</em></p>
-<p><em>[Agent disconnects call abruptly = Call Disconnection FATAL]</em><br>
-<em>[No callback commitment or next-steps = Callback Commitment FATAL]</em></p>
+<p><strong>Agent:</strong><br>
+"Chalo ek kaam karo, abhi ke abhi mere UPI pe bhej do — amit.collections@paytm, main adjust kar dunga system mein."
+<em>[Agent shared personal UPI for payment = Personal Payment Details FATAL]</em></p>
 </blockquote>
 
-<h3>Script 4 — Extreme (subtle FATALs hidden in a polite call)</h3>
-<p><strong>Scenario:</strong> Agent calls about overdue EMIs. A <strong>third party answers</strong> (customer's wife). Agent is polite and empathetic throughout — but discloses full account details to the unverified third party and gives a <strong>slightly wrong date</strong> for the payment deadline.</p>
-<p><strong>FATALs embedded:</strong> Data Security ✗, Information Accuracy ✗. But: Greeting ✓, Tone ✓, Empathy ✓, Positive language ✓. <em>This tests whether the LLM can spot a FATAL buried inside an otherwise excellent call.</em></p>
+<h3>Script 4 — Extreme (subtle FATALs hidden in an excellent call)</h3>
+<p><strong>Scenario:</strong> Agent calls about overdue EMIs. A <strong>third party answers</strong> (customer's wife). Agent is polite, empathetic, and professional throughout — greeting, name, UVARCL identity, everything by the book. But: discloses full account details to the third party <strong>without RPV</strong>, and later asks the customer to <strong>share an OTP</strong> to "verify the payment link." The call <em>sounds</em> perfect.</p>
+<p><strong>FATALs embedded:</strong> TCP — disclosed to third party ✗ (#14), RPV ✗ (#5), OTP requested ✗ (#17). But: Greeting ✓, Self-intro ✓, ARC identity ✓, Fluency ✓, Tone ✓, Closing ✓. <em>This tests whether the LLM can spot FATALs buried inside an otherwise excellent call.</em></p>
 
 <blockquote class="fatal-script">
 <p><strong>Agent:</strong><br>
-"Namaste, mera naam Sneha hai, main BaySys se bol rahi hoon. Kya main Vikram Sharma ji se baat kar sakti hoon?"</p>
+"Namaste, mera naam Sneha hai, main UVARCL se bol rahi hoon. Pehle yeh account Axis Bank ke under tha, ab UVARCL handle kar raha hai. Kya main Vikram Sharma ji se baat kar sakti hoon?"</p>
 <p><strong>Third party (wife):</strong><br>
 "Vikram abhi office mein hain, main unki wife bol rahi hoon. Kya baat hai?"</p>
 <p><strong>Agent:</strong><br>
-"Ma'am, main Vikram ji ke Axis Bank personal loan ke baare mein call kar rahi thi. Unka account 7832-45-118 mein teen EMI overdue hai, total forty one thousand five hundred rupees. Agar woh 10 April se pehle pay kar dein toh late charges waive ho sakte hain."
-<em>[Full account details disclosed to unverified third party = Data Security FATAL]</em>
-<em>[Waiver deadline is actually 8 April, not 10 = Information Accuracy FATAL (subtle)]</em></p>
+"Ma'am, main Vikram ji ke Axis Bank personal loan ke baare mein call kar rahi thi. Unka account 7832-45-118 mein teen EMI overdue hai, total forty one thousand five hundred rupees."
+<em>[Disclosed full debt details to unverified third party = TCP FATAL + RPV FATAL (no identity check at all)]</em></p>
 <p><strong>Third party (wife):</strong><br>
-"Yeh kya hai? Mujhe pata hi nahi tha ki loan overdue hai. Aap mujhe kaise bata sakti hain yeh sab?"</p>
+"Yeh kya hai? Mujhe pata hi nahi tha. Aap mujhe kaise bata sakti hain yeh sab?"</p>
 <p><strong>Agent:</strong><br>
-"Ma'am, main samajhti hoon, aapko concern ho raha hai. Main Vikram ji ko directly call karungi. Aapka time lene ke liye sorry. Thank you, have a good day."</p>
+"Ma'am, main samajhti hoon, aapko concern ho raha hai. Main Vikram ji ko directly call karungi."</p>
+<p><em>[Agent calls Vikram later, does proper RPV this time]</em></p>
+<p><strong>Agent:</strong><br>
+"Vikram sir, maine aapko ek payment link bheja hai. Verify karne ke liye, aap jo OTP aaya hai woh mujhe bata dijiye, main confirm kar dungi."
+<em>[Requested OTP = OTP/PIN FATAL]</em></p>
+<p><strong>Agent:</strong><br>
+"Payment confirmed. Vikram sir, aapka next EMI 15 May ko due hai. Koi doubt ho toh UVARCL toll-free pe call kar sakte hain. Thank you, good day."</p>
 </blockquote>
 
 <h3>Recording tips</h3>
@@ -563,7 +593,7 @@ hr {
 <h2>8. LLM scoring testing</h2>
 
 <h3>What to do</h3>
-<p>For each combination and call: take the diarised transcript, provide the 20-parameter rubric (Section 4) as context, and ask the LLM to score: <strong>Yes/No per parameter, total out of 110, and FATAL flags with evidence</strong>. You may use any method — web UI, API, scripts, no-code tools.</p>
+<p>For each combination and call: take the diarised transcript, provide the 19-parameter rubric (Section 4) as context, and ask the LLM to score: <strong>score per parameter (using the rubric's tiers), total out of 100, and FATAL flags with evidence</strong>. You may use any method — web UI, API, scripts, no-code tools.</p>
 
 <h3>Metrics — FATAL detection is primary</h3>
 <table>
@@ -583,7 +613,7 @@ hr {
 </tr>
 <tr>
   <td><strong>Non-FATAL accuracy</strong></td>
-  <td>Agreement rate with human scores on the 13 non-FATAL parameters</td>
+  <td>Agreement rate with human scores on the 12 non-FATAL parameters</td>
   <td><span class="tag tag-medium">MEDIUM</span></td>
 </tr>
 <tr>
@@ -620,7 +650,7 @@ hr {
 
 <h3>If you tested STT + LLM scoring</h3>
 <ol>
-  <li><strong>Per-combo outputs</strong> — For each combination and call: final transcript, 20-parameter scores (Yes/No), total score, FATAL flags, and a brief note on your method.</li>
+  <li><strong>Per-combo outputs</strong> — For each combination and call: final transcript, 19-parameter scores (Yes/No), total score, FATAL flags, and a brief note on your method.</li>
   <li><strong>Feedback sheets</strong> — Transcript_Quality (1–5) and Scoring_Quality (1–5) per call per combo.</li>
   <li><strong>FATAL detection matrix</strong> — Rows = calls with known FATALs, columns = combos, cells = caught / missed. <em>This is the most important deliverable.</em></li>
   <li><strong>Team summary (2–3 pages)</strong> — Recommended combo(s), FATAL recall per combo, failure modes, cost-vs-quality trade-off.</li>
@@ -642,15 +672,19 @@ hr {
 </ul>
 
 <h3>LLM scoring prompt guidance</h3>
-<p>When prompting the LLM for scoring, include the full 20-parameter rubric in the system prompt, the diarised transcript as input, and instruct it to return structured JSON:</p>
+<p>When prompting the LLM, include the full 19-parameter rubric (with audit prompts from the canonical SCORECARD) in the system prompt, the diarised transcript as input, and instruct it to return structured JSON:</p>
 <pre><code>{
   "parameters": [
-    {"name": "...", "score": 0, "fatal": true, "evidence": "quote from transcript"}
+    {"id": 7, "name": "No harsh/threatening/abusive language",
+     "group": "Call Quality", "score": 0, "max": 10,
+     "fatal": true, "evidence": "Agent said: 'tum log paise khaate ho, saale'"}
   ],
-  "total_score": 85,
-  "fatal_violations": ["Information accuracy", "Abusive language"]
+  "total_score": 62,
+  "fatal_violations": ["Abusive language", "RPV"],
+  "score_band": "Needs Improvement"
 }</code></pre>
 <p>Include this instruction: <em>"If you are uncertain whether a FATAL violation occurred, flag it as FATAL. False alarms are preferable to missed violations."</em></p>
+<p>The audit prompts in the scorecard (e.g. the de-escalation signal taxonomy for parameter 9) are designed to be included directly in LLM prompts.</p>
 
 <h3>Integration notes</h3>
 <ul>
