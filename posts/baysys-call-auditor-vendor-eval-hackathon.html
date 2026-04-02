@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Can AI Understand Indian Phone Calls? — Hackathon | Baysys.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ── BaySys Brand Tokens ── */
+:root {
+  --brand-orange: #E07246;
+  --brand-orange-dark: #C85E32;
+  --brand-orange-light: #FDF3EF;
+  --brand-orange-mid: #F5C8B0;
+  --brand-lavender: #C4A8D4;
+  --brand-gradient: linear-gradient(135deg, #E07246 0%, #C4A8D4 100%);
+  --paper: #f7f4ef;
+  --ink: #0f0f0f;
+  --rule: #d4cfc8;
+  --caption: #6b6560;
+  --highlight: #f0e8c8;
+  --fatal-red: #b91c1c;
+  --fatal-bg: #fef2f2;
+  --success-green: #166534;
+  --success-bg: #f0fdf4;
+  --radius: 14px;
+  --shadow: 0 2px 12px rgba(224,114,70,0.10);
+  --shadow-hover: 0 6px 24px rgba(224,114,70,0.18);
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.page-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ── Hero ── */
+.hero {
+  padding: 56px 0 40px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 40px;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-orange);
+  margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+.hero-sub {
+  font-size: 16px;
+  color: var(--caption);
+  max-width: 600px;
+}
+.hero-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--caption);
+  margin-top: 16px;
+}
+
+/* ── Section headings ── */
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(19px, 3.5vw, 22px);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 48px 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--brand-orange-mid);
+}
+h3 {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 28px 0 6px;
+}
+
+/* ── Text ── */
+p { margin: 6px 0 12px; }
+ul, ol { margin: 6px 0 14px 24px; }
+li { margin: 3px 0; }
+strong { font-weight: 600; }
+a { color: var(--brand-orange); text-decoration: none; border-bottom: 1px solid var(--brand-orange-mid); }
+a:hover { color: var(--brand-orange-dark); border-color: var(--brand-orange-dark); }
+
+/* ── Cards ── */
+.card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+}
+.card-accent {
+  border-left: 4px solid var(--brand-orange);
+}
+.card-fatal {
+  border-left: 4px solid var(--fatal-red);
+  background: var(--fatal-bg);
+}
+.card-success {
+  border-left: 4px solid var(--success-green);
+  background: var(--success-bg);
+}
+.card-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-orange);
+  margin-bottom: 6px;
+}
+.card-fatal .card-label { color: var(--fatal-red); }
+
+/* ── Tables ── */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 12px 0 20px;
+  font-size: 13px;
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+th, td {
+  border: 1px solid var(--rule);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--brand-orange-light);
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+tr:nth-child(even) td { background: #fafaf8; }
+
+/* ── Tags ── */
+.tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+.tag-fatal {
+  background: var(--fatal-red);
+  color: #fff;
+}
+.tag-primary {
+  background: var(--brand-orange);
+  color: #fff;
+}
+.tag-high {
+  background: var(--brand-orange-mid);
+  color: var(--brand-orange-dark);
+}
+.tag-medium {
+  background: var(--highlight);
+  color: #854d0e;
+}
+.tag-low {
+  background: #f0fdf4;
+  color: var(--success-green);
+}
+
+/* ── Blockquotes (scripts) ── */
+blockquote {
+  margin: 10px 0;
+  padding: 14px 18px;
+  border-left: 4px solid var(--brand-orange-mid);
+  background: #fff;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--ink);
+  font-size: 14px;
+}
+blockquote.fatal-script {
+  border-left-color: var(--fatal-red);
+  background: var(--fatal-bg);
+}
+blockquote em {
+  color: var(--fatal-red);
+  font-size: 13px;
+}
+
+/* ── Code ── */
+code {
+  font-family: 'DM Mono', monospace;
+  background: var(--brand-orange-light);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+pre {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+/* ── Divider ── */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 40px 0;
+}
+
+/* ── Footer ── */
+.footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--caption);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-brand {
+  font-weight: 500;
+  color: var(--brand-orange);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .hero { padding: 32px 0 28px; }
+  .page-wrapper { padding: 0 16px 48px; }
+  table { font-size: 12px; }
+  th, td { padding: 6px 8px; }
+}
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-eyebrow">Baysys.ai &middot; Hackathon</div>
+  <h1>Can AI Understand Indian Phone Calls?</h1>
+  <p class="hero-sub">Hindi, Hinglish, background chaos, angry customers — real calls are messy. Your job: find out which AI combo transcribes them best and catches every compliance violation. Five vendor combinations, 50 real calls, one winner.</p>
+  <p class="hero-meta">v7 &middot; April 2026 &middot; Open to all participants</p>
+</div>
+
+<!-- ═══ 1. AUDIENCE ═══ -->
+<h2>1. Who is this for?</h2>
+<p>You. Whether you're an engineer, a data person, a QA analyst, or someone who's never written a line of code — you can participate. You don't need to do everything. <strong>Even if you only test the transcription (STT) part, that's a perfectly valid and complete submission.</strong> Not everyone needs to touch the LLM scoring side.</p>
+<p>This document tells you everything you need: the vendor combinations, the scoring rubric, the scripts you'll role-play, and how we'll judge the results. A Technical Appendix at the end goes deeper for engineers.</p>
+
+<!-- ═══ 2. THE PROBLEM ═══ -->
+<h2>2. The problem</h2>
+<p>Baysys.ai processes tens of thousands of customer calls every day in Hindi, English, and Hinglish. Calls range from 3 to 20 minutes. Manual listening and scoring is slow, expensive, and impossible to scale.</p>
+<p>We need an automated <strong>Call Auditor pipeline</strong> that, for every call:</p>
+<ol>
+  <li><strong>Transcribes</strong> the audio into accurate text.</li>
+  <li><strong>Separates speakers</strong> — always clear who is the Agent and who is the Customer.</li>
+  <li><strong>Scores</strong> the call against the 20-parameter quality rubric (Section 4), flagging every FATAL violation.</li>
+</ol>
+
+<div class="card card-accent">
+  <div class="card-label">What we are optimising for</div>
+  <p style="margin:0"><strong>Transcription accuracy is non-negotiable</strong> — everything downstream depends on it. For LLM scoring, a cheaper model with lower non-FATAL accuracy is acceptable, <strong>as long as it never misses a FATAL</strong>. A missed FATAL (e.g. agent discloses customer data to a third party, and the system scores it compliant) is a regulatory and reputational risk.</p>
+</div>
+
+<!-- ═══ 3. COMBINATIONS ═══ -->
+<h2>3. Vendor combinations</h2>
+<p>Baysys has shortlisted 4 STT providers and 2 LLMs, pre-combined into <strong>5 fixed combinations</strong>. No new vendors in this exercise.</p>
+
+<table>
+<thead>
+<tr>
+  <th>Combo</th>
+  <th>STT provider</th>
+  <th>LLM scoring</th>
+  <th>~&thinsp;₹/min</th>
+  <th>Why this combo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>1</strong></td>
+  <td>Soniox (async + diarisation)</td>
+  <td>GPT-4o-mini</td>
+  <td>0.18</td>
+  <td>Strong Hindi accuracy, low cost. Primary candidate for scale.</td>
+</tr>
+<tr>
+  <td><strong>2</strong></td>
+  <td>Sarvam AI (batch + diarisation)</td>
+  <td>GPT-4o-mini</td>
+  <td>0.52</td>
+  <td>India-first vendor; Indic-language specialist.</td>
+</tr>
+<tr>
+  <td><strong>3</strong></td>
+  <td>OpenAI Speech (Whisper / gpt-4o-mini-transcribe)</td>
+  <td>GPT-4o-mini</td>
+  <td>0.30–0.58</td>
+  <td>Single-vendor simplicity. Hindi accuracy may be weaker.</td>
+</tr>
+<tr>
+  <td><strong>4</strong></td>
+  <td>Soniox (async + diarisation)</td>
+  <td>Claude 3.5 Sonnet</td>
+  <td>0.65</td>
+  <td>Quality ceiling. Best reasoning — benchmark for FATAL detection.</td>
+</tr>
+<tr>
+  <td><strong>5</strong></td>
+  <td>Deepgram Nova-2 (+ diarisation)</td>
+  <td>GPT-4o-mini</td>
+  <td>0.10</td>
+  <td>Cheapest option. Aggressive STT pricing with Hindi support.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Prices are approximate and based on published rates. The hackathon focus is <strong>quality</strong>, not cost optimisation — but cost context helps frame trade-offs.</p>
+
+<!-- ═══ 4. SCORING RUBRIC ═══ -->
+<h2>4. The scoring rubric</h2>
+<p>Every call is scored against <strong>20 parameters</strong> across 6 categories for a maximum of <strong>110 points</strong>. Seven parameters carry a <span class="tag tag-fatal">FATAL</span> flag — any single FATAL violation means the call <strong>fails</strong>, regardless of total score.</p>
+
+<table>
+<thead>
+<tr>
+  <th>#</th>
+  <th>Parameter</th>
+  <th>Category</th>
+  <th>Max</th>
+  <th>Scoring</th>
+  <th>FATAL?</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Greeting</td><td>Call Opening</td><td>4</td><td>Yes = 4, No = 0</td><td></td></tr>
+<tr><td>2</td><td>Data Security &amp; TCP — Non-disclosure</td><td>Product &amp; Process</td><td>5</td><td>Yes (disclosed) = 0, No = 5</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>3</td><td>Probing for resolution</td><td>Product &amp; Process</td><td>4</td><td>Yes = 4, No = 0</td><td></td></tr>
+<tr><td>4</td><td>Information accuracy</td><td>Product &amp; Process</td><td>10</td><td>Yes = 10, No = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>5</td><td>Convincing for payment</td><td>Product &amp; Process</td><td>4</td><td>Yes = 4, No = 0</td><td></td></tr>
+<tr><td>6</td><td>Objection handling</td><td>Product &amp; Process</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
+<tr><td>7</td><td>Awareness of non-payment consequences</td><td>Product &amp; Process</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
+<tr><td>8</td><td>Alternative contact information</td><td>Product &amp; Process</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
+<tr><td>9</td><td>Tone &amp; filler avoidance</td><td>Soft Skills</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
+<tr><td>10</td><td>Effective listening</td><td>Soft Skills</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
+<tr><td>11</td><td>Hold procedure</td><td>Soft Skills</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
+<tr><td>12</td><td>Acknowledgement &amp; empathy</td><td>Soft Skills</td><td>3</td><td>Yes = 3, No = 0</td><td></td></tr>
+<tr><td>13</td><td>Slang / jargon avoidance</td><td>Soft Skills</td><td>3</td><td>No slang = 3, Used slang = 0</td><td></td></tr>
+<tr><td>14</td><td>Positive language</td><td>Soft Skills</td><td>5</td><td>Yes = 5, No = 0</td><td></td></tr>
+<tr><td>15</td><td>Call disconnection</td><td>Zero Tolerance</td><td>10</td><td>No disconnect = 10, Disconnected = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>16</td><td>Professional behaviour</td><td>Zero Tolerance</td><td>10</td><td>Yes = 10, No = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>17</td><td>Abusive language</td><td>Zero Tolerance</td><td>10</td><td>No abuse = 10, Abusive = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>18</td><td>Correct R-code and note updates</td><td>Documentation</td><td>10</td><td>Yes = 10, No = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>19</td><td>Callback / waiver commitment</td><td>Documentation</td><td>10</td><td>Yes = 10, No = 0</td><td><span class="tag tag-fatal">FATAL</span></td></tr>
+<tr><td>20</td><td>Call closing</td><td>Call Closing</td><td>4</td><td>Yes = 4, No = 0</td><td></td></tr>
+</tbody>
+</table>
+
+<p><strong>Maximum: 110 points.</strong> The 7 FATAL parameters account for 65 of those 110 points. One FATAL = automatic fail.</p>
+
+<div class="card card-fatal">
+  <div class="card-label">Why FATAL detection is the primary metric</div>
+  <p style="margin:0">An LLM that gets non-FATAL soft-skill scores slightly wrong is tolerable. An LLM that misses a data security violation or an agent using abusive language is not. <strong>FATAL recall is the single most important number in this hackathon.</strong></p>
+</div>
+
+<!-- ═══ 5. TEST DESIGN ═══ -->
+<h2>5. Test design</h2>
+<p>There are <strong>two evaluation streams</strong>. You can do either or both:</p>
+<ol>
+  <li><strong>Transcription (STT)</strong> — How accurately does each combo convert audio to diarised text? <em>This is a perfectly complete submission on its own.</em></li>
+  <li><strong>LLM scoring</strong> — How reliably does each combo detect FATAL violations and score against the 20-parameter rubric?</li>
+</ol>
+
+<div class="card card-accent">
+  <div class="card-label">STT-only is a valid submission</div>
+  <p style="margin:0">If your team focuses purely on transcription quality — comparing how well each STT provider handles Hindi, Hinglish, noise, and numbers — that is a full, scoreable submission. You do not need to test LLM scoring to participate.</p>
+</div>
+
+<h3>Test materials provided by Baysys</h3>
+<ul>
+  <li><strong>50 real production calls</strong> (mono MP3, 3–15 min each) — a mix of clean, moderate, and difficult calls from real collections operations.</li>
+  <li><strong>4 role-play scripts</strong> at graduated difficulty (Section 6) — you and your teammates record your own calls from these.</li>
+  <li><strong>Ground truth scores</strong> — 2 experienced human auditors will score every production call against the full rubric <em>before</em> the hackathon. Their consensus becomes the baseline.</li>
+</ul>
+
+<h3>Volume per combination</h3>
+<table>
+<thead>
+<tr><th>Material</th><th>Per combo</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td>Production calls</td><td>All 50</td><td>Same 50 across all combos for fair comparison</td></tr>
+<tr><td>Team role-play calls</td><td>At least 4 (one per script)</td><td>Record under realistic noise — see Section 6</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>≥ 54</strong></td><td>50 production calls are mandatory</td></tr>
+</tbody>
+</table>
+
+<h3>Blind evaluation</h3>
+<p>When rating LLM outputs, evaluators will <strong>not know which combo produced a given score</strong>. Baysys will assign shuffled labels (Combo A / B / C / D / E) per evaluator to prevent bias.</p>
+
+<!-- ═══ 6. ROLE-PLAY SCRIPTS ═══ -->
+<h2>6. Role-play scripts — you make these calls</h2>
+<p>This is the fun part. You and your teammates <strong>act out these scripts and record the calls yourselves</strong>. One person plays the Agent, the other plays the Customer. Use your own phone — call each other, use speakerphone, or sit across a table.</p>
+<p>The goal is to create <strong>realistic, messy audio</strong> that stress-tests how well each STT provider handles real Indian conditions. The more realistic, the more useful your data is.</p>
+
+<div class="card card-accent">
+  <div class="card-label">Make it real</div>
+  <p style="margin:0">Have your friend stand on a <strong>busy road</strong> and play the customer. Record one call from a <strong>metro station</strong>. Do one with a <strong>ceiling fan on full speed</strong> next to the phone. Have someone talk in the background. Play a TV. The whole point is to simulate what a real collections call sounds like — not a quiet room.</p>
+</div>
+
+<p>Four scripts, increasing difficulty. Each one targets specific parameters from the rubric — especially FATALs. Record at least one call per script.</p>
+
+<h3>Script 1 — Easy (clean call, no violations)</h3>
+<p><strong>Scenario:</strong> Agent calls about 1 overdue EMI. Customer is cooperative, agrees to pay by UPI within 2 days. Agent follows all protocols. No FATAL violations.</p>
+<p><strong>What this tests:</strong> Baseline. Every combo should score this correctly — Greeting ✓, Empathy ✓, Positive language ✓, Call closing ✓.</p>
+
+<blockquote>
+<p><strong>Agent:</strong><br>
+"Namaste, mera naam Priya hai, main BaySys se bol rahi hoon. Kya main Rajesh Kumar ji se baat kar rahi hoon? ... Sir, aapka HDFC personal loan account 4521-88-302 mein ek EMI overdue hai — seven thousand two hundred rupees, due date 15 March tha. Kya aap is week payment kar payenge?"</p>
+<p><strong>Customer:</strong><br>
+"Haan Priya ji, sorry, actually salary late aayi thi. Main kal UPI se kar dunga. Aap mujhe account number aur exact amount WhatsApp kar do please."</p>
+<p><strong>Agent:</strong><br>
+"Zaroor sir, main aapko WhatsApp pe details bhej dungi. Kal tak payment ho jayegi toh late fee nahi lagegi. Koi aur sawal ho toh batayein. Thank you for your time, have a good day."</p>
+</blockquote>
+
+<h3>Script 2 — Medium (soft-skill failures, no FATALs)</h3>
+<p><strong>Scenario:</strong> Agent calls about 2 overdue EMIs. Customer is irritated. Agent loses patience — fillers, no empathy, mild jargon. But no FATAL violations.</p>
+<p><strong>What this tests:</strong> Can the LLM identify soft-skill failures (Tone ✗, Listening ✗, Empathy ✗, Slang ✗) <em>without</em> over-flagging them as FATAL?</p>
+
+<blockquote>
+<p><strong>Agent:</strong><br>
+"Hello, main BaySys se Amit bol raha hoon. Aapka account mein do EMI pending hai, total twenty two thousand. Aapko payment karna hoga."</p>
+<p><strong>Customer:</strong><br>
+"Bhai, pichle hafte bhi call aaya tha. Maine bola tha ki abhi paisa nahi hai. Kitni baar boloon?"</p>
+<p><strong>Agent:</strong><br>
+"Dekhiye sir, umm, basically yeh aapki liability hai. Aapne loan liya hai toh pay karna padega na. Agar nahi karenge toh, uh, aapka CIBIL kharaab hoga, legal action ho sakta hai, basically bahut problem hogi."</p>
+<p><strong>Customer:</strong><br>
+"Aap dhamki de rahe ho kya?"</p>
+<p><strong>Agent:</strong><br>
+"Nahi sir, main sirf bata raha hoon. Toh basically aap bata do kab payment karenge."</p>
+</blockquote>
+
+<h3>Script 3 — Hard (multiple FATALs including abusive language)</h3>
+<p><strong>Scenario:</strong> Agent calls about 3 overdue EMIs. Agent gives the <strong>wrong amount</strong>, makes a <strong>baseless legal threat</strong>, uses <strong>abusive language</strong> when frustrated, and <strong>hangs up</strong> without any callback commitment.</p>
+<p><strong>FATALs embedded:</strong> Information accuracy ✗, Professional behaviour ✗, Abusive language ✗, Call disconnection ✗, Callback commitment ✗. <em>If the LLM misses any of these, it fails.</em></p>
+
+<blockquote class="fatal-script">
+<p><strong>Agent:</strong><br>
+"Haan hello, BaySys se bol raha hoon. Suniye, aapka loan pe lagbhag fifty thousand baaki hai."
+<em>[Actual amount is ₹32,000 — wrong figure = Information Accuracy FATAL]</em></p>
+<p><strong>Customer:</strong><br>
+"Fifty thousand? Mere hisaab se toh thirty-two thousand ke around hona chahiye. Aap galat bol rahe ho."</p>
+<p><strong>Agent:</strong><br>
+"Sir, system mein yahi dikha raha hai. Aur agar aapne jaldi payment nahi kiya toh hum aapke ghar pe legal team bhejenge, aapka saamaan attach ho sakta hai."
+<em>[Baseless legal threat = Professional Behaviour FATAL]</em></p>
+<p><strong>Customer:</strong><br>
+"Yeh kya bol rahe ho? Aapko aisa bolne ka haq nahi hai. Main complaint karunga."</p>
+<p><strong>Agent:</strong><br>
+"Complaint karo, kuch nahi hoga. Tum log paise khaate ho aur phir natak karte ho, saale—"
+<em>[Abusive language = Abusive Language FATAL]</em></p>
+<p><em>[Agent disconnects call abruptly = Call Disconnection FATAL]</em><br>
+<em>[No callback commitment or next-steps = Callback Commitment FATAL]</em></p>
+</blockquote>
+
+<h3>Script 4 — Extreme (subtle FATALs hidden in a polite call)</h3>
+<p><strong>Scenario:</strong> Agent calls about overdue EMIs. A <strong>third party answers</strong> (customer's wife). Agent is polite and empathetic throughout — but discloses full account details to the unverified third party and gives a <strong>slightly wrong date</strong> for the payment deadline.</p>
+<p><strong>FATALs embedded:</strong> Data Security ✗, Information Accuracy ✗. But: Greeting ✓, Tone ✓, Empathy ✓, Positive language ✓. <em>This tests whether the LLM can spot a FATAL buried inside an otherwise excellent call.</em></p>
+
+<blockquote class="fatal-script">
+<p><strong>Agent:</strong><br>
+"Namaste, mera naam Sneha hai, main BaySys se bol rahi hoon. Kya main Vikram Sharma ji se baat kar sakti hoon?"</p>
+<p><strong>Third party (wife):</strong><br>
+"Vikram abhi office mein hain, main unki wife bol rahi hoon. Kya baat hai?"</p>
+<p><strong>Agent:</strong><br>
+"Ma'am, main Vikram ji ke Axis Bank personal loan ke baare mein call kar rahi thi. Unka account 7832-45-118 mein teen EMI overdue hai, total forty one thousand five hundred rupees. Agar woh 10 April se pehle pay kar dein toh late charges waive ho sakte hain."
+<em>[Full account details disclosed to unverified third party = Data Security FATAL]</em>
+<em>[Waiver deadline is actually 8 April, not 10 = Information Accuracy FATAL (subtle)]</em></p>
+<p><strong>Third party (wife):</strong><br>
+"Yeh kya hai? Mujhe pata hi nahi tha ki loan overdue hai. Aap mujhe kaise bata sakti hain yeh sab?"</p>
+<p><strong>Agent:</strong><br>
+"Ma'am, main samajhti hoon, aapko concern ho raha hai. Main Vikram ji ko directly call karungi. Aapka time lene ke liye sorry. Thank you, have a good day."</p>
+</blockquote>
+
+<h3>Recording tips</h3>
+<ul>
+  <li><strong>Format:</strong> Mono MP3 (this matches real production calls). Most phone recording apps output this by default.</li>
+  <li><strong>Phone, not microphone:</strong> Use a real phone call, speakerphone, or WhatsApp voice call. Do not record in a silent room with a studio mic — that defeats the purpose.</li>
+  <li><strong>Get creative with noise:</strong> Record from a busy road, an auto-rickshaw, a metro platform, a canteen, next to a fan or cooler. The messier the audio, the more useful the test.</li>
+  <li><strong>Mix it up:</strong> Different accents, speaking speeds, volume levels. Have someone mumble. Talk over each other briefly. Switch between Hindi and English mid-sentence.</li>
+  <li><strong>Scripts 3 and 4:</strong> Do not tell the evaluator which FATALs are in the script — we want to test blind detection.</li>
+  <li><strong>You can improvise:</strong> Adapt names, numbers, and small details. Keep the structure and the embedded violations intact.</li>
+</ul>
+
+<!-- ═══ 7. STT TESTING ═══ -->
+<h2>7. Transcription (STT) testing</h2>
+<p>For each combination, transcribe all <strong>50 production calls + your role-play calls</strong> using the correct STT provider. Enable speaker diarisation. Label turns as <strong>Agent</strong> / <strong>Customer</strong>. You can use vendor dashboards, free-tier API keys, Python scripts, no-code tools — whatever works for you.</p>
+<p><strong>Reminder:</strong> If your team only does STT testing, that is a complete and valid submission.</p>
+
+<h3>Transcript quality — 1 to 5 scale</h3>
+<table>
+<thead>
+<tr><th>Score</th><th>Meaning</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>5</strong></td><td>Near-perfect. Words, numbers, dates, amounts all correct. Speakers correctly separated.</td></tr>
+<tr><td><strong>4</strong></td><td>Minor errors that don't affect meaning. All key facts (amounts, dates, names) correct.</td></tr>
+<tr><td><strong>3</strong></td><td>Noticeable errors. Some facts garbled or speakers confused in places. A human could still score the call.</td></tr>
+<tr><td><strong>2</strong></td><td>Significant errors. Key facts wrong (e.g. ₹38,450 becomes ₹3,845). Scoring from this would be unreliable.</td></tr>
+<tr><td><strong>1</strong></td><td>Unusable. Large sections missing, wrong language, or speaker labels random.</td></tr>
+</tbody>
+</table>
+
+<p>Pay special attention to: <strong>numbers and amounts</strong> (must not be garbled), <strong>dates and deadlines</strong> (must not shift), <strong>Hinglish transitions</strong> (must not be dropped), <strong>speaker diarisation</strong> (must not swap Agent/Customer), and any transcription error that would cause a FATAL to be missed or false-flagged.</p>
+
+<!-- ═══ 8. LLM SCORING ═══ -->
+<h2>8. LLM scoring testing</h2>
+
+<h3>What to do</h3>
+<p>For each combination and call: take the diarised transcript, provide the 20-parameter rubric (Section 4) as context, and ask the LLM to score: <strong>Yes/No per parameter, total out of 110, and FATAL flags with evidence</strong>. You may use any method — web UI, API, scripts, no-code tools.</p>
+
+<h3>Metrics — FATAL detection is primary</h3>
+<table>
+<thead>
+<tr><th>Metric</th><th>What it measures</th><th>Priority</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>FATAL recall</strong></td>
+  <td>Of all human-flagged FATALs, what % did the LLM catch?</td>
+  <td><span class="tag tag-fatal">PRIMARY</span></td>
+</tr>
+<tr>
+  <td><strong>FATAL precision</strong></td>
+  <td>Of all LLM-flagged FATALs, what % were real (not false alarms)?</td>
+  <td><span class="tag tag-high">HIGH</span></td>
+</tr>
+<tr>
+  <td><strong>Non-FATAL accuracy</strong></td>
+  <td>Agreement rate with human scores on the 13 non-FATAL parameters</td>
+  <td><span class="tag tag-medium">MEDIUM</span></td>
+</tr>
+<tr>
+  <td><strong>Total score MAE</strong></td>
+  <td>Mean absolute error of total score vs human baseline</td>
+  <td><span class="tag tag-low">LOW</span></td>
+</tr>
+</tbody>
+</table>
+
+<div class="card card-success">
+  <div class="card-label">Decision rule</div>
+  <p style="margin:0">A combo with <strong>100% FATAL recall and 70% non-FATAL accuracy</strong> is preferred over a combo with 80% FATAL recall and 95% non-FATAL accuracy. We optimise for safety first, precision second, cost third.</p>
+</div>
+
+<h3>Scoring quality — 1 to 5 scale</h3>
+<ul>
+  <li><strong>5</strong> — Caught all FATALs, non-FATAL scores match human judgement, useful comments.</li>
+  <li><strong>4</strong> — Caught all FATALs, minor non-FATAL disagreements, reasonable comments.</li>
+  <li><strong>3</strong> — Missed 1 FATAL or raised 2+ false FATAL alarms.</li>
+  <li><strong>2</strong> — Missed multiple FATALs or consistently wrong on non-FATALs.</li>
+  <li><strong>1</strong> — Scores bear little relation to the actual call.</li>
+</ul>
+
+<!-- ═══ 9. SUBMISSIONS ═══ -->
+<h2>9. What to submit</h2>
+
+<h3>If you tested STT only</h3>
+<ol>
+  <li><strong>Transcripts</strong> — For each combination and call: the final transcript with Agent/Customer labels.</li>
+  <li><strong>Transcript quality ratings</strong> — Transcript_Quality (1–5) per call per combo, with comments on what went wrong.</li>
+  <li><strong>Team summary (1–2 pages)</strong> — Which STT provider(s) you recommend and why. Where each one breaks.</li>
+</ol>
+
+<h3>If you tested STT + LLM scoring</h3>
+<ol>
+  <li><strong>Per-combo outputs</strong> — For each combination and call: final transcript, 20-parameter scores (Yes/No), total score, FATAL flags, and a brief note on your method.</li>
+  <li><strong>Feedback sheets</strong> — Transcript_Quality (1–5) and Scoring_Quality (1–5) per call per combo.</li>
+  <li><strong>FATAL detection matrix</strong> — Rows = calls with known FATALs, columns = combos, cells = caught / missed. <em>This is the most important deliverable.</em></li>
+  <li><strong>Team summary (2–3 pages)</strong> — Recommended combo(s), FATAL recall per combo, failure modes, cost-vs-quality trade-off.</li>
+</ol>
+
+<!-- ═══ 10. HOW BAYSYS USES THIS ═══ -->
+<h2>10. How Baysys.ai uses your work</h2>
+<p>Your qualitative feedback will be combined with internal quantitative metrics to select the production combo, identify parameters needing custom prompt engineering, and quantify cost at target volume (18,000 calls/day, ~60,000 audio minutes/day). A combo will only be chosen if it reliably catches FATALs <strong>and</strong> is trusted by people close to the collections and QA work.</p>
+
+<!-- ═══ 11. TECHNICAL APPENDIX ═══ -->
+<h2>11. Technical appendix</h2>
+
+<h3>Quantitative metrics</h3>
+<ul>
+  <li><strong>STT:</strong> Word Error Rate (WER) overall and per language segment; entity accuracy for numbers, dates, and amounts; diarisation error rate vs hand-labelled segments.</li>
+  <li><strong>FATAL detection:</strong> Recall, precision, and F1 per FATAL parameter type.</li>
+  <li><strong>Non-FATAL scoring:</strong> Parameter-level agreement rate; Mean Absolute Error (MAE) of total score.</li>
+  <li><strong>Operational:</strong> Throughput (audio minutes per real minute); error/timeout rates; daily cost projection at 60K min/day.</li>
+</ul>
+
+<h3>LLM scoring prompt guidance</h3>
+<p>When prompting the LLM for scoring, include the full 20-parameter rubric in the system prompt, the diarised transcript as input, and instruct it to return structured JSON:</p>
+<pre><code>{
+  "parameters": [
+    {"name": "...", "score": 0, "fatal": true, "evidence": "quote from transcript"}
+  ],
+  "total_score": 85,
+  "fatal_violations": ["Information accuracy", "Abusive language"]
+}</code></pre>
+<p>Include this instruction: <em>"If you are uncertain whether a FATAL violation occurred, flag it as FATAL. False alarms are preferable to missed violations."</em></p>
+
+<h3>Integration notes</h3>
+<ul>
+  <li>Keep STT and scoring as separate modules — providers must be switchable via configuration.</li>
+  <li>The existing Call Auditor codebase has a provider-agnostic architecture and a placeholder model for custom LLM scoring — all hackathon combos fit within this structure.</li>
+  <li>Standardise scoring JSON for internal storage, even if vendors return different shapes.</li>
+  <li>Log full request/response payloads (PII-redacted) for debugging and audit.</li>
+</ul>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <span class="footer-brand">Baysys.ai</span>
+  <span>v7 &middot; 2 April 2026 &middot; Confidential</span>
+</div>
+
+</div><!-- /page-wrapper -->
+</body>
+</html>
