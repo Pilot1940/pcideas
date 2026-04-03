@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Can AI Understand Indian Phone Calls? — Hackathon | Baysys.ai</title>
+  <title>Can AI Understand Indian Phone Calls? — Baysys.ai</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 /* ── BaySys Brand Tokens ── */
@@ -29,17 +29,21 @@
   --radius: 14px;
   --shadow: 0 2px 12px rgba(224,114,70,0.10);
   --shadow-hover: 0 6px 24px rgba(224,114,70,0.18);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', monospace;
 }
 
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--sans);
   background: var(--paper);
   color: var(--ink);
-  line-height: 1.7;
-  font-size: 15px;
+  line-height: 1.75;
+  font-size: 17px;
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -50,44 +54,270 @@ body {
   padding: 0 24px 80px;
 }
 
-/* ── Hero ── */
-.hero {
-  padding: 56px 0 40px;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 40px;
+/* ══════════════════════════════════════
+   PART 1: NARRATIVE HEADER (article style)
+   ══════════════════════════════════════ */
+
+/* ── Masthead ── */
+.masthead {
+  border-bottom: 3px double var(--rule);
+  padding: 2rem 0 0;
+  text-align: center;
+  background: var(--paper);
 }
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+.masthead-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--caption);
+  margin-bottom: 1.5rem;
+}
+.hero-kicker {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--brand-orange);
-  margin-bottom: 12px;
+  display: block;
+  margin-bottom: 1rem;
 }
-.hero h1 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 32px;
+h1.headline {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
   font-weight: 700;
-  color: var(--ink);
-  line-height: 1.25;
-  margin-bottom: 12px;
+  line-height: 1.1;
+  max-width: 780px;
+  margin: 0 auto 1.25rem;
+  padding: 0 2rem;
+  letter-spacing: -0.02em;
 }
-.hero-sub {
-  font-size: 16px;
-  color: var(--caption);
-  max-width: 600px;
+h1.headline em {
+  font-style: italic;
+  color: var(--brand-orange);
 }
-.hero-meta {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
+.deck {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-style: italic;
+  font-weight: 400;
+  color: #3a3530;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  padding: 0 2rem;
+  line-height: 1.5;
+}
+.byline-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--caption);
-  margin-top: 16px;
+  flex-wrap: wrap;
 }
 
-/* ── Section headings ── */
-h2 {
-  font-family: 'Playfair Display', Georgia, serif;
+/* ── Article body (narrative sections) ── */
+.article-body {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 0;
+}
+.article-body p {
+  margin-bottom: 1.4rem;
+  font-weight: 300;
+}
+.article-body strong { font-weight: 500; }
+.article-body a {
+  color: var(--brand-orange);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brand-orange-mid);
+}
+.article-body a:hover { border-bottom-color: var(--brand-orange); }
+
+.dropcap::first-letter {
+  font-family: var(--serif);
+  font-size: 5rem;
+  font-weight: 700;
+  float: left;
+  line-height: 0.82;
+  margin: 0.08em 0.12em -0.05em 0;
+  color: var(--brand-orange);
+}
+
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3.5rem 0 0;
+}
+.section-rule::before, .section-rule::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--rule);
+}
+.section-rule span {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--caption);
+  white-space: nowrap;
+}
+
+.narrative-h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 2rem 0 1.25rem;
+  letter-spacing: -0.01em;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.narrative-h3 {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brand-orange);
+  margin: 2.5rem 0 0.75rem;
+}
+
+.pullquote {
+  border-left: 4px solid var(--brand-orange);
+  margin: 2.5rem -1rem 2.5rem 0;
+  padding: 1.25rem 2rem 1.25rem 2rem;
+  background: white;
+}
+.pullquote p {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Stat blocks ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 2.5rem 0;
+}
+.stat-cell {
+  background: white;
+  padding: 1.1rem 0.6rem;
+  text-align: center;
+}
+.stat-number {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+  font-weight: 700;
+  color: var(--brand-orange);
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--caption);
+}
+
+/* ── Architecture diagram ── */
+.arch-diagram {
+  background: #1a1612;
+  color: #e8e0d5;
+  padding: 1.5rem 1.75rem;
+  margin: 2.5rem 0;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  border-radius: var(--radius);
+}
+.arch-title {
+  color: var(--brand-orange);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #3a3530;
+}
+.arch-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.arch-node {
+  border: 1px solid #4a4440;
+  padding: 0.5rem 0.75rem;
+  background: #231f1b;
+  text-align: center;
+  flex-shrink: 0;
+}
+.arch-node-label { color: #c8a87a; font-size: 0.7rem; display: block; margin-bottom: 0.1rem; }
+.arch-node-detail { color: #7a9ab8; font-size: 0.58rem; display: block; }
+.arch-arrow { color: #4a4440; padding: 0 0.4rem; font-size: 1rem; flex-shrink: 0; }
+.arch-note { color: #6b6560; font-size: 0.65rem; font-style: italic; margin-top: 0.5rem; }
+
+/* ── Transition divider ── */
+.transition-divider {
+  margin: 4rem 0 3rem;
+  padding: 2.5rem 0;
+  text-align: center;
+  border-top: 3px double var(--rule);
+  border-bottom: 3px double var(--rule);
+}
+.transition-divider .label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--caption);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.transition-divider .title {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.transition-divider .sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: #3a3530;
+  margin-top: 0.5rem;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ══════════════════════════════════════
+   PART 2: HACKATHON CONTENT
+   ══════════════════════════════════════ */
+
+/* ── Section headings (hackathon) ── */
+.hackathon-body h2 {
+  font-family: var(--serif);
   font-size: 22px;
   font-weight: 600;
   color: var(--ink);
@@ -95,21 +325,19 @@ h2 {
   padding-bottom: 6px;
   border-bottom: 2px solid var(--brand-orange-mid);
 }
-h3 {
-  font-family: 'DM Sans', system-ui, sans-serif;
+.hackathon-body h3 {
+  font-family: var(--sans);
   font-size: 16px;
   font-weight: 700;
   color: var(--ink);
   margin: 28px 0 6px;
 }
-
-/* ── Text ── */
-p { margin: 6px 0 12px; }
-ul, ol { margin: 6px 0 14px 24px; }
-li { margin: 3px 0; }
-strong { font-weight: 600; }
-a { color: var(--brand-orange); text-decoration: none; border-bottom: 1px solid var(--brand-orange-mid); }
-a:hover { color: var(--brand-orange-dark); border-color: var(--brand-orange-dark); }
+.hackathon-body p { margin: 6px 0 12px; font-size: 15px; font-weight: 400; line-height: 1.7; }
+.hackathon-body ul, .hackathon-body ol { margin: 6px 0 14px 24px; font-size: 15px; }
+.hackathon-body li { margin: 3px 0; }
+.hackathon-body strong { font-weight: 600; }
+.hackathon-body a { color: var(--brand-orange); text-decoration: none; border-bottom: 1px solid var(--brand-orange-mid); }
+.hackathon-body a:hover { color: var(--brand-orange-dark); border-color: var(--brand-orange-dark); }
 
 /* ── Cards ── */
 .card {
@@ -120,19 +348,11 @@ a:hover { color: var(--brand-orange-dark); border-color: var(--brand-orange-dark
   margin: 16px 0;
   box-shadow: var(--shadow);
 }
-.card-accent {
-  border-left: 4px solid var(--brand-orange);
-}
-.card-fatal {
-  border-left: 4px solid var(--fatal-red);
-  background: var(--fatal-bg);
-}
-.card-success {
-  border-left: 4px solid var(--success-green);
-  background: var(--success-bg);
-}
+.card-accent { border-left: 4px solid var(--brand-orange); }
+.card-fatal { border-left: 4px solid var(--fatal-red); background: var(--fatal-bg); }
+.card-success { border-left: 4px solid var(--success-green); background: var(--success-bg); }
 .card-label {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--mono);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.06em;
@@ -143,7 +363,7 @@ a:hover { color: var(--brand-orange-dark); border-color: var(--brand-orange-dark
 .card-fatal .card-label { color: var(--fatal-red); }
 
 /* ── Tables ── */
-table {
+.hackathon-body table {
   border-collapse: collapse;
   width: 100%;
   margin: 12px 0 20px;
@@ -153,13 +373,13 @@ table {
   overflow: hidden;
   box-shadow: var(--shadow);
 }
-th, td {
+.hackathon-body th, .hackathon-body td {
   border: 1px solid var(--rule);
   padding: 8px 10px;
   text-align: left;
   vertical-align: top;
 }
-th {
+.hackathon-body th {
   background: var(--brand-orange-light);
   font-weight: 600;
   color: var(--ink);
@@ -167,12 +387,12 @@ th {
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-tr:nth-child(even) td { background: #fafaf8; }
+.hackathon-body tr:nth-child(even) td { background: #fafaf8; }
 
 /* ── Tags ── */
 .tag {
   display: inline-block;
-  font-family: 'DM Mono', monospace;
+  font-family: var(--mono);
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.04em;
@@ -180,26 +400,11 @@ tr:nth-child(even) td { background: #fafaf8; }
   border-radius: 4px;
   vertical-align: middle;
 }
-.tag-fatal {
-  background: var(--fatal-red);
-  color: #fff;
-}
-.tag-primary {
-  background: var(--brand-orange);
-  color: #fff;
-}
-.tag-high {
-  background: var(--brand-orange-mid);
-  color: var(--brand-orange-dark);
-}
-.tag-medium {
-  background: var(--highlight);
-  color: #854d0e;
-}
-.tag-low {
-  background: #f0fdf4;
-  color: var(--success-green);
-}
+.tag-fatal { background: var(--fatal-red); color: #fff; }
+.tag-primary { background: var(--brand-orange); color: #fff; }
+.tag-high { background: var(--brand-orange-mid); color: var(--brand-orange-dark); }
+.tag-medium { background: var(--highlight); color: #854d0e; }
+.tag-low { background: #f0fdf4; color: var(--success-green); }
 
 /* ── Blockquotes (scripts) ── */
 blockquote {
@@ -215,14 +420,11 @@ blockquote.fatal-script {
   border-left-color: var(--fatal-red);
   background: var(--fatal-bg);
 }
-blockquote em {
-  color: var(--fatal-red);
-  font-size: 13px;
-}
+blockquote em { color: var(--fatal-red); font-size: 13px; }
 
 /* ── Code ── */
 code {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--mono);
   background: var(--brand-orange-light);
   padding: 1px 6px;
   border-radius: 4px;
@@ -238,80 +440,177 @@ pre {
   line-height: 1.5;
   margin: 12px 0;
 }
-pre code {
-  background: none;
-  padding: 0;
-  color: inherit;
-}
+pre code { background: none; padding: 0; color: inherit; }
 
-/* ── Divider ── */
-hr {
-  border: none;
-  border-top: 1px solid var(--rule);
-  margin: 40px 0;
-}
-
-/* ── Footer ── */
+/* ── Divider & Footer ── */
+hr { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
 .footer {
   margin-top: 48px;
   padding-top: 24px;
   border-top: 1px solid var(--rule);
-  font-family: 'DM Mono', monospace;
+  font-family: var(--mono);
   font-size: 12px;
   color: var(--caption);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.footer-brand {
-  font-weight: 500;
-  color: var(--brand-orange);
-}
+.footer-brand { font-weight: 500; color: var(--brand-orange); }
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
-  .hero h1 { font-size: 24px; }
-  h2 { font-size: 19px; }
+  h1.headline { font-size: 1.8rem; }
+  .article-body { padding: 2rem 0 0; }
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+  .hackathon-body h2 { font-size: 19px; }
   .page-wrapper { padding: 0 16px 48px; }
-  table { font-size: 12px; }
-  th, td { padding: 6px 8px; }
+  .hackathon-body table { font-size: 12px; }
+  .hackathon-body th, .hackathon-body td { padding: 6px 8px; }
+  .arch-flow { flex-direction: column; align-items: stretch; }
+  .arch-arrow { transform: rotate(90deg); text-align: center; padding: 0.2rem 0; }
 }
+@media print { body { font-size: 11pt; } }
 </style>
 </head>
 
 <body>
+
+<!-- ══════════════════════════════════════════════════════
+     PART 1: THE STORY — why this problem matters
+     ══════════════════════════════════════════════════════ -->
+
+<header class="masthead">
+  <p class="masthead-label">BaySys.ai — Technology &amp; Operations</p>
+  <hr style="border:none;border-top:1px solid var(--rule);width:60%;margin:0.75rem auto;" />
+  <span class="hero-kicker">Open Challenge — Call Audit AI</span>
+  <h1 class="headline">Can AI Understand <em>Indian Phone Calls?</em></h1>
+  <p class="deck">18,000 debt collection calls a day. Hindi, Hinglish, background chaos, angry customers. We built the system. Now we need to find the best ears for it.</p>
+  <div class="byline-bar">
+    <span>Baysys.ai</span>
+    <span>April 2026</span>
+    <span>Hackathon + Case Study</span>
+  </div>
+</header>
+
 <div class="page-wrapper">
 
-<!-- ═══ HERO ═══ -->
-<div class="hero">
-  <div class="hero-eyebrow">Baysys.ai &middot; Hackathon</div>
-  <h1>Can AI Understand Indian Phone Calls?</h1>
-  <p class="hero-sub">Hindi, Hinglish, background chaos, angry customers — real calls are messy. Your job: find out which AI combo transcribes them best and catches every compliance violation. Five vendor combinations, 50 real calls, one winner.</p>
-  <p class="hero-meta">v7 &middot; April 2026 &middot; Open to all participants</p>
+<div class="article-body">
+
+<!-- ═══ THE CONTEXT ═══ -->
+<p class="dropcap">Every day, Baysys.ai's agents make over 18,000 phone calls to customers across India about overdue loans. These aren't quiet, scripted exchanges. They're messy, emotional, multilingual conversations — Hindi flipping to English mid-sentence, auto-rickshaws honking in the background, customers angry about calls they didn't expect. Each one of these calls must comply with the Reserve Bank of India's Code of Conduct. A single violation — an agent who forgets to verify identity, uses abusive language, or shares debt details with a family member — is a regulatory risk.</p>
+
+<p>Until now, the only way to audit these calls was to hire people to listen. One call takes 10–15 minutes to review. At 18,000 calls a day, you'd need an army of auditors — and you'd still only cover a fraction of the volume. The industry average is 2–5% audit coverage. The rest goes unheard.</p>
+
+<p>Baysys.ai set out to change that. Build an AI system that listens to every call, scores it against a 19-parameter quality rubric, and flags every compliance violation — automatically, at scale, within hours of the call being made.</p>
+
+<div class="section-rule"><span>The Scale</span></div>
+
+<h2 class="narrative-h2">$700 million in distressed assets. 650,000 accounts. 16 people.</h2>
+
+<p><a href="https://baysys.ai" target="_blank" rel="noopener">Baysys.ai</a> manages over $700 million in distressed consumer debt across four portfolios — 650,000 customer accounts — with a 16-person headquarters team. Where the industry norm would staff 300–400 people for this volume, Baysys runs lean by design: AI handles training, quality monitoring, and compliance checking so that human expertise focuses on decisions that actually need human judgement.</p>
+
+<div class="stat-row">
+  <div class="stat-cell">
+    <span class="stat-number">18K</span>
+    <span class="stat-label">Calls per day</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-number">650K</span>
+    <span class="stat-label">Customer accounts</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-number">19</span>
+    <span class="stat-label">Audit parameters</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-number">7</span>
+    <span class="stat-label">FATAL violations<br><span style="font-size:0.55rem;color:#9a9590;">auto-fail, any one = regulatory risk</span></span>
+  </div>
 </div>
 
-<!-- ═══ 1. AUDIENCE ═══ -->
+<div class="section-rule"><span>The Build</span></div>
+
+<h2 class="narrative-h2">Built in 48 hours. 275 tests. Seven prompts deep.</h2>
+
+<p>The Call Audit AI system was designed by Baysys.ai's CTO — the same architect behind the Voice Trainer that went from problem to production in 96 hours. The design decisions were non-obvious and came from years inside India's debt resolution industry: a provider-agnostic architecture so STT and LLM vendors could be swapped without touching business logic, a fatal-level scoring matrix derived from real RBI enforcement actions, a compliance engine that enforces calling-hour rules at both metadata and transcript level, submission priority tiers that route the most dangerous calls to human review first.</p>
+
+<p>What AI did was compress the timeline. Using Claude Code as a pair-programmer, the CTO took the system from empty scaffold to production-ready in under 48 hours — seven prompt sessions (A through G), each closing specific GitHub issues, plus two performance hardening rounds. Not a prototype: a complete, tested system with ingestion pipeline, CRM sync, S3 audio handling, webhook recovery polling, bulk deduplication, and 275 passing tests with zero linting findings.</p>
+
+<div class="arch-diagram">
+  <div class="arch-title">Call Audit AI — Processing Pipeline</div>
+  <div class="arch-flow">
+    <div class="arch-node">
+      <span class="arch-node-label">CRM</span>
+      <span class="arch-node-detail">call_logs sync</span>
+    </div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-node">
+      <span class="arch-node-label">Ingestion</span>
+      <span class="arch-node-detail">dedup · S3 URLs · IST</span>
+    </div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-node">
+      <span class="arch-node-label">STT Provider</span>
+      <span class="arch-node-detail">swappable adapter</span>
+    </div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-node">
+      <span class="arch-node-label">LLM Scoring</span>
+      <span class="arch-node-detail">19 params · 7 FATALs</span>
+    </div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-node">
+      <span class="arch-node-label">Compliance</span>
+      <span class="arch-node-detail">RBI COC · fatal matrix</span>
+    </div>
+    <span class="arch-arrow">→</span>
+    <div class="arch-node">
+      <span class="arch-node-label">Dashboard</span>
+      <span class="arch-node-detail">flags · scores · tiers</span>
+    </div>
+  </div>
+  <div class="arch-note">Provider-agnostic: STT and LLM are swappable via configuration. That's the whole point of this hackathon.</div>
+</div>
+
+<div class="section-rule"><span>The Hard Part</span></div>
+
+<h2 class="narrative-h2">The system works. Now we need to find the right ears.</h2>
+
+<p>The architecture is ready. The scoring rubric is locked. The compliance engine is live. But the most critical decision remains open: <strong>which combination of speech-to-text and LLM providers actually works on real Indian phone calls?</strong></p>
+
+<p>This isn't an academic question. These calls are in Hindi and Hinglish — often both in the same sentence. They're recorded over PSTN at 8kHz. Customers are on speakerphone in noisy environments. Agents speak fast, use industry jargon, code-switch between languages. Numbers — loan amounts, EMI dates, account IDs — must be transcribed exactly, because a garbled amount means a garbled score, and a garbled score means a missed FATAL.</p>
+
+<p>We've shortlisted 4 STT providers and 2 LLMs, pre-combined into 5 fixed combinations. We need to know which one to trust with 18,000 calls a day.</p>
+
+<div class="pullquote">
+  <p>Transcription accuracy is non-negotiable — everything downstream depends on it. For the LLM, we'll accept a cheaper model with lower non-FATAL accuracy, as long as it never misses a FATAL. A missed FATAL is a regulatory and reputational risk.</p>
+</div>
+
+<p>That's where you come in.</p>
+
+</div><!-- /article-body -->
+
+<!-- ══════════════════════════════════════════════════════
+     TRANSITION
+     ══════════════════════════════════════════════════════ -->
+
+<div class="transition-divider">
+  <span class="label">The Challenge</span>
+  <div class="title">Your turn.</div>
+  <div class="sub">Five vendor combinations. 50 real production calls. Four role-play scripts with hidden violations. Find the best AI ears for Indian phone calls.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     PART 2: THE HACKATHON
+     ══════════════════════════════════════════════════════ -->
+
+<div class="hackathon-body">
+
 <h2>1. Who is this for?</h2>
 <p>You. Whether you're an engineer, a data person, a QA analyst, or someone who's never written a line of code — you can participate. You don't need to do everything. <strong>Even if you only test the transcription (STT) part, that's a perfectly valid and complete submission.</strong> Not everyone needs to touch the LLM scoring side.</p>
 <p>This document tells you everything you need: the vendor combinations, the scoring rubric, the scripts you'll role-play, and how we'll judge the results. A Technical Appendix at the end goes deeper for engineers.</p>
 
-<!-- ═══ 2. THE PROBLEM ═══ -->
-<h2>2. The problem</h2>
-<p>Baysys.ai processes tens of thousands of customer calls every day in Hindi, English, and Hinglish. Calls range from 3 to 20 minutes. Manual listening and scoring is slow, expensive, and impossible to scale.</p>
-<p>We need an automated <strong>Call Auditor pipeline</strong> that, for every call:</p>
-<ol>
-  <li><strong>Transcribes</strong> the audio into accurate text.</li>
-  <li><strong>Separates speakers</strong> — always clear who is the Agent and who is the Customer.</li>
-  <li><strong>Scores</strong> the call against the 20-parameter quality rubric (Section 4), flagging every FATAL violation.</li>
-</ol>
-
-<div class="card card-accent">
-  <div class="card-label">What we are optimising for</div>
-  <p style="margin:0"><strong>Transcription accuracy is non-negotiable</strong> — everything downstream depends on it. For LLM scoring, a cheaper model with lower non-FATAL accuracy is acceptable, <strong>as long as it never misses a FATAL</strong>. A missed FATAL (e.g. agent discloses customer data to a third party, and the system scores it compliant) is a regulatory and reputational risk.</p>
-</div>
-
-<!-- ═══ 3. COMBINATIONS ═══ -->
-<h2>3. Vendor combinations</h2>
+<h2>2. Vendor combinations</h2>
 <p>Baysys has shortlisted 4 STT providers and 2 LLMs, pre-combined into <strong>5 fixed combinations</strong>. No new vendors in this exercise.</p>
 
 <table>
@@ -365,8 +664,7 @@ hr {
 
 <p>Prices are approximate and based on published rates. The hackathon focus is <strong>quality</strong>, not cost optimisation — but cost context helps frame trade-offs.</p>
 
-<!-- ═══ 4. SCORING RUBRIC ═══ -->
-<h2>4. The scoring rubric</h2>
+<h2>3. The scoring rubric</h2>
 <p>Every call is scored against the <strong>UVARCL Collections Call Quality Scorecard v2</strong> — 19 parameters across 5 groups, maximum <strong>100 points</strong> (weighted by group). Seven parameters carry a <span class="tag tag-fatal">FATAL</span> flag — any single FATAL = the call <strong>fails</strong>, regardless of total score.</p>
 
 <h3>Group weights</h3>
@@ -426,8 +724,7 @@ hr {
   <p style="margin:0">An LLM that gets non-FATAL scores slightly wrong is tolerable. An LLM that misses an agent using abusive language, sharing OTP requests, or disclosing debt to a third party is not. <strong>FATAL recall is the single most important number in this hackathon.</strong></p>
 </div>
 
-<!-- ═══ 5. TEST DESIGN ═══ -->
-<h2>5. Test design</h2>
+<h2>4. Test design</h2>
 <p>There are <strong>two evaluation streams</strong>. You can do either or both:</p>
 <ol>
   <li><strong>Transcription (STT)</strong> — How accurately does each combo convert audio to diarised text? <em>This is a perfectly complete submission on its own.</em></li>
@@ -442,7 +739,7 @@ hr {
 <h3>Test materials provided by Baysys</h3>
 <ul>
   <li><strong>50 real production calls</strong> (mono MP3, 3–15 min each) — a mix of clean, moderate, and difficult calls from real collections operations.</li>
-  <li><strong>4 role-play scripts</strong> at graduated difficulty (Section 6) — you and your teammates record your own calls from these.</li>
+  <li><strong>4 role-play scripts</strong> at graduated difficulty (Section 5) — you and your teammates record your own calls from these.</li>
   <li><strong>Ground truth scores</strong> — 2 experienced human auditors will score every production call against the full rubric <em>before</em> the hackathon. Their consensus becomes the baseline.</li>
 </ul>
 
@@ -453,7 +750,7 @@ hr {
 </thead>
 <tbody>
 <tr><td>Production calls</td><td>All 50</td><td>Same 50 across all combos for fair comparison</td></tr>
-<tr><td>Team role-play calls</td><td>At least 4 (one per script)</td><td>Record under realistic noise — see Section 6</td></tr>
+<tr><td>Team role-play calls</td><td>At least 4 (one per script)</td><td>Record under realistic noise — see Section 5</td></tr>
 <tr><td><strong>Total</strong></td><td><strong>≥ 54</strong></td><td>50 production calls are mandatory</td></tr>
 </tbody>
 </table>
@@ -461,8 +758,7 @@ hr {
 <h3>Blind evaluation</h3>
 <p>When rating LLM outputs, evaluators will <strong>not know which combo produced a given score</strong>. Baysys will assign shuffled labels (Combo A / B / C / D / E) per evaluator to prevent bias.</p>
 
-<!-- ═══ 6. ROLE-PLAY SCRIPTS ═══ -->
-<h2>6. Role-play scripts — you make these calls</h2>
+<h2>5. Role-play scripts — you make these calls</h2>
 <p>This is the fun part. You and your teammates <strong>act out these scripts and record the calls yourselves</strong>. One person plays the Agent, the other plays the Customer. Use your own phone — call each other, use speakerphone, or sit across a table.</p>
 <p>The goal is to create <strong>realistic, messy audio</strong> that stress-tests how well each STT provider handles real Indian conditions. The more realistic, the more useful your data is.</p>
 
@@ -568,8 +864,7 @@ hr {
   <li><strong>You can improvise:</strong> Adapt names, numbers, and small details. Keep the structure and the embedded violations intact.</li>
 </ul>
 
-<!-- ═══ 7. STT TESTING ═══ -->
-<h2>7. Transcription (STT) testing</h2>
+<h2>6. Transcription (STT) testing</h2>
 <p>For each combination, transcribe all <strong>50 production calls + your role-play calls</strong> using the correct STT provider. Enable speaker diarisation. Label turns as <strong>Agent</strong> / <strong>Customer</strong>. You can use vendor dashboards, free-tier API keys, Python scripts, no-code tools — whatever works for you.</p>
 <p><strong>Reminder:</strong> If your team only does STT testing, that is a complete and valid submission.</p>
 
@@ -589,11 +884,10 @@ hr {
 
 <p>Pay special attention to: <strong>numbers and amounts</strong> (must not be garbled), <strong>dates and deadlines</strong> (must not shift), <strong>Hinglish transitions</strong> (must not be dropped), <strong>speaker diarisation</strong> (must not swap Agent/Customer), and any transcription error that would cause a FATAL to be missed or false-flagged.</p>
 
-<!-- ═══ 8. LLM SCORING ═══ -->
-<h2>8. LLM scoring testing</h2>
+<h2>7. LLM scoring testing</h2>
 
 <h3>What to do</h3>
-<p>For each combination and call: take the diarised transcript, provide the 19-parameter rubric (Section 4) as context, and ask the LLM to score: <strong>score per parameter (using the rubric's tiers), total out of 100, and FATAL flags with evidence</strong>. You may use any method — web UI, API, scripts, no-code tools.</p>
+<p>For each combination and call: take the diarised transcript, provide the 19-parameter rubric (Section 3) as context, and ask the LLM to score: <strong>score per parameter (using the rubric's tiers), total out of 100, and FATAL flags with evidence</strong>. You may use any method — web UI, API, scripts, no-code tools.</p>
 
 <h3>Metrics — FATAL detection is primary</h3>
 <table>
@@ -638,8 +932,7 @@ hr {
   <li><strong>1</strong> — Scores bear little relation to the actual call.</li>
 </ul>
 
-<!-- ═══ 9. SUBMISSIONS ═══ -->
-<h2>9. What to submit</h2>
+<h2>8. What to submit</h2>
 
 <h3>If you tested STT only</h3>
 <ol>
@@ -656,11 +949,25 @@ hr {
   <li><strong>Team summary (2–3 pages)</strong> — Recommended combo(s), FATAL recall per combo, failure modes, cost-vs-quality trade-off.</li>
 </ol>
 
-<!-- ═══ 10. HOW BAYSYS USES THIS ═══ -->
-<h2>10. How Baysys.ai uses your work</h2>
+<h2>9. How Baysys.ai uses your work</h2>
 <p>Your qualitative feedback will be combined with internal quantitative metrics to select the production combo, identify parameters needing custom prompt engineering, and quantify cost at target volume (18,000 calls/day, ~60,000 audio minutes/day). A combo will only be chosen if it reliably catches FATALs <strong>and</strong> is trusted by people close to the collections and QA work.</p>
 
-<!-- ═══ 11. TECHNICAL APPENDIX ═══ -->
+<h2>10. Resources &amp; tools</h2>
+
+<h3>Soniox Compare — open-source STT comparison tool</h3>
+<p>Soniox provides an <a href="https://github.com/soniox/soniox-compare" target="_blank" rel="noopener">open-source comparison tool</a> (MIT licence) that runs side-by-side real-time transcription across multiple STT providers — including Soniox, Google, Azure, OpenAI, Deepgram, Speechmatics, and AssemblyAI. The codebase is FastAPI + React/Vite (TypeScript), with each provider implemented as a separate adapter in <code>providers/&lt;name&gt;/provider.py</code>.</p>
+<p><strong>How you can use it:</strong> Fork the repo, supply API keys via <code>.env</code>, and use the provider adapters as starter code for your own batch processing scripts. Note: the tool is designed for real-time WebSocket comparison, not batch file evaluation — but the adapter code saves you from reading each vendor's API docs from scratch.</p>
+<p>Try it live: <a href="https://soniox.com/compare" target="_blank" rel="noopener">soniox.com/compare</a></p>
+
+<h3>API documentation</h3>
+<ul>
+  <li><strong>Soniox:</strong> <a href="https://soniox.com/docs" target="_blank" rel="noopener">soniox.com/docs</a> — async transcription + diarisation</li>
+  <li><strong>Sarvam AI:</strong> <a href="https://docs.sarvam.ai" target="_blank" rel="noopener">docs.sarvam.ai</a> — batch Indic-language STT</li>
+  <li><strong>OpenAI Speech:</strong> <a href="https://platform.openai.com/docs/guides/speech-to-text" target="_blank" rel="noopener">platform.openai.com</a> — Whisper / gpt-4o-mini-transcribe</li>
+  <li><strong>Deepgram:</strong> <a href="https://developers.deepgram.com" target="_blank" rel="noopener">developers.deepgram.com</a> — Nova-2 with diarisation</li>
+  <li><strong>Claude (Anthropic):</strong> <a href="https://docs.anthropic.com" target="_blank" rel="noopener">docs.anthropic.com</a> — Claude 3.5 Sonnet for LLM scoring</li>
+</ul>
+
 <h2>11. Technical appendix</h2>
 
 <h3>Quantitative metrics</h3>
@@ -672,7 +979,7 @@ hr {
 </ul>
 
 <h3>LLM scoring prompt guidance</h3>
-<p>When prompting the LLM, include the full 19-parameter rubric (with audit prompts from the canonical SCORECARD) in the system prompt, the diarised transcript as input, and instruct it to return structured JSON:</p>
+<p>When prompting the LLM, include the full 19-parameter rubric (with audit prompts from Section 3) in the system prompt, the diarised transcript as input, and instruct it to return structured JSON:</p>
 <pre><code>{
   "parameters": [
     {"id": 7, "name": "No harsh/threatening/abusive language",
@@ -694,10 +1001,12 @@ hr {
   <li>Log full request/response payloads (PII-redacted) for debugging and audit.</li>
 </ul>
 
+</div><!-- /hackathon-body -->
+
 <!-- ═══ FOOTER ═══ -->
 <div class="footer">
   <span class="footer-brand">Baysys.ai</span>
-  <span>v7 &middot; 2 April 2026 &middot; Confidential</span>
+  <span>v8 &middot; 3 April 2026 &middot; Confidential</span>
 </div>
 
 </div><!-- /page-wrapper -->
