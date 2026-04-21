@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>PC's Thoughts, Ideas and Research</title>
+  <subtitle>Music · Technology · Finance · The World. &amp; Just about anything</subtitle>
+  <link href="https://pcideas.chitalkar.com/feed.xml" rel="self"/>
+  <link href="https://pcideas.chitalkar.com/"/>
+  <id>https://pcideas.chitalkar.com/</id>
+  <updated>2026-04-21T00:00:00Z</updated>
+  <author>
+    <name>Parikshit Chitalkar</name>
+  </author>
+
+  <entry>
+    <title>Can AI Understand Indian Phone Calls?</title>
+    <link href="https://pcideas.chitalkar.com/posts/baysys-call-auditor-vendor-eval-hackathon.html"/>
+    <id>https://pcideas.chitalkar.com/posts/baysys-call-auditor-vendor-eval-hackathon.html</id>
+    <published>2026-04-02T09:00:00Z</published>
+    <updated>2026-04-02T09:00:00Z</updated>
+    <summary>Five vendor combinations, 50 real calls, one winner — a hackathon to find the best AI call auditor for Hindi, Hinglish, and chaos.</summary>
+  </entry>
+
+  <entry>
+    <title>From Problem to Production in 96 Hours — BaySys.ai</title>
+    <link href="https://pcideas.chitalkar.com/posts/baystreet-agent-trainer-article.html"/>
+    <id>https://pcideas.chitalkar.com/posts/baystreet-agent-trainer-article.html</id>
+    <published>2026-03-25T09:00:00Z</published>
+    <updated>2026-03-25T09:00:00Z</updated>
+    <summary>How BaySys.ai built and deployed a real AI agent trainer in 96 hours, from idea to production.</summary>
+  </entry>
+
+  <entry>
+    <title>Tempo Unchained — How Recording Technology Drove 90 Years of BPM Growth in Bollywood</title>
+    <link href="https://pcideas.chitalkar.com/posts/tempo-unchained.html"/>
+    <id>https://pcideas.chitalkar.com/posts/tempo-unchained.html</id>
+    <published>2026-03-22T09:00:00Z</published>
+    <updated>2026-03-22T09:00:00Z</updated>
+    <summary>How recording technology — from live rooms to tape to digital — shaped 90 years of Bollywood tempo.</summary>
+  </entry>
+
+  <entry>
+    <title>Advanced AI Concepts — Context, Tokens &amp; Mastery</title>
+    <link href="https://pcideas.chitalkar.com/posts/ai-complete-guide.html"/>
+    <id>https://pcideas.chitalkar.com/posts/ai-complete-guide.html</id>
+    <published>2026-03-22T08:00:00Z</published>
+    <updated>2026-03-22T08:00:00Z</updated>
+    <summary>A deep guide to how modern AI systems work: context windows, token limits, and how to get the most out of them.</summary>
+  </entry>
+
+  <entry>
+    <title>AI &amp; Coding — For Bass Players, Cricket Stars &amp; Young Engineers</title>
+    <link href="https://pcideas.chitalkar.com/posts/ai-for-kids.html"/>
+    <id>https://pcideas.chitalkar.com/posts/ai-for-kids.html</id>
+    <published>2026-03-22T07:00:00Z</published>
+    <updated>2026-03-22T07:00:00Z</updated>
+    <summary>Making AI and coding feel real and exciting for curious kids and the adults who teach them.</summary>
+  </entry>
+</feed>
