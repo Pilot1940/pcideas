@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNP6QSWCCZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VNP6QSWCCZ');
+</script>
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon-32.png" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>From Problem to Production in 96 Hours — The Story Continued — BaySys.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0f0f0f;
+    --paper: #f7f4ef;
+    --accent: #c8402a;
+    --accent-muted: #e8d5d0;
+    --rule: #d4cfc8;
+    --caption: #6b6560;
+    --highlight: #f0e8c8;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 18px; line-height: 1.75; font-weight: 300; overflow-x: hidden; }
+
+  /* ── HEADER ── */
+  .masthead { border-bottom: 3px double var(--rule); padding: 2rem 0 0; text-align: center; background: var(--paper); }
+  .masthead-label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--caption); margin-bottom: 1.5rem; }
+  .back-link { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--caption); display: inline-block; margin-bottom: 1rem; border-bottom: none; }
+  .back-link:hover { color: var(--accent); }
+  .hero-kicker { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 1rem; }
+  h1.headline { font-family: var(--serif); font-size: clamp(2.2rem, 5.5vw, 4.5rem); font-weight: 900; line-height: 1.05; max-width: 900px; margin: 0 auto 1.25rem; padding: 0 2rem; letter-spacing: -0.02em; }
+  h1.headline em { font-style: italic; color: var(--accent); }
+  .deck { font-family: var(--serif); font-size: clamp(1.05rem, 2vw, 1.3rem); font-style: italic; font-weight: 400; color: #3a3530; max-width: 680px; margin: 0 auto 2rem; padding: 0 2rem; line-height: 1.5; }
+  .byline-bar { display: flex; justify-content: center; align-items: center; gap: 2rem; padding: 1rem 2rem; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--caption); flex-wrap: wrap; }
+
+  /* ── LAYOUT ── */
+  .article-body { max-width: 780px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+  p { margin-bottom: 1.5rem; font-weight: 300; }
+  h2 { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; line-height: 1.2; margin: 3.5rem 0 1.25rem; letter-spacing: -0.01em; }
+  h3 { font-family: var(--sans); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin: 2.5rem 0 0.75rem; }
+  strong { font-weight: 500; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-muted); }
+  a:hover { border-bottom-color: var(--accent); }
+
+  .dropcap::first-letter { font-family: var(--serif); font-size: 5.5rem; font-weight: 900; float: left; line-height: 0.75; margin: 0.05em 0.2em 0 0; color: var(--accent); }
+
+  .pullquote { border-left: 4px solid var(--accent); margin: 3rem -2rem 3rem 0; padding: 1.5rem 2rem 1.5rem 2.5rem; background: white; }
+  .pullquote p { font-family: var(--serif); font-size: clamp(1.25rem, 2.5vw, 1.6rem); font-style: italic; font-weight: 400; color: var(--ink); margin: 0; line-height: 1.4; }
+
+  .section-rule { display: flex; align-items: center; gap: 1rem; margin: 4rem 0 0; }
+  .section-rule::before, .section-rule::after { content: ''; flex: 1; border-top: 1px solid var(--rule); }
+  .section-rule span { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--caption); white-space: nowrap; }
+
+  .aside-box { background: var(--accent-muted); border-left: 3px solid var(--accent); padding: 1.25rem 1.5rem; margin: 2.5rem 0; font-size: 0.88rem; }
+  .aside-box p { margin: 0 0 0.75rem; }
+  .aside-box p:last-child { margin: 0; }
+  .insight-box { background: #eaf0e8; border-left: 3px solid #4a8a3a; padding: 1.25rem 1.5rem; margin: 2.5rem 0; font-size: 0.88rem; }
+  .insight-box p { margin: 0 0 0.75rem; }
+  .insight-box p:last-child { margin: 0; }
+  .insight-box strong { color: #2a5a1a; }
+
+  /* ── STAT BLOCKS ── */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 3rem 0; }
+  .stat-cell { background: white; padding: 1.25rem 0.65rem; text-align: center; }
+  .stat-number { font-family: var(--serif); font-size: clamp(1.35rem, 2.8vw, 2.1rem); font-weight: 900; color: var(--accent); line-height: 1; display: block; margin-bottom: 0.4rem; }
+  .stat-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--caption); }
+
+  /* ── SCREENSHOTS ── */
+  .screenshot-wrap { margin: 2.5rem 0; }
+  .screenshot-frame { display: block; width: 100%; border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .fig-cap { font-family: var(--sans); font-size: 0.78rem; color: var(--caption); padding: 0.7rem 0 0; border-top: 1px solid var(--rule); line-height: 1.45; margin-top: 0.5rem; }
+  .fig-cap strong { font-weight: 500; color: var(--ink); }
+
+  /* ── SCORECARD PREVIEW ── */
+  .scorecard-preview { border: 1px solid var(--rule); background: white; margin: 2rem 0; overflow: hidden; }
+  .sc-header { background: #1a1612; color: #e8e0d5; padding: 0.6rem 1.25rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+  .sc-section { border-bottom: 1px solid var(--rule); padding: 0.75rem 1.25rem; }
+  .sc-section:last-child { border-bottom: none; }
+  .sc-section-header { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--caption); margin-bottom: 0.5rem; }
+  .sc-section-header .score { color: var(--accent); font-weight: 500; }
+  .sc-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; padding: 0.15rem 0; }
+  .sc-row .pass { color: #3a7a3a; }
+  .sc-row .fail { color: var(--accent); }
+  .sc-row span { color: #3a3530; }
+  .coach-note { background: #fffbeb; border: 1px solid #f0d060; padding: 1rem 1.25rem; margin: 0.75rem 0 0; font-size: 0.82rem; line-height: 1.5; }
+  .coach-note strong { color: #854d0e; }
+
+  /* ── AGENT PROFILE ── */
+  .agent-section-bars { margin: 1.5rem 0; }
+  .section-bar-row { margin-bottom: 1.25rem; }
+  .section-bar-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.3rem; font-size: 0.85rem; }
+  .section-bar-name { font-weight: 400; }
+  .section-bar-score { font-family: var(--mono); font-size: 0.8rem; }
+  .score-good { color: #4a8a3a; font-weight: 500; }
+  .score-excellent { color: #2a5a1a; font-weight: 500; }
+  .score-needs-work { color: #b07820; font-weight: 500; }
+  .score-poor { color: var(--accent); font-weight: 500; }
+  .bar-track { height: 10px; background: #e8e4de; border-radius: 2px; position: relative; }
+  .bar-fill { height: 100%; border-radius: 2px; }
+  .bar-fill.intro { background: #4a7ab8; }
+  .bar-fill.quality { background: #3a7a3a; }
+  .bar-fill.scam { background: #c87820; }
+  .bar-agency-tick { position: absolute; top: -3px; width: 2px; height: 16px; background: #8a4ab8; }
+  .bar-legend { font-family: var(--mono); font-size: 0.62rem; color: #8a4ab8; margin-top: 0.3rem; }
+
+  /* ── CALL HISTORY TABLE ── */
+  .call-history-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 1.5rem 0; }
+  .call-history-table th { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--caption); padding: 0.5rem 0.75rem; border-bottom: 2px solid var(--ink); text-align: left; }
+  .call-history-table td { padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .call-history-table .call-id { font-family: var(--mono); font-size: 0.68rem; color: var(--caption); }
+  .call-history-table .rating-badge { font-family: var(--mono); font-size: 0.62rem; padding: 0.15rem 0.4rem; border-radius: 2px; white-space: nowrap; }
+  .badge-excellent { background: #eaf0e8; color: #2a5a1a; }
+  .badge-good { background: #eaf0ea; color: #3a6a2a; }
+  .badge-needs-work { background: #fef3e0; color: #854d0e; }
+  .badge-poor { background: #fce8e6; color: #991b1b; }
+  .badge-short { background: #f0f0f0; color: #6b6560; }
+
+  /* ── PROMPT VERSION TRACK ── */
+  .version-track { margin: 2rem 0; border: 1px solid var(--rule); background: white; overflow: hidden; }
+  .version-track-header { background: #1a1612; color: #e8e0d5; padding: 0.6rem 1.25rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .version-row { display: grid; grid-template-columns: 80px 100px 1fr; border-bottom: 1px solid var(--rule); font-size: 0.82rem; }
+  .version-row:last-child { border-bottom: none; }
+  .version-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); padding: 0.6rem 0.8rem; background: #f5f0eb; border-right: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; font-weight: 500; }
+  .version-date { font-family: var(--mono); font-size: 0.66rem; color: var(--caption); padding: 0.6rem 0.8rem; border-right: 1px solid var(--rule); display: flex; align-items: center; }
+  .version-desc { padding: 0.6rem 1rem; color: #3a3530; }
+  .version-desc strong { font-weight: 500; color: var(--ink); }
+
+  /* ── HEATMAP TABLE ── */
+  .heatmap-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.82rem; }
+  .heatmap-table th { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--caption); padding: 0.5rem 0.75rem; border-bottom: 2px solid var(--ink); text-align: left; }
+  .heatmap-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--rule); }
+  .heatmap-table .section-name { font-weight: 400; }
+  .heatmap-table .avg-score { font-family: var(--mono); font-weight: 500; }
+  .avg-low { color: var(--accent); }
+  .avg-mid { color: #b07820; }
+  .avg-high { color: #3a7a3a; }
+  .agency-chip { display: inline-block; font-family: var(--mono); font-size: 0.6rem; padding: 0.1rem 0.35rem; border-radius: 2px; margin: 0.1rem; white-space: nowrap; }
+  .chip-negative { background: #fce8e6; color: #991b1b; }
+  .chip-positive { background: #eaf0e8; color: #166534; }
+
+  /* ── ETL DIAGRAM ── */
+  .etl-flow { background: #1a1612; color: #e8e0d5; padding: 1.75rem 2rem; margin: 2.5rem 0; font-family: var(--mono); font-size: 0.78rem; }
+  .etl-title { color: var(--accent); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 1px solid #3a3530; }
+  .etl-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .etl-node { border: 1px solid #4a4440; padding: 0.45rem 0.75rem; background: #231f1b; flex-shrink: 0; }
+  .etl-node.src { background: #1e2018; border-color: #4a5040; }
+  .etl-node.target { background: #1e2828; border-color: #406060; }
+  .etl-node.notify { background: #28201e; border-color: #604040; }
+  .etl-arrow { color: #4a4440; padding: 0 0.3rem; }
+  .etl-label { color: #7a9ab8; font-size: 0.62rem; display: block; }
+  .etl-value { color: #c8a87a; font-size: 0.7rem; display: block; }
+
+  /* ── MIGRATION TIMELINE ── */
+  .migration-timeline { margin: 2.5rem 0; border: 1px solid var(--rule); background: white; overflow: hidden; }
+  .migration-timeline-header { background: #1a1612; color: #e8e0d5; padding: 0.75rem 1.5rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .migration-row { display: grid; grid-template-columns: 80px 1fr; gap: 0; border-bottom: 1px solid var(--rule); }
+  .migration-row:last-child { border-bottom: none; }
+  .migration-num { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; padding: 0.65rem 1rem; background: #f5f0eb; display: flex; align-items: center; justify-content: center; color: var(--accent); border-right: 1px solid var(--rule); }
+  .migration-desc { padding: 0.65rem 1.25rem; font-size: 0.84rem; color: #3a3530; }
+  .migration-desc strong { font-weight: 500; color: var(--ink); }
+
+  /* ── FOOTER ── */
+  .article-footer { border-top: 3px double var(--rule); padding: 3rem 2rem; text-align: center; max-width: 780px; margin: 0 auto; }
+  .article-footer p { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--caption); margin: 0; }
+
+  /* ── CODE BLOCK ── */
+  .code-block { background: #1a1612; color: #e8e0d5; font-family: var(--mono); font-size: 0.82rem; line-height: 1.6; padding: 1.75rem 2rem; margin: 2rem 0; overflow-x: auto; border-left: 3px solid var(--accent); }
+  .code-block .comment { color: #6b6560; font-style: italic; }
+  .code-block .key { color: #c8a87a; }
+  .code-block .val { color: #7ac87a; }
+  .code-block .num { color: #e8c87a; }
+
+  /* ── SHARE WIDGET ── */
+  #pc-share-float {
+    position: fixed; top: 50%; right: 1.5rem; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 0.5rem; z-index: 100;
+  }
+  #pc-share-float a, #pc-share-float button {
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: white; border: 1px solid var(--rule);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    color: var(--ink); cursor: pointer; text-decoration: none;
+    transition: box-shadow 0.15s;
+    font-size: 1rem; padding: 0;
+  }
+  #pc-share-float a:hover, #pc-share-float button:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.14); border-bottom: 1px solid var(--rule); }
+  #pc-share-float svg { width: 18px; height: 18px; }
+  #pc-share-float .copy-tick { display: none; color: #3a7a3a; font-size: 1rem; }
+
+  #pc-share-bottom {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+    background: white; border-top: 1px solid var(--rule);
+    padding: 0.6rem 1.5rem; z-index: 100;
+    flex-direction: row; align-items: center; justify-content: space-around;
+    gap: 0.5rem;
+  }
+  #pc-share-bottom a, #pc-share-bottom button {
+    display: flex; align-items: center; justify-content: center;
+    flex: 1; gap: 0.4rem; padding: 0.5rem 0.6rem;
+    border-radius: 4px; background: #f5f0eb;
+    border: 1px solid var(--rule); font-family: var(--mono);
+    font-size: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--ink); cursor: pointer; text-decoration: none;
+  }
+  #pc-share-bottom svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) { #pc-share-float { display: none; } }
+  @media (max-width: 860px) { #pc-share-bottom { display: flex; } }
+  @media (max-width: 640px) {
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    .version-row { grid-template-columns: 60px 80px 1fr; }
+    .call-history-table { font-size: 0.78rem; }
+  }
+  @media print { body { font-size: 11pt; } #pc-share-float, #pc-share-bottom { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- Share widget — float (desktop) -->
+<div id="pc-share-float">
+  <a id="sf-wa" href="#" target="_blank" rel="noopener" title="Share on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.555 4.126 1.527 5.862L0 24l6.277-1.503A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.797 9.797 0 0 1-5.031-1.384l-.36-.214-3.727.893.935-3.618-.235-.372A9.795 9.795 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+  </a>
+  <a id="sf-x" href="#" target="_blank" rel="noopener" title="Share on X">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+  </a>
+  <a id="sf-li" href="#" target="_blank" rel="noopener" title="Share on LinkedIn">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+  </a>
+  <button id="sf-copy" title="Copy link">
+    <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    <span class="copy-tick">✓</span>
+  </button>
+</div>
+
+<!-- Share widget — bottom bar (mobile) -->
+<div id="pc-share-bottom">
+  <a id="sb-wa" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.555 4.126 1.527 5.862L0 24l6.277-1.503A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.797 9.797 0 0 1-5.031-1.384l-.36-.214-3.727.893.935-3.618-.235-.372A9.795 9.795 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+    WhatsApp
+  </a>
+  <a id="sb-x" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    Post
+  </a>
+  <a id="sb-li" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    LinkedIn
+  </a>
+  <button id="sb-copy">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    Copy
+  </button>
+</div>
+
+<header class="masthead">
+  <p class="masthead-label">BaySys.ai — Technology &amp; Operations</p>
+  <a class="back-link" href="/posts/baystreet-agent-trainer-article.html">← Read Part One: From Problem to Production in 96 Hours</a>
+  <hr style="border:none;border-top:1px solid var(--rule);width:60%;margin:0.75rem auto;" />
+  <span class="hero-kicker">Case Study — Part Two — What Happened Next</span>
+  <h1 class="headline">From Problem to Production in 96 Hours — <em>The Story Continued</em></h1>
+  <p class="deck">The sprint ended. The system went live. Then came the real work: 30 days of bugs, rebuilds, prompt regressions, analytics engineering, and a weekly eval pipeline that runs whether anyone asks it to or not.</p>
+  <div class="byline-bar">
+    <span>BaySys.ai</span>
+    <span>April 2026</span>
+    <span>22 min read</span>
+  </div>
+</header>
+
+<main class="article-body">
+
+  <!-- ═══ OPENING ═══ -->
+  <p class="dropcap">The 96 hours ended on Tuesday, March 26. By Thursday, March 27, the system was embedded in the CRM and agents were making real practice calls against AI personas on real phones. The part that took 96 hours was the scaffold: models, webhook handler, Bolna integration, briefing card, call initiation, scorecard. The part that has taken every day since is everything else. Bugs in live calls. Prompt regressions that only appear when a Hyderabad-based textile wholesaler responds in Urdu instead of Hinglish. A ghost call backfill that covered 209 rows no one knew existed. A discipline scoring architecture that had to be rebuilt because the data team changed their weighting formula and the trainer had no way to stay in sync. All of this is the real system. The sprint was the idea. The 30 days after were the proof.</p>
+
+  <p>This is a detailed account of what was built from that Thursday through the end of April 2026. It covers the bugs as well as the features, the prompt engineering iterations that failed before the ones that held, the architecture of the analytics dashboard that runs today, and the infrastructure decisions that turned a fast prototype into something dependable enough to gate access to real customer calls on the strength of training performance.</p>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <span class="stat-number">967</span>
+      <span class="stat-label">Calls This Week</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-number">69.1%</span>
+      <span class="stat-label">Platform Avg Score</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-number">242</span>
+      <span class="stat-label">Active Agents</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-number">4,635</span>
+      <span class="stat-label">Total PTPs This Week</span>
+    </div>
+  </div>
+
+  <div class="section-rule"><span>The Real Go-Live</span></div>
+
+  <h2>March 27: The First Webhook Fires Into Production</h2>
+
+  <p>CRM integration was live on March 27, three days after the sprint began. But "live" in those first days meant that the plumbing worked—calls could be initiated, the AI answered, and scores came back. The production webhook connecting Bolna's AI cloud to the CRM backend didn't flow reliably until April 4, when the two-layer authentication was locked in: IP whitelist on Bolna's outbound IP (13.203.39.153) plus a URL token in the webhook endpoint path. Both checks run in sequence. A webhook that fails the IP check never reaches parsing. The token comparison is constant-time to prevent timing attacks. In development, both checks are skipped when the environment variables are empty—a conscious decision so engineers can test locally without configuring secrets. In production, neither check is optional.</p>
+
+  <p>The webhook payload is stored verbatim before any extraction logic runs. Every completed Bolna call has a <code>raw_webhook_payload</code> JSON field and a <code>transcript_text</code> field on the TrainingCall model. This turned out to be critical: within the first two weeks, the Bolna extraction format changed between API versions. Score fields that had arrived as plain integers arrived as nested objects—<code>{"objective": "2"}</code> instead of <code>2</code>. The webhook handler had to be extended with a <code>_parse_score_value()</code> method that handles both formats. Without the raw payload stored, diagnosing this would have required re-running historical calls. With it, the fix was a grep and a test.</p>
+
+  <div class="aside-box">
+    <p><strong>What the webhook receives:</strong> After every completed practice call, Bolna fires a POST to <code>https://crmapi.bayst.finance/trainer/webhook/bolna/?token=&lt;secret&gt;</code> with a JSON body containing the 14 binary score fields, conversation duration, LLM token count, the full transcript, and a coaching note generated by a dedicated Bolna extraction agent. The backend processes this in under 100ms: validates auth, checks idempotency on <code>bolna_call_id</code>, extracts and casts all 14 score fields, computes section totals, updates difficulty progression, stores everything. One atomic transaction.</p>
+  </div>
+
+  <div class="section-rule"><span>The Prompt Gauntlet</span></div>
+
+  <h2>Eleven Prompt Versions: Every Bug a Live Call Taught Us</h2>
+
+  <p>The system went live on v8.5. It is now on v11.x. Eleven major iterations in thirty days, each one responding to a real failure in a real call. The failures were not subtle. In one of the first live calls, Karthikeyan Subramanian said "UVARCL? I have not heard of this organization" after the agent mentioned only "personal loan." UVARCL—the name of the debt buyer, which the AI persona must never volunteer—had leaked. The agent hadn't said it. The AI had volunteered it unprompted, breaking the entire premise of the training scenario.</p>
+
+  <p>The root cause was timing. The system prompt contained a CRITICAL guard at the end of Section 3 instructing the persona not to volunteer UVARCL. But by the time the LLM read that guard, it had already committed to generating Section 3 output. The guard was downstream of the decision it was trying to prevent. The fix in v8.7 moved the FORBIDDEN block to the end of Section 2 with an explicit wrong/right example—not just a rule, but a contrast. The LLM was shown what it must not say next to what it should say instead. That specific construction proved more robust than declarative prohibitions alone. The same call type has not produced a UVARCL leak since v8.7.</p>
+
+  <div class="version-track">
+    <div class="version-track-header">Prompt Version History — March 24 to April 13, 2026</div>
+    <div class="version-row">
+      <div class="version-num">v8.5</div>
+      <div class="version-date">Mar 25</div>
+      <div class="version-desc"><strong>Initial live prompt.</strong> 9 active personas seeded. First Bolna calls confirmed end-to-end. Premature Section 3 trigger guard in place.</div>
+    </div>
+    <div class="version-row">
+      <div class="version-num">v8.6</div>
+      <div class="version-date">Mar 26</div>
+      <div class="version-desc"><strong>UVARCL re-entry guard added.</strong> Rule 7 phrasing variation. Contact detail guard. Email-during-call refusal (Karthikeyan and Lakshmi). STT courtesy word examples.</div>
+    </div>
+    <div class="version-row">
+      <div class="version-num">v8.7</div>
+      <div class="version-date">Mar 26</div>
+      <div class="version-desc"><strong>FORBIDDEN block with wrong/right example</strong> moved to end of Section 2. Root cause of UVARCL leak: guard read after LLM committed to Section 3. Explicit before/after example proved stronger than declarative rule alone.</div>
+    </div>
+    <div class="version-row">
+      <div class="version-num">v8.8–v8.9</div>
+      <div class="version-date">Mar–Apr</div>
+      <div class="version-desc"><strong>STT keyword boost tuning.</strong> UVARCL:30, OTS:40, EMI:80, ARC:80, CIBIL:80, settlement:70, StandardChartered:90, Karthikeyan:80, Subramanian:70. Deepgram nova-3 domain boosting dramatically reduced recognition failures on proper nouns.</div>
+    </div>
+    <div class="version-row">
+      <div class="version-num">v9.2–v9.5</div>
+      <div class="version-date">Apr 2</div>
+      <div class="version-desc"><strong>Romanisation pass.</strong> Devanagari removed from step titles. Hindi script retained only in actual dialogue. Rule 9 settlement-volunteering violations fixed in Rekha Desai (3 Phase 3 lines) and Ravi Krishnamurthy (2 lines). Consistency pass all 9 personas.</div>
+    </div>
+    <div class="version-row">
+      <div class="version-num">v11.0</div>
+      <div class="version-date">Apr 12</div>
+      <div class="version-desc"><strong>Per-level architecture.</strong> 9 personas × 5 difficulty levels = 45 separate prompt files. Each level now has a fully distinct prompt instead of a single prompt with a difficulty injection. Zero code changes required for new levels.</div>
+    </div>
+    <div class="version-row">
+      <div class="version-num">v11.1–v11.x</div>
+      <div class="version-date">Apr 13+</div>
+      <div class="version-desc"><strong>Greeting buffer fix.</strong> AI now holds on neutral "हाँ, बोल।" when first caller turn is a greeting only. Prevents premature persona disclosure before agent has identified themselves. Live in production as of Apr 13.</div>
+    </div>
+  </div>
+
+  <p>The most significant structural change was v11.0. Until Session 33 (April 12), all 9 personas had one prompt file each with a <code>{difficulty_level}</code> placeholder that injected the current level at call time. This created a single-prompt-serves-all architecture that became increasingly unworkable as difficulty levels diverged. A prompt written to make Rajesh Gupta cooperative at L1 contained constraints that made him implausibly compliant at L5. The per-level architecture replaced this with 45 separate prompt files—one per persona-level combination—named <code>{slug}-{bank}-{gender}-L{n}-v{X.Y}.md</code>. The database holds 45 rows in <code>training_personas</code>. The <code>prompt_version</code> field encodes both level and version: <code>L3-v11.1</code> means difficulty level 3, version 11, iteration 1. Adding a sixth difficulty level requires no code changes—only 9 new prompt files and a re-seed.</p>
+
+  <p>The sync pipeline handles the full round-trip. A single management command—<code>python manage.py sync_persona_prompts</code> or a POST to the sync endpoint with a Bearer token—reads all 45 prompt files, strips the YAML briefing card block from each (so financial data doesn't reach Bolna), replaces the <code>Difficulty Level: L{n}</code> hardcoded line with a <code>{difficulty_level}</code> placeholder for backward compatibility, and writes the content to the database. The database is source of truth for live calls. Editing a prompt file has zero effect on production until sync runs. This is intentional: it creates an explicit promotion gate between draft and live.</p>
+
+  <div class="section-rule"><span>The Voice Coach</span></div>
+
+  <h2>Session 18: Before Agents Can Practice, They Must Train</h2>
+
+  <p>On March 30, a new gate was inserted into the trainer flow. New agents arriving at the Practice tab for the first time were no longer presented with a briefing card. Instead they saw a banner: "Complete one Coach scenario first." The Voice Coach shipped as a prerequisite.</p>
+
+  <p>The Coach is a structured audio-guided training module: five scenarios covering the most common call types (nervous debtor, aggressive debtor, dignified refusal, distressed and overwhelmed, analytically-minded challenger), two languages (Hindi and English), six phases per scenario (introduction, first resistance, escalation, verification request, resolution attempt, close). Each phase has three audio blocks: the script (what to say), the why (the reasoning behind it), and the watch (what to watch for). Some phases have a fourth tip block. Every block has a play button inline, and the timeline advances automatically as audio completes. One hundred and twenty MP3 recordings cover all blocks across both languages.</p>
+
+  <p>The gate check is in the backend <code>BriefingView</code>. When an agent loads the briefing, the view calls <code>get_or_create</code> on their <code>DifficultyProgression</code> row. If they have zero total calls and no <code>coach_completed_at</code> timestamp, a 403 with error key <code>coach_required</code> is returned. The frontend shows the gate banner. When the agent completes any scenario, the frontend POSTs to <code>/trainer/coach/complete/</code>, which sets the timestamp and unlocks Practice permanently. Existing agents with any call history are grandfathered—they never see the gate.</p>
+
+  <p>Three edge cases had to be handled in the first two weeks of live operation. The POST to <code>/coach/complete/</code> was failing silently for some users, leaving them permanently blocked. The fix added three retries with 2-second gaps and a localStorage fallback—if the POST fails, the completion is stored locally and re-attempted when the agent loads Practice next time. Second: several agents who had completed coaching before the backend gate was added had zero calls but also no completion timestamp. A SQL backfill in the Supabase SQL Editor set <code>coach_completed_at</code> for all users with <code>total_calls &gt; 0</code>. Third: the failsafe exception handler in <code>BriefingView</code> was catching bare <code>Exception</code>—too broad. It was narrowed to <code>(DifficultyProgression.DoesNotExist, OperationalError)</code> so infrastructure failures pass through cleanly while preventing the coach gate from blocking agents due to a database timeout.</p>
+
+  <div class="section-rule"><span>The Dashboard</span></div>
+
+  <h2>From Leaderboard to Analytics Platform: Three Weeks of Dashboard Builds</h2>
+
+  <p>The original dashboard was simple: a leaderboard of agents sorted by average score, a rating distribution chart, and an agency filter. By April 17, the admin view had become a multi-layer analytics platform covering agency-level KPIs, agent-level efficacy scatter, section heatmaps, pace and momentum tracking, eight-week trend lines, a system errors panel, and a weekly snapshot pipeline powering all historical views. Every component was built in response to a specific operational question that could not be answered by the original dashboard.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/rating-trends-tl.png" alt="Rating Trends — Team Lead view showing 63 active agents, score distribution, level distribution, and calls per day" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 1 — Rating Trends (Team Lead view).</strong> 63 active agents, 68 total. Score distribution shows 29.4% Excellent calls and 42.9% Good — but the agent distribution by average score tells a different story: most agents are in "Needs Work" territory. Level distribution shows 31 of 68 agents at L5, the highest difficulty. One agent (Pooja) has been stuck at L1 for 18 days — the dashboard flags this automatically.</p>
+  </div>
+
+  <p>The level distribution is one of the most operationally useful data points the dashboard produces. When 31 of 68 agents in an agency are at L5—the adversarial difficulty level where personas call the call a textbook scam, threaten cybercrime complaints, and demand written proof before engaging—it means the training system has done its job on raw knowledge transfer. Those agents are ready for harder real calls. What the level distribution cannot tell you is whether their PTP conversion rate improves as their trainer score improves. That question required a new chart.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/admin-overview.png" alt="Admin overview showing multi-agency KPIs, agency cards, and trainer efficacy scatter plot" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 2 — Admin Overview.</strong> Today: 83 practice calls, 69.4% platform avg score. This week (W17): 967 calls across all agencies. Agency cards show Prolynk leading on trainer score (72.9%) while Comtel scores 74.3%. The Trainer Efficacy scatter plots each of 242 agents by trainer score vs. PTP conversion rate, with dot size representing call volume. The diagonal dashed line is the expected relationship. Dots above the line are converting better than their score predicts. Dots below are underconverting.</p>
+  </div>
+
+  <p>The Trainer Efficacy scatter (built in sessions S42r through S42y) took four iterations to get right. The first version had a y-axis bug that clipped dots above 100% PTP conversion—some agents convert more than one promise per call by catching sequential follow-ups. Changing the domain from <code>[0, 100]</code> to <code>[0, 'auto']</code> let those points appear. The dot size was initially by trainer call count; changed to PTP lifetime because call count skewed toward new agents making many practice calls, not agents driving real business value. The colourBy toggle (by band vs. by agency) was added to let admins switch between viewing skill distribution and agency clustering. Default filters—minimum 5 PTPs, hide 0% conversion, active agents only—prevent the scatter from being dominated by inactive agents with one lucky call.</p>
+
+  <div class="section-rule"><span>Agent Performance Analytics</span></div>
+
+  <h2>Four Tabs, One Question: Who Needs What Kind of Help?</h2>
+
+  <p>The Agent Performance Analytics component—built in sessions S42t through S42u—is the most analytically complex part of the dashboard. It starts with four summary cards: Star Performers (37 agents above average skill and PTP conversion), Transfer Gap (24 agents with high skill but underconverting), Lucky Converters (20 converting despite below-average scores), and Need Coaching (53 agents below 55% trainer score). These segments come from the efficacy scatter quadrant, divided at a skill threshold of 60% and PTP conversion threshold of 26%.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/effectiveness-quadrant.png" alt="Effectiveness Quadrant showing 37 Star Performers, 24 Transfer Gap, 20 Lucky Converters, 53 Need Coaching" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 3 — Effectiveness Quadrant.</strong> Showing 178 of 267 agents (min 5 PTPs, active only). The upper-right quadrant — Star Performers — is the goal state. The Transfer Gap segment (high skill, underconverting) is analytically interesting: these agents have learned the training rubric but something in their real-call behaviour is suppressing conversion. The Lucky Converters segment (lower-right) are converting despite low scores — possibly on relationship or territory, not training. 53 agents are below 55% trainer score and in active need of coaching intervention.</p>
+  </div>
+
+  <p>The second tab — Section Heatmap — is the hardest one to look at. It ranks call sections by weakness, ordered weakest-first, and shows each section's average score as a percentage alongside a distribution bar showing how agents are spread across bands. It also shows which agencies deviate most from the population average.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/section-heatmap.png" alt="Section Heatmap showing Scam &amp; Trust at 24.8%, Introduction at 52.2%, Call Quality at 75.4%, Discipline at 76.8%" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 4 — Section Heatmap.</strong> Ordered weakest-first. Scam &amp; Trust at 24.8% is the system-wide problem — most agents fall in the Needs Work or Poor band for this section. The distribution bar shows a sea of orange and red. Creditas is 22.7 percentage points below the population on Scam &amp; Trust. BaystreetG is 38.7pp above — the agency has systematically trained its agents on the verification offer, where most agencies have not. Introduction at 52.2% shows more variation: agencies like Comtel and BaystreetG are above population average; Creditas is 31.1pp below. Call Quality at 75.4% is healthier — most agents have learned the conduct rubric even if they haven't mastered trust-building.</p>
+  </div>
+
+  <p>The Scam &amp; Trust number deserves a full explanation because it reveals a structural problem, not just a training gap. The section has two criteria: confirming explicitly that you are not asking for OTP, password, or card data, and offering an independent verification route (the helpline, website, RBI registry, credit bureau). The first criterion agents have learned—nearly all pass it. The second criterion they systematically fail. The reason is not that they don't know about the verification offer. It's that offering it feels, in the moment, like it might give the customer a reason to hang up before committing to a promise to pay. The agent who says "you can verify us via the RBI registry" is implicitly validating the customer's suspicion that verification might be necessary. Agents unconsciously skip it to avoid derailing a conversation that's going well. The training data confirms this is the last skill to develop—agents reach 75% on Call Quality, 52% on Introduction, and 24% on Scam-Trust not because they fail the criterion randomly but because passing it actively conflicts with a short-term incentive.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/pace-momentum.png" alt="Pace &amp; Momentum showing Armeka agency agents sorted by momentum, with individual score trend sparklines" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 5 — Pace &amp; Momentum (Armeka agency, momentum-sorted).</strong> Each card shows an agent's current score, PTP conversion, and momentum (improvement over last 5 calls). I/Q/S/D cells show section-level percentages. Rutuja Bhagavan Shinde leads Armeka's momentum at +17.8% despite 11.5% PTP conversion — improving fast but not yet converting. Shivkumar Kamble is tagged "Transfer Gap": 78.3% trainer score, only 5.8% PTP conversion. High skill, underconverting — a different intervention than coaching required.</p>
+  </div>
+
+  <p>The Pace &amp; Momentum tab (S42u) required the most UX engineering. The initial version rendered all agents in a flat list — unusable at 242 agents. The revision grouped by agency in collapsible sections (first agency expanded by default), with Sort buttons outside the component to prevent re-mounting on re-render. Momentum is computed as the slope of the last 5 call scores—a negative momentum agent scoring 70% consistently is different from a negative momentum agent sliding from 90% to 60%. The signal badges (Skill Gap, Transfer Gap, Needs Dev) are assigned from the efficacy quadrant and displayed on each card so team leads can immediately see which type of intervention each agent needs without switching views.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/section-trends.png" alt="Section Trends W13–W17 showing improvement in all four sections over five weeks" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 6 — Section Trends (W13–W17, system-wide).</strong> W13 is the system's launch week — March 23-29, 2026. Call Quality started at 72% and has stayed relatively stable at 75–80%. Discipline started at 0% (tracking wasn't in place at launch) and rose sharply in W15 when the discipline pipeline connected, reaching 76% by W17. Introduction started at 20% and has grown steadily to 62%. Scam-Trust started at 0% (same pipeline gap) and has reached 40% — still the weakest section, but on a consistent upward slope.</p>
+  </div>
+
+  <p>The Trends chart is powered by the <code>SectionScoreSnapshot</code> model—nightly per-agency and system-wide snapshots of average intro, quality, scam-trust, and discipline scores. Migration 0017 added this model on April 15. The <code>snapshot_rating_distributions</code> management command was extended to populate it: for each agency, it queries that day's completed calls, computes section percentages, and upserts a row. The system-wide row uses <code>agency_id=0</code> as a sentinel. A <code>--backfill-from</code> flag lets the command regenerate historical snapshots from existing call data—the full history visible in the chart was populated retroactively from the training_calls table. The chart also supports a dotted overlay: when an agency is selected, a second query fetches system-wide averages and renders them as dashed lines so team leads can see their agency trend against the platform baseline.</p>
+
+  <div class="section-rule"><span>One Agent's Record</span></div>
+
+  <h2>What the Drawer Shows: Abhi Divakar, Prolynk, Agent ID 544</h2>
+
+  <p>Every agent in the dashboard is clickable. The agent drawer slides in from the right with three tabs: Overview (score trend and section performance), Call History (recent calls with expandable scorecards and audio), and Progression (level track with call counts at each level). The data in Abhi Divakar's drawer, from Prolynk, illustrates both what the system produces and what it reveals.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/score-trend-overview.png" alt="Abhi Divakar agent overview showing L5 level track, score trend over 10 calls, and section performance bars" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 7 — Agent Overview: Abhi Divakar, Prolynk.</strong> All four level checkmarks filled — Abhi has completed L1 through L4 and is now in L5 (adversarial personas, maximum difficulty). Score trend over last 10 calls shows wide volatility: two calls near 100%, one call in Needs Work territory (orange dot, call 5), one call ending as Poor (red dot, call 10). Section performance: Introduction 68% Good (above agency avg 56%), Call Quality 88% Excellent (above agency avg 80%), Scam Handling 60% Needs Work (above agency avg 30%). Even a high-performing L5 agent has not solved Scam-Trust.</p>
+  </div>
+
+  <p>The score volatility at L5 is expected and by design. At L5, personas call the agent a fraudster directly, threaten to file a cybercrime complaint, and refuse any engagement without written documentation. A good call (92.9% Excellent) and a bad call (21.4% Poor) from the same agent against the same persona on consecutive days reflects not inconsistency but the nature of the difficulty. Some calls the customer is more willing to engage. The training value is not eliminating variance—it is developing the range of responses capable of handling the worst version of the scenario.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/call-history-scorecard.png" alt="Abhi Divakar call history showing recent Too Short calls and an expanded scorecard for call #4042 with coach note" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 8 — Call History: four consecutive "Too Short" calls, then an Excellent.</strong> Calls #4631, #4589, #4389, #4376 (April 23–24) are all "Too Short" — below the 20-second minimum conversation duration gate added in S43a. These calls are not scored; the persona connection dropped before a real conversation began. Call #4042 (April 22) scored 92.9% Excellent with an expanded scorecard: Introduction 9/10, Call Quality 14/14, Scam-Trust 3/4. The single Introduction miss was not introducing by name before asking questions. The Scam-Trust miss was not offering an independent verification route. The coach note explains why the call worked and what to fix.</p>
+  </div>
+
+  <p>The expanded scorecard for Call #4042 shows the exact anatomy of an Excellent call that isn't perfect. Introduction 9/10: four of five criteria met. The agent greeted appropriately, established bank context, explained the debt assignment chain, and named UVARCL as RBI-licensed. But they did not introduce themselves by name before the first question—a common pattern where agents get to the substantive content correctly but skip the personal identification step. Call Quality 14/14: perfect. Every criterion met. The conversation moved forward, questions were answered, the close was clear. Scam-Trust 3/4: the agent confirmed they were not asking for OTP or sensitive data, but did not offer the verification route.</p>
+
+  <div class="scorecard-preview">
+    <div class="sc-header">
+      <span>Call #4042 — Apr 22 2026 — Abhi Divakar vs. Sunita Kapoor L5</span>
+      <span style="color: #7ac87a;">92.9% Excellent</span>
+    </div>
+    <div class="sc-section">
+      <div class="sc-section-header"><span>Introduction Quality</span><span class="score">9 / 10</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Time-appropriate greeting (Good morning / Good afternoon)</span></div>
+      <div class="sc-row"><span class="fail">✗</span><span>Agent introduced themselves by name</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Bank and product context established</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Explained UVARCL has taken over the account</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Mentioned UVARCL is RBI-licensed</span></div>
+    </div>
+    <div class="sc-section">
+      <div class="sc-section-header"><span>Call Quality</span><span class="score">14 / 14</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>No fumbling, long pauses, or unprofessional conduct</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>No harsh, threatening, or unparliamentary language</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Customer questions answered accurately</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Customer appeared satisfied with responses</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Call moved to next logical step</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Clear closing remark with next action</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Addressed scam / regulatory concerns correctly</span></div>
+    </div>
+    <div class="sc-section">
+      <div class="sc-section-header"><span>Scam-Trust Handling</span><span class="score">3 / 4</span></div>
+      <div class="sc-row"><span class="pass">✓</span><span>Confirmed NOT asking for OTP / card / password</span></div>
+      <div class="sc-row"><span class="fail">✗</span><span>Offered independent verification method (helpline / RBI)</span></div>
+    </div>
+    <div class="coach-note">
+      <strong>Coach note:</strong> You repeatedly insisted the customer confirm details by calling Axis Bank or checking messages without first clearly explaining your own organization and its legitimacy, which caused the customer to feel suspicious. In your next call, introduce your company clearly at the start, explain your role and intent simply without pushing the customer prematurely for confirmation, to build trust and avoid early resistance.
+    </div>
+  </div>
+
+  <p>The coach note is generated by a dedicated Bolna extraction agent that analyzes the transcript independently of scoring. It is not a template. It reads the actual conversation and provides turn-specific feedback. In this case, it correctly identified that while Abhi established legitimacy, the sequencing was wrong—the push for confirmation came before sufficient organizational context was established, triggering the customer's suspicion. An agent reading this note has a specific, actionable instruction for the next call, not generic advice.</p>
+
+  <div class="section-rule"><span>System Reliability</span></div>
+
+  <h2>Ghost Calls, Too-Short Gates, and 126 Stuck Today</h2>
+
+  <p>A "ghost call" is a completed Bolna webhook that reports zero conversation duration and zero LLM tokens. From the system's perspective, the call completed—a webhook arrived, the idempotency check passed, the call was marked as completed. From any other perspective, nothing happened. The agent's phone never rang, or rang once and disconnected before the AI answered. Scoring a ghost call would produce scores of zero for every criterion and damage the agent's statistics and difficulty progression with data that has nothing to do with their performance.</p>
+
+  <p>Session S43a added a ghost call gate before any scoring logic runs. If a webhook arrives with <code>conversation_duration = 0</code> and <code>llm_tokens = 0</code>, the call is marked <code>status='failed'</code>, <code>call_outcome='provider_failure'</code> and processing stops. The gate split required a careful look at the webhook handler's structure: the status-only check (idempotency) had to run before the ghost check, but scoring had to run only after both. The backfill run on April 14 updated 209 historical rows that had been scored as zero across multiple days—far more than the original estimate of 40.</p>
+
+  <p>A "too-short" call is different. These calls connect—the agent speaks, the AI responds—but the conversation ends in under 20 seconds. This covers disconnects, network failures, agents who immediately hang up, and calls where the agent's opening was so poor that the AI ended the scenario. Scoring a 12-second call with the same rubric as a 4-minute call produces meaningless data. Session S43a (Fix A2) added a sub-20-second gate: calls with a non-zero but sub-20-second conversation duration receive <code>call_outcome='too_short'</code>, <code>rating_band='Invalid'</code>, and all 14 score fields remain NULL. The transcript and recording URL are still saved for debugging. The 20-second threshold is configurable via <code>TRAINER_MIN_CALL_DURATION</code>.</p>
+
+  <div class="screenshot-wrap">
+    <img src="screenshots/system-errors.png" alt="System Errors panel showing 126 stuck calls today, 672 all time, and a live list of recent stuck calls with agent, persona, level, and Bolna call ID" class="screenshot-frame" />
+    <p class="fig-cap"><strong>Figure 9 — System Errors panel.</strong> 126 calls stuck today (Bolna accepted the call but never fired a webhook), 672 all time. 0 provider failures today, 690 all time. The table shows the live list: agents from Prolynk, MBA, Baystreet_G, Armeka, and Konex, calling Nasreen Ansari, Rekha Desai, Imran Sheikh, Sunita Kapoor, and Arjun Mehra at L3 through L5. Stuck calls cluster in time — 8 calls between 10:09 and 10:11 AM — suggesting a brief Bolna infrastructure event rather than individual connection failures. These will be resolved at 1AM by the nightly cleanup job.</p>
+  </div>
+
+  <p>The System Errors panel replaced the earlier "Unscored Calls" panel in session S43d and was subsequently refined in five more sessions (S43f, S43h, S43n, S43q, S43s). Each refinement responded to a specific operational problem. S43f added agent name and agency name to the table rows so operators didn't have to cross-reference agent IDs manually. S43h fixed time display to IST and made the Agency column sortable. S43n fixed a NULL <code>initiated_at</code> bug where ghost-call backfill rows (which had no <code>initiated_at</code> from Bolna) were excluded from period counts. S43s fixed the most operationally frustrating bug: in month mode (the default dashboard view after S43m changed the default), the system_errors count always showed "—" because the data was built inside an <code>if mode != "month"</code> guard. Moving the dict construction outside the period guard fixed it—the panel now shows correct counts regardless of which time period the dashboard is viewing.</p>
+
+  <p>Stuck calls are cleaned up nightly. The <code>resolve_stuck_calls</code> management command (Session S43c) runs at 1AM via Celery beat. It queries all <code>status='initiated'</code> TrainingCalls with a non-null <code>bolna_call_id</code> and checks each against the Bolna API. A 404 response means Bolna has no record of the call—marked as <code>failed/provider_failure</code>. An ended status means the call completed on Bolna's side but the webhook never arrived—marked as <code>failed/no_answer</code>. Running calls are skipped. The command supports <code>--dry-run</code> and <code>--limit N</code> for manual runs during urgent clearance. Before this command existed, stuck calls accumulated indefinitely. The 672 all-time count includes the backlog that pre-dated the command; new stuck calls now clear within 24 hours.</p>
+
+  <div class="section-rule"><span>PTP Attribution</span></div>
+
+  <h2>The Investigation That Revealed 49% of PTPs Were Invisible</h2>
+
+  <p>Session S43b was not a feature session. It was an investigation. The dashboard had been showing PTP conversion numbers that felt low. A data analysis session on April 14 confirmed the root cause: <code>fetch_ptp_data()</code> was using an INNER JOIN between <code>crm_comments</code> (where PTPs are logged) and <code>call_logs</code> (dialler data). <code>call_logs</code> only contains data since February 19, 2026—the day the Exotel dialler integration went live. Any PTP recorded before that date, or for any call not routed through the dialler, would produce no match in the join and be silently excluded.</p>
+
+  <p>The analysis found that 49% of all-time PTPs—4,611 of 9,392—were invisible to the trainer dashboard. The stable-period analysis (March 15 to April 13) showed 30.2% hidden. Rezolution agency was worst: 81% of their PTPs invisible. Prolynk: 52% hidden.</p>
+
+  <p>The fix design was agreed: switch PTP attribution to <code>crm_comments.comment_by</code> (a direct agent FK that doesn't depend on dialler data). But the fix was gated behind the data team's pending Exotel webhook integration and a mandatory CRM form update—structural dependencies that couldn't be resolved in a sprint. The investigation was closed as documented, not fixed. The dashboard PTP numbers remain understated until those dependencies are resolved. The documentation at <code>Documentation/attributed_ptps_investigation_2026-04-14.md</code> has the full analysis.</p>
+
+  <p>In parallel, the PTP counting logic itself was rewritten in S42w. The original logic double-counted PTPs: if two agents called the same customer on the same day, each was credited with the full PTP. The rewrite uses a <code>DISTINCT ON (customer_id, ptp_date)</code> CTE so each PTP date for each customer counts once at the system level. Conversion credit is split 50-50: half to the agent who first secured any PTP for the customer, half to the agent attributed to the most recent PTP before payment. Same agent both times equals full credit. The 50-50 split is visible in the data—<code>converted_ptps</code> is a float that can be 0.5.</p>
+
+  <div class="section-rule"><span>The ETL Harness</span></div>
+
+  <h2>April 23–24: A General-Purpose Data Pipeline Engine in Six Sessions</h2>
+
+  <p>The last major build in April was not a trainer feature. It was infrastructure. Six sessions over two days (April 23–24) produced the Analytics ETL Harness: a general-purpose scheduled SQL-to-analytics-table engine that handles TRUNCATE + batch INSERT, data quality checks, run logging, failure alerts, and optional CSV export to Google Drive. The first job—<code>baysys_daily_analytics_snapshot</code>—runs a 38-column daily analytics snapshot from the raw UVARCL data into an <code>analytics</code> schema table.</p>
+
+  <div class="etl-flow">
+    <div class="etl-title">Analytics ETL Harness — Execute Job Flow</div>
+    <div class="etl-row">
+      <div class="etl-node src"><span class="etl-label">Source SQL</span><span class="etl-value">jobs/{name}/job.yaml</span></div>
+      <div class="etl-arrow">→</div>
+      <div class="etl-node"><span class="etl-label">Harness</span><span class="etl-value">execute_job()</span></div>
+      <div class="etl-arrow">→</div>
+      <div class="etl-node"><span class="etl-label">Blocking checks</span><span class="etl-value">TRUNCATE + batch INSERT</span></div>
+      <div class="etl-arrow">→</div>
+      <div class="etl-node target"><span class="etl-label">Target table</span><span class="etl-value">analytics.baysys_daily_*</span></div>
+    </div>
+    <div class="etl-row" style="margin-top:0.75rem;">
+      <div class="etl-node"><span class="etl-label">Non-blocking checks</span><span class="etl-value">run after commit</span></div>
+      <div class="etl-arrow">→</div>
+      <div class="etl-node"><span class="etl-label">Run log</span><span class="etl-value">analytics.etl_run_log</span></div>
+      <div class="etl-arrow">→</div>
+      <div class="etl-node notify"><span class="etl-label">Notifications</span><span class="etl-value">per-job email list</span></div>
+      <div class="etl-arrow">→</div>
+      <div class="etl-node notify"><span class="etl-label">CSV export</span><span class="etl-value">Google Drive (optional)</span></div>
+    </div>
+  </div>
+
+  <p>The batch INSERT uses <code>psycopg2.extras.execute_values</code> for a single multi-row INSERT per batch—approximately 10× the throughput of <code>executemany</code>. But the code runs on Django 5.x in some environments, which uses psycopg3 cursor wrappers that don't expose the psycopg2-specific extras. The solution is runtime detection: the <code>_get_raw_cursor()</code> helper unwraps Django's cursor chain, then checks whether the raw connection has an <code>encoding</code> attribute (a psycopg2 marker). If yes, use execute_values. If no, fall back to executemany. This means the same code runs correctly on both psycopg2 and psycopg3 without configuration changes.</p>
+
+  <p>The check system is YAML-configured. Each job has a <code>checks.yaml</code> that specifies blocking checks (which roll back the transaction if they fail) and non-blocking checks (which log but don't abort). The current daily snapshot job has five checks: <code>not_empty</code> (custom SQL asserting at least one row), <code>source_loan_coverage</code> (coverage ratio against source query must be ≥ 90%), <code>null_check_critical</code> (null rate tolerance per column), <code>agency_distribution</code> (minimum groups), and <code>row_count_drift</code> (row count must not change more than 15% day-over-day). The drift check passes on first run. Blocking checks trigger rollback and send an alert email. Non-blocking failures are recorded in <code>checks_json</code> on the run log row but don't stop the pipeline.</p>
+
+  <p>Per-job notification emails were added in ETL-S05: the <code>job.yaml</code> can specify a <code>notify_emails</code> list that overrides the global <code>NOTIFY_EMAILS</code> setting. When the daily snapshot job runs, email goes to the specific data team members responsible for that job, not every engineer on the global list. The optional CSV export (ETL-S06) queries the target table post-commit, serializes to CSV, and uploads to a specified Google Drive folder via a service account. The export failure is swallowed—if Drive is unreachable, the job still succeeds. The CSV export is disabled by default in the daily snapshot job's YAML; enabled by setting <code>csv_export.enabled: true</code> and supplying a Drive folder ID.</p>
+
+  <p>The harness has 79 tests covering loaders, checks, harness logic, notifications, and exporters. Zero ruff findings. The entire implementation—scaffold, documentation, implementation, performance improvements, per-job emails, CSV export—was built across six sessions in two days. The institutional decision to use AI-assisted builds with mandatory human code review after each session explains the speed without sacrificing quality. Every session produced a code review pass. Every finding was addressed before moving to the next session.</p>
+
+  <div class="section-rule"><span>The Test Infrastructure</span></div>
+
+  <h2>420+ Tests, 18 Migrations: The Build Narrative as Schema</h2>
+
+  <p>The test suite has grown from 8 smoke tests (Prompt A, March 24) to 420+ passing tests as of April 2026, plus 79 ETL tests, all passing. Every module with logic has a corresponding test file. Tests are run against in-memory SQLite to keep the suite fast, but the production database is Supabase PostgreSQL and the connection mode matters: session-mode pooler on port 5432 rather than transaction-mode on port 6543, because <code>search_path</code> is not preserved across transaction-mode connections. The test suite has never been green with an unstaged breaking change; the rule is zero errors and zero ruff findings before any commit touches the main branch.</p>
+
+  <p>The eighteen migrations document the system's evolution more precisely than any feature list. Each one represents a real problem that reached the schema level.</p>
+
+  <div class="migration-timeline">
+    <div class="migration-timeline-header">Migration History — March 24 to April 15, 2026</div>
+    <div class="migration-row">
+      <div class="migration-num">0001</div>
+      <div class="migration-desc"><strong>Initial scaffold.</strong> TrainingPersona, TrainingCall, DifficultyProgression. 8 smoke tests.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0002</div>
+      <div class="migration-desc"><strong>Raw webhook payload.</strong> Store complete Bolna response before extraction — critical for debugging score format changes.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0003</div>
+      <div class="migration-desc"><strong>Briefing card fields.</strong> 11 financial fields on TrainingPersona: outstanding amounts, DPD, missed payments, prior calls, legal notice date.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0004</div>
+      <div class="migration-desc"><strong>Legal notice date as CharField.</strong> Changed from IntegerField to CharField(20) to support "N/A" and free-text values.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0005</div>
+      <div class="migration-desc"><strong>Transcript field.</strong> Added raw transcript string field — dropped in 0007 when transcript_text proved sufficient.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0006</div>
+      <div class="migration-desc"><strong>Coach gate fields.</strong> coach_completed_at and coach_required on DifficultyProgression — powers the new-agent practice gate.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0007</div>
+      <div class="migration-desc"><strong>Drop redundant transcript.</strong> transcript_text handles both Bolna formats (list-of-dicts + plain string). One source of truth.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0008</div>
+      <div class="migration-desc"><strong>Max score field.</strong> Denormalized maximum for quick percentage calculation without a runtime constants lookup.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0009</div>
+      <div class="migration-desc"><strong>CallEvalResult model.</strong> Weekly eval pipeline persistence — stores per-call Layer 1 check results and eval run ID.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0010</div>
+      <div class="migration-desc"><strong>Rating band field.</strong> Denormalized 'Excellent' / 'Good' / 'Needs Work' / 'Poor' — avoids recomputing from score on every dashboard query.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0011</div>
+      <div class="migration-desc"><strong>Persona name on CallEvalResult.</strong> Denormalized persona name for eval reports — avoids joins on per-call analysis.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0012</div>
+      <div class="migration-desc"><strong>RatingSnapshot.</strong> Nightly per-agency rating band counts — makes 8-week trend chart possible without querying the full call history.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0013</div>
+      <div class="migration-desc"><strong>Recording URL.</strong> S3 presigned URL from Bolna stored on TrainingCall — audio playback in the scorecard drawer.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0014</div>
+      <div class="migration-desc"><strong>Prompt version + SectionScoreSnapshot.</strong> Track which prompt version was live at call time; add section-level snapshot table.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0015</div>
+      <div class="migration-desc"><strong>Merge migration.</strong> Consolidates concurrent development on dashboard and eval branches.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0016</div>
+      <div class="migration-desc"><strong>Dashboard indexes.</strong> Indexes on call_date, agent_id, rating_band — dashboard queries at 242 agents with rolling history require them.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0017</div>
+      <div class="migration-desc"><strong>SectionScoreSnapshot.</strong> Dedicated model for per-agency, per-section nightly snapshots — powers the Section Trends tab and heatmap.</div>
+    </div>
+    <div class="migration-row">
+      <div class="migration-num">0018</div>
+      <div class="migration-desc"><strong>Index rename and optimisation.</strong> Final performance tuning for production query patterns at current scale.</div>
+    </div>
+  </div>
+
+  <div class="section-rule"><span>Current State</span></div>
+
+  <h2>Where the System Stands: April 25, 2026</h2>
+
+  <p>The BaySys Voice AI Trainer is live at crm.bayst.finance/trainer/hub. Three Bolna agents handle all nine personas across their five difficulty levels. Forty-five prompt files at v11.x are in the database, synced from git after each prompt engineering session. Four hundred twenty tests pass. Eighteen migrations are applied to the Supabase production database. The weekly eval pipeline runs Friday nights. Three Celery jobs run nightly: <code>snapshot_rating_distributions</code> at midnight, <code>resolve_stuck_calls</code> at 1AM, <code>backfill_recording_urls</code> every five minutes for recent completed calls. The ETL harness runs a daily analytics snapshot at 2AM.</p>
+
+  <p>What the system still doesn't do: the PTP attribution fix is blocked on the data team's Exotel webhook integration. The Bolna spike (issue #45—evaluating whether to replace Bolna with self-hosted voice orchestration using Voxtral TTS, Pipecat or LiveKit, and Whisper STT) is open and long-term. The overall report (issue #46—callers across agencies, untrained agents from the CRM users table) is backlogged. Score trend chart (#40) and structured persona feedback (#37) are frontend features waiting for dashboard capacity.</p>
+
+  <p>Five issues remaining in the backlog is the wrong way to read the current state. The better way is: a founding team of four engineers built and operates a voice AI training platform handling 967 calls per week across 242 agents at 10 agencies, with fully automated scoring, adaptive difficulty, a Voice Coach prerequisite, a multi-layer analytics dashboard, a weekly automated eval pipeline, and a nightly ETL harness—without a dedicated data team, without external vendors, and without a single third-party SaaS tool for anything except the telephony layer. That is the right way to read it.</p>
+
+  <div class="pullquote">
+    <p>"The system trained agents. The bugs trained the system. Thirty days after the sprint, both were better."</p>
+  </div>
+
+  <p>The metrics from the Section Trends chart are the cleanest summary of what the 30 days produced. Introduction quality went from 20% at launch to 62% by week 17. Call Quality held above 75% throughout—it was never the problem. Discipline tracking came online in week 15 and immediately showed 67%, rising to 76% by week 17. Scam-Trust, the section that reveals whether agents have genuinely internalised the compliance intent behind the training (not just its form), went from 0% to 40%. Still the lowest. Still improving. The system is working.</p>
+
+</main>
+
+<footer class="article-footer">
+  <p>BaySys.ai &nbsp;·&nbsp; April 2026 &nbsp;·&nbsp; Technology &amp; Operations &nbsp;·&nbsp; <a href="/posts/baystreet-agent-trainer-article.html" style="color:var(--caption); border-bottom: 1px solid var(--rule);">← Part One</a></p>
+</footer>
+
+<script>
+(function() {
+  var url = encodeURIComponent(location.href);
+  var title = encodeURIComponent(document.title);
+  var wa = "https://wa.me/?text=" + encodeURIComponent(document.title + " " + location.href);
+  var xLink = "https://twitter.com/intent/tweet?url=" + url + "&text=" + title;
+  var li = "https://www.linkedin.com/shareArticle?mini=true&url=" + url + "&title=" + title;
+
+  ['sf-wa','sb-wa'].forEach(function(id){ var el=document.getElementById(id); if(el) el.href=wa; });
+  ['sf-x','sb-x'].forEach(function(id){ var el=document.getElementById(id); if(el) el.href=xLink; });
+  ['sf-li','sb-li'].forEach(function(id){ var el=document.getElementById(id); if(el) el.href=li; });
+
+  function copyLink(btnId, iconId) {
+    var btn = document.getElementById(btnId);
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      navigator.clipboard.writeText(location.href).then(function() {
+        var icon = btn.querySelector('.copy-icon');
+        var tick = btn.querySelector('.copy-tick');
+        if (icon) icon.style.display = 'none';
+        if (tick) tick.style.display = 'inline';
+        setTimeout(function() {
+          if (icon) icon.style.display = '';
+          if (tick) tick.style.display = 'none';
+        }, 2000);
+      });
+    });
+  }
+  copyLink('sf-copy');
+  var sbCopy = document.getElementById('sb-copy');
+  if (sbCopy) {
+    sbCopy.addEventListener('click', function() {
+      navigator.clipboard.writeText(location.href);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
