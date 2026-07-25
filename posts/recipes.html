@@ -1176,35 +1176,72 @@
       btn.closest('.card').classList.toggle('expanded');
     }
 
-    function filterCards(cat) {
-      var cards = document.querySelectorAll('.card');
-      var btns = document.querySelectorAll('.filter-btn');
-      var count = 0;
+    var currentCat = 'all';
+    var selectedIngr = new Set();
 
+    function filterCards(cat) {
+      currentCat = cat;
+      var btns = document.querySelectorAll('.filter-btn');
       btns.forEach(function(b) { b.classList.remove('active'); });
       event.target.classList.add('active');
+      refreshCards();
+    }
+
+    function refreshCards() {
+      var cards = document.querySelectorAll('.card');
+      var filtering = selectedIngr.size > 0;
+      var visibleCount = 0, ready = 0, close = 0, far = 0;
 
       cards.forEach(function(c) {
-        if (cat === 'all' || c.dataset.cat === cat) {
-          c.style.display = '';
-          count++;
+        var catOk = (currentCat === 'all' || c.dataset.cat === currentCat);
+        var missing = filtering ? c._ingrTags.filter(function(t) { return !selectedIngr.has(t); }) : [];
+
+        if (filtering) {
+          if (missing.length === 0) {
+            if (catOk) ready++;
+            c._badge.className = 'match-badge ready';
+            c._badge.textContent = 'Ready to cook';
+            c.style.order = '0';
+          } else if (missing.length === 1) {
+            if (catOk) close++;
+            c._badge.className = 'match-badge close';
+            c._badge.textContent = 'Need ' + missing[0];
+            c.style.order = '1';
+          } else {
+            if (catOk) far++;
+            c._badge.className = 'match-badge far';
+            c._badge.textContent = missing.length + ' more needed';
+            c.style.order = '2';
+          }
         } else {
-          c.style.display = 'none';
+          c._badge.className = 'match-badge';
+          c._badge.textContent = '';
+          c.style.order = '';
         }
+
+        var ingrOk = !filtering || missing.length <= 1;
+        var visible = catOk && ingrOk;
+        c.style.display = visible ? '' : 'none';
+        if (visible) visibleCount++;
       });
 
-      document.getElementById('card-count').textContent = count + ' recipe' + (count !== 1 ? 's' : '');
+      document.getElementById('card-count').textContent = visibleCount + ' recipe' + (visibleCount !== 1 ? 's' : '');
+
+      var resultBar = document.getElementById('pantry-result');
+      if (filtering) {
+        resultBar.classList.add('show');
+        document.getElementById('stat-ready').textContent = ready + (ready === 1 ? ' recipe ready now' : ' recipes ready now');
+        document.getElementById('stat-close').textContent = close + ' one ingredient away';
+        document.getElementById('stat-far').textContent = far + ' hidden — need 2+';
+      } else {
+        resultBar.classList.remove('show');
+      }
     }
 
     (function() {
       var cards = document.querySelectorAll('.card');
       var chips = document.querySelectorAll('.pantry-chips .chip');
-      var resultBar = document.getElementById('pantry-result');
-      var statReady = document.getElementById('stat-ready');
-      var statClose = document.getElementById('stat-close');
-      var statFar = document.getElementById('stat-far');
       var clearBtn = document.getElementById('pantry-clear');
-      var selected = new Set();
 
       cards.forEach(function(card) {
         card._ingrTags = (card.dataset.ingr || '').split(',').map(function(s) { return s.trim(); }).filter(Boolean);
@@ -1214,67 +1251,24 @@
         card._badge = badge;
       });
 
-      function update() {
-        if (selected.size === 0) {
-          resultBar.classList.remove('show');
-          cards.forEach(function(c) {
-            c.style.order = '';
-            c._badge.className = 'match-badge';
-            c._badge.textContent = '';
-          });
-          return;
-        }
-        resultBar.classList.add('show');
-        var ready = 0, close = 0, far = 0;
-        cards.forEach(function(c) {
-          var tags = c._ingrTags;
-          if (!tags.length) {
-            c._badge.className = 'match-badge';
-            c._badge.textContent = '';
-            c.style.order = '3';
-            return;
-          }
-          var missing = tags.filter(function(t) { return !selected.has(t); });
-          if (missing.length === 0) {
-            ready++;
-            c._badge.className = 'match-badge ready';
-            c._badge.textContent = 'Ready to cook';
-            c.style.order = '0';
-          } else if (missing.length === 1) {
-            close++;
-            c._badge.className = 'match-badge close';
-            c._badge.textContent = 'Need ' + missing[0];
-            c.style.order = '1';
-          } else {
-            far++;
-            c._badge.className = 'match-badge far';
-            c._badge.textContent = missing.length + ' more needed';
-            c.style.order = '2';
-          }
-        });
-        statReady.textContent = ready + (ready === 1 ? ' recipe ready now' : ' recipes ready now');
-        statClose.textContent = close + ' one ingredient away';
-        statFar.textContent = far + ' further out';
-      }
-
       chips.forEach(function(chip) {
         chip.addEventListener('click', function() {
           var val = chip.dataset.ingr;
-          if (selected.has(val)) {
-            selected.delete(val);
+          if (selectedIngr.has(val)) {
+            selectedIngr.delete(val);
             chip.classList.remove('active');
           } else {
-            selected.add(val);
+            selectedIngr.add(val);
             chip.classList.add('active');
           }
-          update();
+          refreshCards();
         });
       });
 
       clearBtn.addEventListener('click', function() {
-        selected.clear();
+        selectedIngr.clear();
         chips.forEach(function(c) { c.classList.remove('active'); });
-        update();
+        refreshCards();
       });
     })();
   </script>
