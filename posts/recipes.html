@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNP6QSWCCZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VNP6QSWCCZ');
+  </script>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon-32.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Collection — PC's Kitchen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:         #FAFAF7;
+      --bg-alt:     #F2F0EB;
+      --bg-card:    #FFFFFF;
+      --text:       #1A1A18;
+      --text-dim:   #5C5B56;
+      --text-muted: #8A8983;
+      --accent:     #B8462E;
+      --accent-light: #e8a090;
+      --border:     #E0DED8;
+      --green:      #3B6D11;
+      --green-bg:   #EDF5E5;
+      --blue:       #1565C0;
+      --blue-bg:    #E3F2FD;
+      --orange:     #E65100;
+      --orange-bg:  #FFF3E0;
+      --purple:     #6A1B9A;
+      --purple-bg:  #F3E5F5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 17px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      line-height: 1.65;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--text);
+      padding: 11px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 15px;
+      letter-spacing: 0.3px;
+      color: var(--bg);
+      text-decoration: none;
+    }
+    .topbar-back {
+      font-size: 12px;
+      color: rgba(250,250,247,0.55);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: color 0.15s;
+    }
+    .topbar-back:hover { color: rgba(250,250,247,0.9); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--text);
+      color: var(--bg);
+      padding: 56px 24px 48px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.7rem, 5vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent-light); }
+    .hero-sub {
+      font-size: clamp(0.8rem, 2vw, 0.92rem);
+      font-weight: 300;
+      color: rgba(250,250,247,0.55);
+      letter-spacing: 0.06em;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── FILTERS ── */
+    .filters {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 24px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .filter-btn {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg-card);
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+    .filter-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      padding: 20px 20px 0;
+    }
+    .card-category {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .cat-wrap { background: var(--orange-bg); color: var(--orange); }
+    .cat-shell { background: var(--purple-bg); color: var(--purple); }
+    .cat-noodle { background: var(--green-bg); color: var(--green); }
+    .cat-stuffed { background: var(--blue-bg); color: var(--blue); }
+    .cat-other { background: var(--bg-alt); color: var(--text-dim); }
+
+    .card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    /* ── MACROS BAR ── */
+    .macros {
+      display: flex;
+      gap: 2px;
+      padding: 0 20px;
+      margin-bottom: 14px;
+    }
+    .macro {
+      flex: 1;
+      text-align: center;
+      padding: 8px 4px;
+      background: var(--bg-alt);
+      border-radius: 6px;
+      font-size: 11px;
+      line-height: 1.3;
+    }
+    .macro:first-child { border-radius: 6px 2px 2px 6px; }
+    .macro:last-child { border-radius: 2px 6px 6px 2px; }
+    .macro-val {
+      display: block;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .macro-label {
+      color: var(--text-muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── EXPAND ── */
+    .card-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-top: 1px solid var(--border);
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      width: 100%;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: auto;
+    }
+    .card-toggle:hover { background: rgba(184,70,46,0.04); }
+    .card-toggle .arrow { transition: transform 0.2s; font-size: 10px; }
+    .card.expanded .card-toggle .arrow { transform: rotate(180deg); }
+
+    .card-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .card.expanded .card-detail {
+      max-height: 2000px;
+    }
+
+    .card-detail-inner {
+      padding: 0 20px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-detail-inner h4 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin: 16px 0 8px;
+      color: var(--text);
+    }
+    .card-detail-inner ul {
+      list-style: none;
+      padding: 0;
+    }
+    .card-detail-inner ul li {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      padding: 2px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+    .card-detail-inner ul li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .card-detail-inner ol {
+      padding-left: 20px;
+    }
+    .card-detail-inner ol li {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      padding: 3px 0;
+      line-height: 1.55;
+    }
+    .card-detail-inner .source-link {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .card-detail-inner .source-link:hover {
+      border-bottom-color: var(--accent);
+    }
+    .card-detail-inner .note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: var(--bg-alt);
+      border-radius: 6px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.8rem 24px 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 40px 20px 32px; }
+      .topbar { padding: 10px 16px; }
+      .card-grid { padding: 16px; gap: 14px; grid-template-columns: 1fr; }
+      .filters { padding: 16px 16px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topbar">
+    <a class="topbar-name" href="/">Parikshit Chitalkar</a>
+    <a class="topbar-back" href="/">&larr; Back to posts</a>
+  </nav>
+
+  <header class="hero">
+    <h1>Recipes that <em>actually</em> work</h1>
+    <p class="hero-sub">High protein, low calorie, big portions. Food you'll enjoy eating while hitting your targets.</p>
+  </header>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterCards('all')">All</button>
+    <button class="filter-btn" onclick="filterCards('shell')">Wrap Shells</button>
+    <button class="filter-btn" onclick="filterCards('wrap')">Wraps</button>
+    <button class="filter-btn" onclick="filterCards('noodle')">Noodles &amp; Pasta</button>
+    <button class="filter-btn" onclick="filterCards('stuffed')">Stuffed &amp; Other</button>
+    <span class="filter-count" id="card-count">16 recipes</span>
+  </div>
+
+  <div class="card-grid" id="card-grid">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- WRAP SHELLS                                 -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <div class="card" data-cat="shell">
+      <div class="card-header">
+        <span class="card-category cat-shell">Wrap Shell</span>
+        <div class="card-title">Cottage Cheese Wrap</div>
+        <div class="card-desc">2-ingredient high-protein wrap shell. Bake on parchment — use with any filling. The foundation recipe.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">155</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">20g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">6g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">5g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (makes 2 wraps)</h4>
+          <ul>
+            <li>1 cup cottage cheese (2% or full-fat)</li>
+            <li>2 eggs</li>
+            <li>1 tsp garlic powder (optional)</li>
+            <li>1 tsp onion powder (optional)</li>
+            <li>1 tsp Italian seasoning (optional)</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Preheat oven to 175°C (350°F). Line a baking sheet with parchment paper.</li>
+            <li>Blend cottage cheese, eggs, and seasonings for 1-2 minutes until completely smooth.</li>
+            <li>Pour onto parchment and spread evenly into a thin rectangle.</li>
+            <li>Bake 35-40 minutes until golden at edges and set through.</li>
+            <li>Cool completely — it firms up as it cools. Cut in half and fill.</li>
+          </ol>
+          <div class="note">Add 2 tbsp parmesan for a sturdier wrap. Change seasoning to match filling (Italian, Mexican, Indian). Stores 3-4 days in fridge.</div>
+          <a class="source-link" href="https://healthyfitnessmeals.com/cottage-cheese-wrap/" target="_blank">Source: Healthy Fitness Meals &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="shell">
+      <div class="card-header">
+        <span class="card-category cat-shell">Wrap Shell</span>
+        <div class="card-title">Moong Dal Chilla</div>
+        <div class="card-desc">Indian lentil crepe stuffed with paneer and vegetables. High fiber, gut-health friendly. Also works as a wrap shell.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">224</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">12g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">24g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">5g</span><span class="macro-label">Fiber</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Batter (makes 7 chillas)</h4>
+          <ul>
+            <li>1 cup moong dal (husked green gram), soaked 2 hours</li>
+            <li>1 tsp cumin seeds</li>
+            <li>&frac12; inch ginger</li>
+            <li>2 green chillies</li>
+            <li>1 tsp salt, &frac12; cup water</li>
+          </ul>
+          <h4>Stuffing</h4>
+          <ul>
+            <li>200g paneer, grated</li>
+            <li>&frac14; cup onions, &frac12; cup spring onion greens</li>
+            <li>&frac12; cup each: carrots, red bell pepper, green bell pepper</li>
+            <li>2 green chillies, &frac12; cup coriander</li>
+            <li>1 tsp each: cumin powder, amchur, salt</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Grind soaked dal with cumin, ginger, chillies, salt until smooth. Add water for thick batter.</li>
+            <li>Mix all stuffing ingredients.</li>
+            <li>Pour batter on hot non-stick tawa, spread into a round.</li>
+            <li>Drizzle ghee. Cook 30-40 seconds until set. Add stuffing, press gently.</li>
+            <li>Flip, cook 1-2 minutes until crisp. Fold and serve.</li>
+          </ol>
+          <a class="source-link" href="https://myfoodstory.com/moong-dal-chilla/" target="_blank">Source: My Food Story &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- WRAPS                                       -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <div class="card" data-cat="wrap">
+      <div class="card-header">
+        <span class="card-category cat-wrap">Wrap</span>
+        <div class="card-title">Buffalo Chicken Wraps</div>
+        <div class="card-desc">Rotisserie chicken, Greek yogurt ranch, buffalo sauce, coleslaw. No cooking, 20 minutes. Absolute banger.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">210</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">20g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">20g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">3g</span><span class="macro-label">Fiber</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (makes 10 wraps)</h4>
+          <ul>
+            <li>450g rotisserie chicken, pulled</li>
+            <li>225g coleslaw mix</li>
+            <li>1 cup nonfat Greek yogurt</li>
+            <li>&frac12; cup buffalo/hot sauce</li>
+            <li>1 tbsp ranch seasoning</li>
+            <li>85g blue cheese or cheddar</li>
+            <li>225g baby spinach and arugula</li>
+            <li>10 cottage cheese wraps or low-carb tortillas</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Combine Greek yogurt, ranch seasoning, and buffalo sauce in a large bowl.</li>
+            <li>Add pulled chicken, coleslaw mix, and cheese. Toss until coated.</li>
+            <li>Layer greens, chicken mixture, more greens on each wrap.</li>
+            <li>Roll tightly. Slice in half.</li>
+          </ol>
+          <div class="note">Greens between filling and wrap prevent sogginess. For extra heat, add more buffalo sauce.</div>
+          <a class="source-link" href="https://masonfit.com/healthy-buffalo-chicken-wraps/" target="_blank">Source: Mason Fit &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="wrap">
+      <div class="card-header">
+        <span class="card-category cat-wrap">Wrap</span>
+        <div class="card-title">Peri Peri Chicken Wrap</div>
+        <div class="card-desc">Charred spicy chicken with smoky paprika mayo. Nando's vibes at a fraction of the calories.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">376</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">50g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">28g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">8g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Chicken (per wrap)</h4>
+          <ul>
+            <li>150g chicken breast, sliced thin</li>
+            <li>&frac12; tsp each: smoked paprika, garlic powder, onion powder, chilli flakes, oregano, basil, salt, pepper</li>
+            <li>&frac12; tsp coconut oil</li>
+          </ul>
+          <h4>Peri Peri Sauce</h4>
+          <ul>
+            <li>2 tbsp light mayo</li>
+            <li>2 tbsp milk</li>
+            <li>1 tsp lemon juice</li>
+            <li>&frac14; tsp each: smoked paprika, cayenne, garlic powder</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Coat chicken in all seasoning.</li>
+            <li>Cook on high heat 7-8 minutes until charred and done.</li>
+            <li>Mix sauce ingredients. Spread on wrap.</li>
+            <li>Add lettuce, red onion, tomato, chicken, remaining sauce. Roll.</li>
+          </ol>
+          <div class="note">Use cottage cheese wrap to drop carbs. Toast seam-side down for crispy finish.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="wrap">
+      <div class="card-header">
+        <span class="card-category cat-wrap">Wrap</span>
+        <div class="card-title">Korean Spiced Chicken Lettuce Wraps</div>
+        <div class="card-desc">Gochujang-glazed chicken mince in butter lettuce. Spicy-sweet, sesame, 15 minutes flat.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">278</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">34g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">11g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">11g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Sauce</h4>
+          <ul>
+            <li>&frac14; cup reduced-sodium soy sauce</li>
+            <li>2 tbsp brown sugar or honey</li>
+            <li>2 tsp sesame oil</li>
+            <li>1 tsp gochujang or sriracha</li>
+            <li>2 garlic cloves, minced</li>
+            <li>1 tbsp fresh ginger, minced</li>
+          </ul>
+          <h4>Assembly (serves 4)</h4>
+          <ul>
+            <li>600g lean chicken mince</li>
+            <li>1 head butter lettuce</li>
+            <li>Spring onions, coriander, sesame seeds</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Whisk sauce ingredients together.</li>
+            <li>Brown chicken mince over medium-high heat, 5-6 minutes.</li>
+            <li>Pour sauce in, simmer 1-2 minutes until thickened.</li>
+            <li>Spoon into lettuce leaves. Top with spring onions, coriander, sesame.</li>
+          </ol>
+          <a class="source-link" href="https://www.slenderkitchen.com/recipe/korean-beef-lettuce-wraps" target="_blank">Source: Slender Kitchen (adapted) &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="wrap">
+      <div class="card-header">
+        <span class="card-category cat-wrap">Wrap</span>
+        <div class="card-title">Chicken Tikka Wraps</div>
+        <div class="card-desc">Tandoori-marinated chicken with Kashmiri chilli, amchur, yogurt. Worth the overnight marinade.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">527</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">41g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">48g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">12g</span><span class="macro-label">Fiber</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Marinade (makes 6 wraps)</h4>
+          <ul>
+            <li>&frac12; cup Greek yogurt (0% fat)</li>
+            <li>1 lemon juice, 2 tbsp olive oil</li>
+            <li>4 cloves garlic, 2-inch ginger (chopped)</li>
+            <li>2 tsp smoked paprika, 2 tsp Kashmiri chilli</li>
+            <li>1 tsp amchur, &frac12; tsp cinnamon, &frac12; tsp aniseed</li>
+            <li>2 tsp salt</li>
+            <li>900g chicken breast, cut into 24 pieces</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Whisk marinade. Coat chicken. Refrigerate overnight (2 days ideal).</li>
+            <li>Thread 4 pieces per skewer. Broil 10 min, flip, 10 min more.</li>
+            <li>Spread tomato sauce on wrap. Add greens, chicken, raita or avocado dip.</li>
+            <li>Roll tightly.</li>
+          </ol>
+          <div class="note">Use cottage cheese wrap for low carb. The marinade is everything — don't rush it.</div>
+          <a class="source-link" href="https://shahzadidevje.com/indian-tandoori-chicken-tikka-wraps/" target="_blank">Source: Desi~licious RD &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="wrap">
+      <div class="card-header">
+        <span class="card-category cat-wrap">Wrap</span>
+        <div class="card-title">High-Protein Chicken Burrito</div>
+        <div class="card-desc">Chicken, black beans, spinach, chipotle Greek yogurt sauce. Massive, filling, proper meal.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">525</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">45g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">45g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">12g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (makes 4 burritos)</h4>
+          <ul>
+            <li>500g chicken breast, diced</li>
+            <li>Chilli powder, cumin, smoked paprika, garlic &amp; onion powder, lime</li>
+            <li>1 cup cooked black beans</li>
+            <li>1 cup cauliflower or brown rice</li>
+            <li>1 onion, 1 bell pepper, mushrooms, spinach</li>
+            <li>60g reduced-fat cheese, Greek yogurt, salsa</li>
+            <li>4 cottage cheese wraps or whole wheat tortillas</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Season and cook chicken 6-8 minutes.</li>
+            <li>Saut&eacute; veg, add beans and rice, wilt spinach.</li>
+            <li>Combine. Fill wraps with cheese, yogurt, salsa.</li>
+            <li>Fold, roll. Sear seam-side down for crispiness.</li>
+          </ol>
+          <a class="source-link" href="https://www.griproom.com/fun/the-best-low-calorie-high-protein-burrito-recipe-ever" target="_blank">Source: GripRoom &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="wrap">
+      <div class="card-header">
+        <span class="card-category cat-wrap">Wrap</span>
+        <div class="card-title">Chicken Taco Lettuce Wraps</div>
+        <div class="card-desc">Taco-seasoned grilled chicken in romaine with avocado and cilantro-lime Greek yogurt sauce.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">161</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">14g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">6g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">9g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 4)</h4>
+          <ul>
+            <li>450g chicken breast</li>
+            <li>2 tbsp taco seasoning, 2 cloves garlic, 1 tbsp olive oil</li>
+            <li>8 romaine lettuce leaves</li>
+            <li>1 avocado, 1 tomato, &frac14; cup onion (all diced)</li>
+          </ul>
+          <h4>Cilantro-Lime Sauce</h4>
+          <ul>
+            <li>&frac12; cup coriander, &frac12; cup Greek yogurt</li>
+            <li>2 tbsp olive oil, 1 jalape&ntilde;o, 1 clove garlic</li>
+            <li>Juice of &frac12; lime, pinch salt</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Marinate chicken 15-30 min. Cook on medium-high until done.</li>
+            <li>Blend sauce ingredients until creamy.</li>
+            <li>Layer lettuce, chicken, veg. Drizzle sauce.</li>
+          </ol>
+          <div class="note">Light but flavourful. Double the chicken for a more substantial meal.</div>
+          <a class="source-link" href="https://gimmedelicious.com/chicken-taco-lettuce-wraps-low-carb-paleo-keto/" target="_blank">Source: Gimme Delicious &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- NOODLES & PASTA                             -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <div class="card" data-cat="noodle">
+      <div class="card-header">
+        <span class="card-category cat-noodle">Noodles</span>
+        <div class="card-title">Garlic Chicken Zucchini Noodles</div>
+        <div class="card-desc">Chicken, garlic, parmesan, chilli flakes on spiralised courgette. Huge volume, absurdly low calorie.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">220</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">25g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">4g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">11g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 4)</h4>
+          <ul>
+            <li>2 medium zucchini, spiralised</li>
+            <li>400g chicken breast, sliced thin</li>
+            <li>2 tbsp butter or olive oil</li>
+            <li>3 cloves garlic, minced</li>
+            <li>75g grated parmesan</li>
+            <li>Salt, pepper, &frac14; tsp red chilli flakes</li>
+            <li>Lemon wedges</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Heat butter. Cook garlic and chicken until golden, 5-6 min.</li>
+            <li>Add zucchini noodles. Cook 3-5 min until tender (not mushy).</li>
+            <li>Off heat: toss with parmesan, lemon, chilli flakes.</li>
+          </ol>
+          <a class="source-link" href="https://bestrecipebox.com/garlic-shrimp-zucchini-noodles/" target="_blank">Source: Best Recipe Box (adapted) &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="noodle">
+      <div class="card-header">
+        <span class="card-category cat-noodle">Noodles</span>
+        <div class="card-title">Chicken Meatballs &amp; Zoodles</div>
+        <div class="card-desc">Herb-loaded chicken meatballs in marinara over spiralised courgette. Classic comfort, fraction of the calories.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">325</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">25g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">25g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">7g</span><span class="macro-label">Fiber</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Meatballs (serves 4, ~16 balls)</h4>
+          <ul>
+            <li>600g lean chicken mince</li>
+            <li>1 cup grated zucchini (squeeze out liquid)</li>
+            <li>2 slices bread + &frac14; cup breadcrumbs</li>
+            <li>1 egg, garlic, onion</li>
+            <li>Fresh oregano, parsley, mint</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Mix all meatball ingredients. Form 16 balls. Chill 15 min.</li>
+            <li>Pan-fry in olive oil over low-medium heat, ~15-20 min.</li>
+            <li>Spiralise 4 zucchini. Saut&eacute; with garlic 1-2 min max.</li>
+            <li>Serve with meatballs, warm marinara, parmesan.</li>
+          </ol>
+          <div class="note">Grated zucchini in the meatballs keeps them incredibly moist. Can grill instead.</div>
+          <a class="source-link" href="https://www.skinnytaste.com/greek-turkey-meatballs/" target="_blank">Source: Skinnytaste (adapted) &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="noodle">
+      <div class="card-header">
+        <span class="card-category cat-noodle">Pasta</span>
+        <div class="card-title">Creamy Cajun Chicken Pasta</div>
+        <div class="card-desc">Cottage cheese cream sauce, cajun spice, bell peppers, chickpea pasta. Creamy without the guilt.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">350</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">38g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">25g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">10g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 4)</h4>
+          <ul>
+            <li>112g chickpea or protein pasta</li>
+            <li>400g chicken breast, diced</li>
+            <li>Cajun seasoning, thyme, paprika, cayenne</li>
+            <li>1 red bell pepper, spring onions</li>
+          </ul>
+          <h4>Cottage Cheese Cream Sauce</h4>
+          <ul>
+            <li>1 cup low-fat cottage cheese (2%)</li>
+            <li>&frac12; cup 2% milk</li>
+            <li>&frac14; cup grated parmesan</li>
+            <li>1 tsp cajun seasoning</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Cook pasta. Reserve 1 cup water.</li>
+            <li>Season and cook chicken. Set aside.</li>
+            <li>Saut&eacute; veg. Deglaze with pasta water.</li>
+            <li>Blend sauce ingredients until smooth. Add to pan on low heat.</li>
+            <li>Toss in chicken and pasta. Don't boil the sauce.</li>
+          </ol>
+          <div class="note">Use zucchini noodles instead of pasta for even lower carbs. The cottage cheese sauce is the secret.</div>
+          <a class="source-link" href="https://easymacromeals.com/creamy-cajun-shrimp-pasta-high-protein/" target="_blank">Source: Easy Macro Meals (adapted) &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="noodle">
+      <div class="card-header">
+        <span class="card-category cat-noodle">Noodles</span>
+        <div class="card-title">Chicken Pesto Zucchini Noodles</div>
+        <div class="card-desc">Spinach-walnut pesto with chicken and grape tomatoes on spiralised courgette. Different flavour from the garlic version.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">280</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">28g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">8g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">16g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Pesto</h4>
+          <ul>
+            <li>2 tbsp olive oil, 2 tbsp walnuts</li>
+            <li>&frac14; cup lemon juice, &frac12; tsp salt</li>
+            <li>&frac12; tsp red pepper flakes, &frac12; cup spinach</li>
+          </ul>
+          <h4>Main (serves 3)</h4>
+          <ul>
+            <li>400g chicken breast, sliced</li>
+            <li>1 cup grape tomatoes, halved</li>
+            <li>1&frac12; cups zucchini, spiralised</li>
+            <li>Italian seasoning, salt, pepper</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Blend pesto until smooth.</li>
+            <li>Cook chicken until golden. Remove.</li>
+            <li>Saut&eacute; tomatoes and zucchini 2-3 min.</li>
+            <li>Return chicken. Toss with pesto. Serve immediately.</li>
+          </ol>
+          <a class="source-link" href="https://skinnyfitalicious.com/shrimp-pesto-zucchini-noodles/" target="_blank">Source: Skinny Fitalicious (adapted) &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="noodle">
+      <div class="card-header">
+        <span class="card-category cat-noodle">Stir-Fry</span>
+        <div class="card-title">Thai Basil Ground Chicken</div>
+        <div class="card-desc">Garlic, shallot, serrano chilli, fish sauce, oyster sauce, basil. Thai street food flavour, 20 minutes.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">190</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">27g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">8g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">7g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 4)</h4>
+          <ul>
+            <li>450g lean ground chicken</li>
+            <li>1 tbsp olive oil</li>
+            <li>6 cloves garlic, 1 shallot, 1 serrano pepper (all minced)</li>
+            <li>2 tbsp soy sauce, 1 tbsp fish sauce</li>
+            <li>1 tbsp oyster sauce, 1 tbsp sweet chilli sauce</li>
+            <li>Large handful fresh basil</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Make paste from shallot, serrano, garlic. Fry 2-3 min.</li>
+            <li>Add chicken, break apart, cook through.</li>
+            <li>Mix sauces. Pour over chicken, stir 30-60 sec.</li>
+            <li>Add basil, stir until wilted.</li>
+          </ol>
+          <div class="note">Serve over cauliflower rice (low carb) or regular rice. Top with fried egg for extra protein. Fish + oyster + sweet chilli = authentic Thai flavour.</div>
+          <a class="source-link" href="https://masonfit.com/thai-basil-ground-chicken/" target="_blank">Source: Mason Fit &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- STUFFED & OTHER                             -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <div class="card" data-cat="stuffed">
+      <div class="card-header">
+        <span class="card-category cat-stuffed">Flatbread</span>
+        <div class="card-title">Cottage Cheese Flatbread Pizza</div>
+        <div class="card-desc">Cottage cheese + egg crust, marinara, mozzarella. Satisfies the pizza craving at a fraction of the damage.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">227</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">22g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">7g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">13g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Crust (serves 4)</h4>
+          <ul>
+            <li>1 cup cottage cheese, 2 eggs</li>
+            <li>3 tbsp parmesan, 1 tsp garlic powder</li>
+            <li>1 tsp Italian seasoning, salt &amp; pepper</li>
+          </ul>
+          <h4>Toppings</h4>
+          <ul>
+            <li>&frac12; cup marinara, &frac34; cup mozzarella</li>
+            <li>&frac12; cup chicken pepperoni or grilled chicken</li>
+            <li>Fresh basil</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Blend crust ingredients smooth. Spread on parchment-lined tray.</li>
+            <li>Bake 175°C (350°F) for 30-35 min until golden.</li>
+            <li>Cool. Add toppings. Bake 5-7 min more until cheese melts.</li>
+          </ol>
+          <div class="note">Same base as the cottage cheese wrap, baked thicker. 7g carbs for pizza is remarkable.</div>
+          <a class="source-link" href="https://www.slenderkitchen.com/recipe/cottage-cheese-flatbread-pizza" target="_blank">Source: Slender Kitchen &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="stuffed">
+      <div class="card-header">
+        <span class="card-category cat-stuffed">Stuffed</span>
+        <div class="card-title">Chicken Fajita Stuffed Peppers</div>
+        <div class="card-desc">Cumin-chilli chicken with rice and cheese baked inside bell peppers. Hearty and satisfying.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">441</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">42g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">25g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">19g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 3)</h4>
+          <ul>
+            <li>3 bell peppers, halved</li>
+            <li>450g chicken breast, diced</li>
+            <li>1 onion, 2 garlic cloves</li>
+            <li>2 tsp chilli powder, 1 tsp cumin</li>
+            <li>1 cup cauliflower or regular rice</li>
+            <li>&frac34; cup shredded cheddar</li>
+            <li>Coriander, lime juice</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Halve and deseed peppers. Place in baking dish.</li>
+            <li>Cook onion, garlic, chicken with spices.</li>
+            <li>Mix in rice, coriander, lime. Stuff peppers.</li>
+            <li>Cover, bake 190°C (375°F) 20 min. Uncover, add cheese, 5 min more.</li>
+          </ol>
+          <div class="note">Use cauliflower rice to drop carbs significantly.</div>
+          <a class="source-link" href="https://feelgoodfoodie.net/recipe/chicken-stuffed-peppers/" target="_blank">Source: Feel Good Foodie &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="stuffed">
+      <div class="card-header">
+        <span class="card-category cat-stuffed">Stuffed</span>
+        <div class="card-title">Chipotle BBQ Stuffed Sweet Potato</div>
+        <div class="card-desc">Ground chicken in smoky BBQ-chipotle sauce over roasted sweet potato with spinach.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">260</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">21g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">33g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">5g</span><span class="macro-label">Fiber</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 6)</h4>
+          <ul>
+            <li>3 large sweet potatoes, halved</li>
+            <li>450g ground chicken</li>
+            <li>&frac12; cup BBQ sauce, 2 chipotle peppers in adobo</li>
+            <li>4 cloves garlic, &frac12; cup stock</li>
+            <li>85g baby spinach</li>
+            <li>Greek yogurt, coriander, pickled onions</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Roast sweet potatoes cut-side down at 230°C (450°F), 40-50 min.</li>
+            <li>Blend BBQ sauce, chipotle, garlic, stock until smooth.</li>
+            <li>Brown chicken. Add sauce. Fold in spinach.</li>
+            <li>Top sweet potatoes with chicken mixture and garnishes.</li>
+          </ol>
+          <div class="note">The chipotle-BBQ sauce is smoky and addictive. Batch-prep the filling for the week.</div>
+          <a class="source-link" href="https://masonfit.com/ground-chicken-and-sweet-potatoes/" target="_blank">Source: Mason Fit &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>&copy; 2026 Parikshit Chitalkar</span>
+    <a href="/">Home</a>
+    <a href="/posts/privacy-policy.html">Privacy Policy</a>
+  </footer>
+
+  <script>
+    function toggleCard(btn) {
+      btn.closest('.card').classList.toggle('expanded');
+    }
+
+    function filterCards(cat) {
+      var cards = document.querySelectorAll('.card');
+      var btns = document.querySelectorAll('.filter-btn');
+      var count = 0;
+
+      btns.forEach(function(b) { b.classList.remove('active'); });
+      event.target.classList.add('active');
+
+      cards.forEach(function(c) {
+        if (cat === 'all' || c.dataset.cat === cat) {
+          c.style.display = '';
+          count++;
+        } else {
+          c.style.display = 'none';
+        }
+      });
+
+      document.getElementById('card-count').textContent = count + ' recipe' + (count !== 1 ? 's' : '');
+    }
+  </script>
+
+</body>
+</html>
