@@ -285,6 +285,7 @@
     .cat-noodle { background: var(--green-bg); color: var(--green); }
     .cat-stuffed { background: var(--blue-bg); color: var(--blue); }
     .cat-other { background: var(--bg-alt); color: var(--text-dim); }
+    .cat-curry { background: #FFF8E1; color: #E65100; }
 
     .card-title {
       font-family: 'Playfair Display', Georgia, serif;
@@ -438,12 +439,75 @@
     }
     footer a { color: var(--text-muted); text-decoration: none; }
 
+    /* ── PERSON FILTER ── */
+    .person-filters {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px 24px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .person-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+    .person-btn {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg-card);
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .person-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* ── PANTRY DIM ── */
+    .card.pantry-dim {
+      opacity: 0.35;
+      transform: scale(0.97);
+    }
+    .card.pantry-close-state {
+      opacity: 0.7;
+    }
+
+    /* ── BLINKIT NOTE ── */
+    .pantry-note {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .pantry-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
     /* ── HOVER (skip on touch so taps don't leave a stuck hover state) ── */
     @media (hover: hover) and (pointer: fine) {
       .topbar-back:hover { color: rgba(250,250,247,0.9); }
       .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
       .chip:hover { border-color: var(--accent); color: var(--accent); }
       .chip.active:hover { color: #fff; }
+      .person-btn:hover { border-color: var(--accent); color: var(--accent); }
+      .person-btn.active:hover { color: #fff; }
       .card:hover {
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         transform: translateY(-2px);
@@ -461,6 +525,8 @@
       .filters { padding: 16px 16px 0; }
       .filter-btn { padding: 8px 14px; }
       .filter-count { width: 100%; margin-left: 0; text-align: right; order: 1; }
+      .person-filters { padding: 12px 16px 0; }
+      .person-btn { padding: 7px 12px; }
       .card-header { padding: 16px 16px 0; }
       .card-desc { margin-bottom: 12px; }
       .macros { padding: 0 16px; gap: 6px; }
@@ -491,14 +557,23 @@
     <button class="filter-btn" onclick="filterCards('shell')">Wrap Shells</button>
     <button class="filter-btn" onclick="filterCards('wrap')">Wraps</button>
     <button class="filter-btn" onclick="filterCards('noodle')">Noodles &amp; Pasta</button>
+    <button class="filter-btn" onclick="filterCards('curry')">Curry &amp; Rice</button>
     <button class="filter-btn" onclick="filterCards('stuffed')">Stuffed &amp; Other</button>
-    <span class="filter-count" id="card-count">16 recipes</span>
+    <span class="filter-count" id="card-count">21 recipes</span>
+  </div>
+
+  <div class="person-filters">
+    <span class="person-label">Who's cooking?</span>
+    <button class="person-btn active" onclick="filterPerson('all')">Everyone</button>
+    <button class="person-btn" onclick="filterPerson('pc')">PC</button>
+    <button class="person-btn" onclick="filterPerson('dev')">Dev</button>
+    <button class="person-btn" onclick="filterPerson('dea')">Dea</button>
   </div>
 
   <section class="pantry">
     <div class="pantry-inner">
       <div class="pantry-title">What can you cook?</div>
-      <p class="pantry-sub" id="pantry-sub">Tap what's in your fridge. <strong>Chicken</strong> alone unlocks 13 of these 16 recipes — the single most versatile ingredient in the collection.</p>
+      <p class="pantry-sub" id="pantry-sub">Tap what's in your fridge. <strong>Chicken</strong> alone unlocks 18 of these 21 recipes — the single most versatile ingredient in the collection.</p>
       <div class="pantry-chips" id="pantry-chips">
         <button class="chip" data-ingr="chicken">Chicken</button>
         <button class="chip" data-ingr="greek yogurt">Greek Yogurt</button>
@@ -512,6 +587,10 @@
         <button class="chip" data-ingr="lettuce">Lettuce</button>
         <button class="chip" data-ingr="marinara">Marinara</button>
         <button class="chip" data-ingr="paneer">Paneer</button>
+        <button class="chip" data-ingr="tortilla wraps">Tortilla Wraps</button>
+      </div>
+      <div class="pantry-note" id="pantry-note">
+        Store-bought wraps: <a href="https://blinkit.com/prn/salsalito-multigrain-wrap-tortilla-wrap/prid/716571" target="_blank">Salsalito Multigrain</a> (148 cal) · <a href="https://blinkit.com/prn/habanero-spinach-tortilla-wrap-wraps/prid/560608" target="_blank">Habanero Spinach</a> (170 cal) · <a href="https://blinkit.com/prn/habanero-beetroot-carrot-tortilla-wrap-wraps/prid/615824" target="_blank">Habanero Beetroot</a> (180 cal) — all on Blinkit. Or make cottage cheese wraps (see Wrap Shells above).
       </div>
       <div class="pantry-result" id="pantry-result">
         <span class="pantry-stat ready" id="stat-ready">0 ready now</span>
@@ -528,7 +607,7 @@
     <!-- WRAP SHELLS                                 -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <div class="card" data-cat="shell" data-ingr="cottage cheese,eggs">
+    <div class="card" data-cat="shell" data-person="pc" data-ingr="cottage cheese,eggs">
       <div class="card-header">
         <span class="card-category cat-shell">Wrap Shell</span>
         <div class="card-title">Cottage Cheese Wrap</div>
@@ -565,7 +644,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="shell" data-ingr="paneer,bell pepper">
+    <div class="card" data-cat="shell" data-person="pc" data-ingr="paneer,bell pepper">
       <div class="card-header">
         <span class="card-category cat-shell">Wrap Shell</span>
         <div class="card-title">Moong Dal Chilla</div>
@@ -613,7 +692,7 @@
     <!-- WRAPS                                       -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <div class="card" data-cat="wrap" data-ingr="chicken,greek yogurt,cheddar">
+    <div class="card" data-cat="wrap" data-person="pc" data-ingr="chicken,greek yogurt,cheddar,tortilla wraps">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Buffalo Chicken Wraps</div>
@@ -646,13 +725,13 @@
             <li>Layer greens, chicken mixture, more greens on each wrap.</li>
             <li>Roll tightly. Slice in half.</li>
           </ol>
-          <div class="note">Greens between filling and wrap prevent sogginess. For extra heat, add more buffalo sauce.</div>
+          <div class="note">Greens between filling and wrap prevent sogginess. For extra heat, add more buffalo sauce.<br>With store-bought tortilla wrap: ~295 cal · 21g protein · 35g carbs · 7g fat.</div>
           <a class="source-link" href="https://masonfit.com/healthy-buffalo-chicken-wraps/" target="_blank">Source: Mason Fit &rarr;</a>
         </div>
       </div>
     </div>
 
-    <div class="card" data-cat="wrap" data-ingr="chicken">
+    <div class="card" data-cat="wrap" data-person="pc" data-ingr="chicken,tortilla wraps">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Peri Peri Chicken Wrap</div>
@@ -687,12 +766,12 @@
             <li>Mix sauce ingredients. Spread on wrap.</li>
             <li>Add lettuce, red onion, tomato, chicken, remaining sauce. Roll.</li>
           </ol>
-          <div class="note">Use cottage cheese wrap to drop carbs. Toast seam-side down for crispy finish.</div>
+          <div class="note">Use cottage cheese wrap to drop carbs. Toast seam-side down for crispy finish.<br>With store-bought tortilla wrap: ~420 cal · 52g protein · 39g carbs · 8g fat.</div>
         </div>
       </div>
     </div>
 
-    <div class="card" data-cat="wrap" data-ingr="chicken,lettuce">
+    <div class="card" data-cat="wrap" data-person="pc" data-ingr="chicken,lettuce">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Korean Spiced Chicken Lettuce Wraps</div>
@@ -734,7 +813,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="wrap" data-ingr="chicken,greek yogurt">
+    <div class="card" data-cat="wrap" data-person="pc" data-ingr="chicken,greek yogurt,tortilla wraps">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Chicken Tikka Wraps</div>
@@ -766,13 +845,13 @@
             <li>Spread tomato sauce on wrap. Add greens, chicken, raita or avocado dip.</li>
             <li>Roll tightly.</li>
           </ol>
-          <div class="note">Use cottage cheese wrap for low carb. The marinade is everything — don't rush it.</div>
+          <div class="note">Use cottage cheese wrap for low carb. The marinade is everything — don't rush it.<br>With store-bought tortilla wrap: ~575 cal · 43g protein · 54g carbs · 17g fat.</div>
           <a class="source-link" href="https://shahzadidevje.com/indian-tandoori-chicken-tikka-wraps/" target="_blank">Source: Desi~licious RD &rarr;</a>
         </div>
       </div>
     </div>
 
-    <div class="card" data-cat="wrap" data-ingr="chicken,greek yogurt,bell pepper,spinach,cheddar">
+    <div class="card" data-cat="wrap" data-person="pc" data-ingr="chicken,greek yogurt,bell pepper,spinach,cheddar,tortilla wraps">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">High-Protein Chicken Burrito</div>
@@ -804,12 +883,13 @@
             <li>Combine. Fill wraps with cheese, yogurt, salsa.</li>
             <li>Fold, roll. Sear seam-side down for crispiness.</li>
           </ol>
+          <div class="note">With store-bought tortilla wrap: ~560 cal · 46g protein · 54g carbs · 12g fat.</div>
           <a class="source-link" href="https://www.griproom.com/fun/the-best-low-calorie-high-protein-burrito-recipe-ever" target="_blank">Source: GripRoom &rarr;</a>
         </div>
       </div>
     </div>
 
-    <div class="card" data-cat="wrap" data-ingr="chicken,greek yogurt,lettuce">
+    <div class="card" data-cat="wrap" data-person="pc" data-ingr="chicken,greek yogurt,lettuce">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Chicken Taco Lettuce Wraps</div>
@@ -853,7 +933,7 @@
     <!-- NOODLES & PASTA                             -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <div class="card" data-cat="noodle" data-ingr="chicken,zucchini,parmesan">
+    <div class="card" data-cat="noodle" data-person="pc" data-ingr="chicken,zucchini,parmesan">
       <div class="card-header">
         <span class="card-category cat-noodle">Noodles</span>
         <div class="card-title">Garlic Chicken Zucchini Noodles</div>
@@ -889,7 +969,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="noodle" data-ingr="chicken,zucchini,eggs,marinara,parmesan">
+    <div class="card" data-cat="noodle" data-person="pc" data-ingr="chicken,zucchini,eggs,marinara,parmesan">
       <div class="card-header">
         <span class="card-category cat-noodle">Noodles</span>
         <div class="card-title">Chicken Meatballs &amp; Zoodles</div>
@@ -925,7 +1005,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="noodle" data-ingr="chicken,cottage cheese,bell pepper,parmesan">
+    <div class="card" data-cat="noodle" data-person="pc" data-ingr="chicken,cottage cheese,bell pepper,parmesan">
       <div class="card-header">
         <span class="card-category cat-noodle">Pasta</span>
         <div class="card-title">Creamy Cajun Chicken Pasta</div>
@@ -968,7 +1048,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="noodle" data-ingr="chicken,zucchini,spinach">
+    <div class="card" data-cat="noodle" data-person="pc" data-ingr="chicken,zucchini,spinach">
       <div class="card-header">
         <span class="card-category cat-noodle">Noodles</span>
         <div class="card-title">Chicken Pesto Zucchini Noodles</div>
@@ -1008,7 +1088,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="noodle" data-ingr="chicken">
+    <div class="card" data-cat="noodle" data-person="pc" data-ingr="chicken">
       <div class="card-header">
         <span class="card-category cat-noodle">Stir-Fry</span>
         <div class="card-title">Thai Basil Ground Chicken</div>
@@ -1049,7 +1129,7 @@
     <!-- STUFFED & OTHER                             -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <div class="card" data-cat="stuffed" data-ingr="cottage cheese,eggs,parmesan,marinara">
+    <div class="card" data-cat="stuffed" data-person="pc" data-ingr="cottage cheese,eggs,parmesan,marinara">
       <div class="card-header">
         <span class="card-category cat-stuffed">Flatbread</span>
         <div class="card-title">Cottage Cheese Flatbread Pizza</div>
@@ -1088,7 +1168,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="stuffed" data-ingr="chicken,bell pepper,cheddar">
+    <div class="card" data-cat="stuffed" data-person="pc" data-ingr="chicken,bell pepper,cheddar">
       <div class="card-header">
         <span class="card-category cat-stuffed">Stuffed</span>
         <div class="card-title">Chicken Fajita Stuffed Peppers</div>
@@ -1126,7 +1206,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="stuffed" data-ingr="chicken,spinach">
+    <div class="card" data-cat="stuffed" data-person="pc" data-ingr="chicken,spinach">
       <div class="card-header">
         <span class="card-category cat-stuffed">Stuffed</span>
         <div class="card-title">Chipotle BBQ Stuffed Sweet Potato</div>
@@ -1163,6 +1243,241 @@
       </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- CURRY & RICE (Dev's Picks)                  -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <div class="card" data-cat="curry" data-person="dev" data-ingr="chicken,greek yogurt">
+      <div class="card-header">
+        <span class="card-category cat-curry">Curry &amp; Rice</span>
+        <div class="card-title">Cauliflower Rice Chicken Biryani</div>
+        <div class="card-desc">Proper biryani flavours — garam masala, Kashmiri chilli, saffron, mint — with cauliflower rice keeping carbs at 17g. Dev's pick.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">382</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">42g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">17g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">6g</span><span class="macro-label">Fiber</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 4)</h4>
+          <ul>
+            <li>680g chicken breast or thighs, cut into 2-inch pieces</li>
+            <li>1 tsp garam masala, 1 tsp ginger, 1 tsp garlic</li>
+            <li>2 tsp Kashmiri red chilli powder, &frac12; tsp turmeric</li>
+            <li>&frac14; cup fresh mint, &frac14; cup coriander</li>
+            <li>1 tbsp lemon juice, 2 tbsp yogurt, 1&frac12; tsp salt</li>
+            <li>&frac14; cup ghee</li>
+            <li>1 large onion, thinly sliced</li>
+            <li>1 tsp shah jeera (or cumin seeds), 1 bay leaf</li>
+            <li>6 cups riced cauliflower</li>
+            <li>Pinch saffron + 1 tbsp warm milk (optional)</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Combine spices, herbs, lemon juice, yogurt and salt. Marinate chicken 20 min (overnight ideal).</li>
+            <li>Process cauliflower florets in food processor until riced.</li>
+            <li>Heat 2 tbsp ghee. Saut&eacute; onions 10-15 min until golden and caramelised. Reserve half.</li>
+            <li>Add remaining ghee, cumin seeds, bay leaf. Saut&eacute; briefly. Add marinated chicken, cook covered 5-7 min.</li>
+            <li>Add cauliflower rice and salt. Combine gently. Cook covered on low-medium 10 min.</li>
+            <li>Top with reserved onions, saffron milk, mint and coriander.</li>
+          </ol>
+          <div class="note">The caramelised onions and saffron make this taste like proper biryani. Cauliflower rice absorbs all the spice.</div>
+          <a class="source-link" href="https://ministryofcurry.com/cauliflower-rice-chicken-biryani/" target="_blank">Source: Ministry of Curry &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="curry" data-person="dev" data-ingr="chicken">
+      <div class="card-header">
+        <span class="card-category cat-curry">Curry &amp; Rice</span>
+        <div class="card-title">Chicken Keema with Peas</div>
+        <div class="card-desc">Classic Indian mince curry — cumin, coriander, garam masala, tomato. 40g protein, 12g carbs. Serve over cauliflower rice. Dev's pick.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">260</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">40g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">12g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">3g</span><span class="macro-label">Fiber</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 4)</h4>
+          <ul>
+            <li>2 tsp oil</li>
+            <li>1 bay leaf</li>
+            <li>1 small onion (80g), chopped</li>
+            <li>1 green chilli, chopped</li>
+            <li>1 tbsp ginger, minced</li>
+            <li>4 cloves garlic, minced</li>
+            <li>2 tsp ground coriander, 1 tsp cumin, 1 tsp garam masala</li>
+            <li>&frac34; tsp salt, &frac12; tsp turmeric, &frac14; tsp black pepper</li>
+            <li>1 tsp Kashmiri red chilli (optional)</li>
+            <li>450g lean chicken mince</li>
+            <li>225g tomato sauce</li>
+            <li>1 cup frozen peas</li>
+            <li>Fresh coriander</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Heat oil over medium-high. Add bay leaf, cook 30 seconds.</li>
+            <li>Add onion and chilli, cook 5 min until browned.</li>
+            <li>Stir in ginger and garlic, cook 2 min.</li>
+            <li>Add chicken mince and all spices. Cook 5 min until browned, breaking up meat.</li>
+            <li>Add tomato sauce plus one can of water. Simmer 7-8 min until liquid mostly absorbs.</li>
+            <li>Stir in peas and coriander. Cook until heated through.</li>
+          </ol>
+          <div class="note">Serve over cauliflower rice for low-carb, or regular basmati. The tomato base keeps it moist without adding cream.</div>
+          <a class="source-link" href="https://easymacromeals.com/indian-keema-chicken-recipe/" target="_blank">Source: Easy Macro Meals &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- DEA'S PICKS                                 -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <div class="card" data-cat="curry" data-person="dea" data-ingr="chicken,greek yogurt">
+      <div class="card-header">
+        <span class="card-category cat-curry">Curry &amp; Rice</span>
+        <div class="card-title">High-Protein Butter Chicken</div>
+        <div class="card-desc">Greek yogurt marinade, silken tofu blended into sauce instead of cream. 61g protein per serving. Dea's pick.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">490</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">61g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">37g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">10g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Chicken Marinade (serves 4)</h4>
+          <ul>
+            <li>900g chicken breast, bite-sized</li>
+            <li>1 cup nonfat Greek yogurt</li>
+            <li>1 tbsp lemon juice</li>
+            <li>4-5 cloves garlic, grated</li>
+            <li>2-inch knob ginger, grated</li>
+            <li>1 tbsp Kashmiri chilli powder</li>
+            <li>1 tbsp garam masala, 1 tsp turmeric, 1 tsp cumin</li>
+            <li>1 tbsp salt</li>
+          </ul>
+          <h4>Sauce</h4>
+          <ul>
+            <li>1 medium onion, diced</li>
+            <li>4-5 cloves garlic, grated + 2-inch ginger</li>
+            <li>2 tbsp tomato paste</li>
+            <li>1 can (425g) crushed tomatoes</li>
+            <li>1 tsp garam masala, 1 tsp Kashmiri chilli</li>
+            <li>&frac12; tsp turmeric, &frac12; tsp kasuri methi</li>
+            <li>1 pack (300g) firm silken tofu</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Marinate chicken in yogurt mixture at least 30 min.</li>
+            <li>Sear marinated chicken in batches until browned.</li>
+            <li>Cook onion until golden. Add garlic, ginger, tomato paste until fragrant.</li>
+            <li>Add crushed tomatoes and spices. Simmer 10-15 min.</li>
+            <li>Blend silken tofu smooth. Combine with sauce and blend until silky. Return to pan.</li>
+            <li>Add chicken, simmer until cooked through. Serve with &frac12; cup basmati rice and coriander.</li>
+          </ol>
+          <div class="note">The silken tofu trick makes the sauce creamy without cream or coconut milk. Macros include &frac12; cup basmati rice.</div>
+          <a class="source-link" href="https://www.joshuaweissman.com/recipes/easy-low-calorie-high-protein-butter-chicken-recipe" target="_blank">Source: Joshua Weissman &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="stuffed" data-person="dea" data-ingr="chicken,cottage cheese,parmesan">
+      <div class="card-header">
+        <span class="card-category cat-stuffed">Baked</span>
+        <div class="card-title">Chicken Alfredo Lasagna</div>
+        <div class="card-desc">Cottage cheese alfredo sauce, chicken, mozzarella, parmesan. 500 cal, 43g protein. Dea's pick.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">500</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">43g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">31g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">24g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 6)</h4>
+          <ul>
+            <li>450g chicken breast, cooked and chopped</li>
+            <li>2 cups (450g) low-fat cottage cheese</li>
+            <li>&frac34; cup (180g) alfredo sauce</li>
+            <li>225g fresh mozzarella, shredded</li>
+            <li>115g parmesan, grated</li>
+            <li>9 sheets no-boil lasagna</li>
+            <li>3-4 handfuls fresh parsley, chopped</li>
+            <li>Salt and pepper</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Preheat oven to 220&deg;C (425&deg;F).</li>
+            <li>Cook or air-fry chicken, chop into bite-sized pieces.</li>
+            <li>Blend cottage cheese, alfredo sauce, salt and pepper until smooth.</li>
+            <li>Thin sauce layer in baking dish. Layer: 3 lasagna sheets, sauce, chicken, parsley, mozzarella, parmesan. Repeat, finishing with cheese.</li>
+            <li>Cover and bake 30 min. Uncover, bake 10-15 min until cheese bubbles and browns.</li>
+            <li>Rest 5 min before serving. Garnish with parsley and parmesan.</li>
+          </ol>
+          <div class="note">The cottage cheese alfredo is indistinguishable from the real thing once blended. Leftovers reheat well.</div>
+          <a class="source-link" href="https://masonfit.com/chicken-alfredo-lasagna/" target="_blank">Source: Mason Fit &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="noodle" data-person="dea" data-ingr="chicken">
+      <div class="card-header">
+        <span class="card-category cat-noodle">Noodles</span>
+        <div class="card-title">Chicken Ramen Bowls</div>
+        <div class="card-desc">Red curry-miso broth, coconut milk, rotisserie chicken, rice ramen. Warming, rich, 38g protein. Dea's pick.</div>
+      </div>
+      <div class="macros">
+        <div class="macro"><span class="macro-val">445</span><span class="macro-label">Cal</span></div>
+        <div class="macro"><span class="macro-val">38g</span><span class="macro-label">Protein</span></div>
+        <div class="macro"><span class="macro-val">45g</span><span class="macro-label">Carbs</span></div>
+        <div class="macro"><span class="macro-val">12g</span><span class="macro-label">Fat</span></div>
+      </div>
+      <button class="card-toggle" onclick="toggleCard(this)">Full recipe <span class="arrow">&#9660;</span></button>
+      <div class="card-detail">
+        <div class="card-detail-inner">
+          <h4>Ingredients (serves 4)</h4>
+          <ul>
+            <li>450g rotisserie or cooked chicken, chopped</li>
+            <li>&frac14; cup teriyaki or Japanese BBQ sauce</li>
+            <li>170g ramen noodles (2 blocks)</li>
+          </ul>
+          <h4>Broth</h4>
+          <ul>
+            <li>1 tbsp red curry paste</li>
+            <li>1 tbsp white miso</li>
+            <li>1 tbsp honey</li>
+            <li>2 tbsp powdered peanut butter</li>
+            <li>2 tbsp coconut aminos or low-sodium soy sauce</li>
+            <li>1 can (400ml) light coconut milk</li>
+            <li>1&frac12; cups chicken bone broth</li>
+          </ul>
+          <h4>Method</h4>
+          <ol>
+            <li>Boil water for ramen.</li>
+            <li>Mix curry paste, miso, honey, peanut butter, coconut aminos. Set aside.</li>
+            <li>Heat chicken with BBQ sauce 3-5 min until caramelised. Set aside.</li>
+            <li>Add curry paste mixture to pan, cook 20-30 sec. Add broth and coconut milk. Simmer.</li>
+            <li>Cook noodles. Add to simmering broth.</li>
+            <li>Serve: noodles, broth, chicken. Top with cucumber, spring onions, sesame, chilli crisp.</li>
+          </ol>
+          <div class="note">The miso-curry-peanut broth is deeply flavourful. Use rotisserie chicken for zero-effort protein.</div>
+          <a class="source-link" href="https://masonfit.com/rotisserie-chicken-ramen/" target="_blank">Source: Mason Fit &rarr;</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <footer>
@@ -1172,76 +1487,58 @@
   </footer>
 
   <script>
+    /* ── State ── */
+    var activeCat = 'all';
+    var activePerson = 'all';
+
     function toggleCard(btn) {
       btn.closest('.card').classList.toggle('expanded');
     }
 
-    var currentCat = 'all';
-    var selectedIngr = new Set();
-
+    /* ── Category filter ── */
     function filterCards(cat) {
-      currentCat = cat;
-      var btns = document.querySelectorAll('.filter-btn');
-      btns.forEach(function(b) { b.classList.remove('active'); });
+      activeCat = cat;
+      document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
       event.target.classList.add('active');
-      refreshCards();
+      applyFilters();
     }
 
-    function refreshCards() {
-      var cards = document.querySelectorAll('.card');
-      var filtering = selectedIngr.size > 0;
-      var visibleCount = 0, ready = 0, close = 0, far = 0;
+    /* ── Person filter ── */
+    function filterPerson(person) {
+      activePerson = person;
+      document.querySelectorAll('.person-btn').forEach(function(b) { b.classList.remove('active'); });
+      event.target.classList.add('active');
+      applyFilters();
+    }
 
+    /* ── Combined filter logic ── */
+    function applyFilters() {
+      var cards = document.querySelectorAll('.card');
+      var count = 0;
       cards.forEach(function(c) {
-        var catOk = (currentCat === 'all' || c.dataset.cat === currentCat);
-        var missing = filtering ? c._ingrTags.filter(function(t) { return !selectedIngr.has(t); }) : [];
-
-        if (filtering) {
-          if (missing.length === 0) {
-            if (catOk) ready++;
-            c._badge.className = 'match-badge ready';
-            c._badge.textContent = 'Ready to cook';
-            c.style.order = '0';
-          } else if (missing.length === 1) {
-            if (catOk) close++;
-            c._badge.className = 'match-badge close';
-            c._badge.textContent = 'Need ' + missing[0];
-            c.style.order = '1';
-          } else {
-            if (catOk) far++;
-            c._badge.className = 'match-badge far';
-            c._badge.textContent = missing.length + ' more needed';
-            c.style.order = '2';
-          }
+        var catMatch = (activeCat === 'all' || c.dataset.cat === activeCat);
+        var personMatch = (activePerson === 'all' || c.dataset.person === activePerson);
+        if (catMatch && personMatch) {
+          c.style.display = '';
+          count++;
         } else {
-          c._badge.className = 'match-badge';
-          c._badge.textContent = '';
-          c.style.order = '';
+          c.style.display = 'none';
         }
-
-        var ingrOk = !filtering || missing.length <= 1;
-        var visible = catOk && ingrOk;
-        c.style.display = visible ? '' : 'none';
-        if (visible) visibleCount++;
       });
-
-      document.getElementById('card-count').textContent = visibleCount + ' recipe' + (visibleCount !== 1 ? 's' : '');
-
-      var resultBar = document.getElementById('pantry-result');
-      if (filtering) {
-        resultBar.classList.add('show');
-        document.getElementById('stat-ready').textContent = ready + (ready === 1 ? ' recipe ready now' : ' recipes ready now');
-        document.getElementById('stat-close').textContent = close + ' one ingredient away';
-        document.getElementById('stat-far').textContent = far + ' hidden — need 2+';
-      } else {
-        resultBar.classList.remove('show');
-      }
+      document.getElementById('card-count').textContent = count + ' recipe' + (count !== 1 ? 's' : '');
     }
 
+    /* ── Pantry checker with sort + dim ── */
     (function() {
-      var cards = document.querySelectorAll('.card');
+      var grid = document.getElementById('card-grid');
+      var cards = Array.from(document.querySelectorAll('.card'));
       var chips = document.querySelectorAll('.pantry-chips .chip');
+      var resultBar = document.getElementById('pantry-result');
+      var statReady = document.getElementById('stat-ready');
+      var statClose = document.getElementById('stat-close');
+      var statFar = document.getElementById('stat-far');
       var clearBtn = document.getElementById('pantry-clear');
+      var selected = new Set();
 
       cards.forEach(function(card) {
         card._ingrTags = (card.dataset.ingr || '').split(',').map(function(s) { return s.trim(); }).filter(Boolean);
@@ -1251,24 +1548,78 @@
         card._badge = badge;
       });
 
+      function update() {
+        if (selected.size === 0) {
+          resultBar.classList.remove('show');
+          cards.forEach(function(c) {
+            c._badge.className = 'match-badge';
+            c._badge.textContent = '';
+            c.classList.remove('pantry-dim', 'pantry-close-state');
+          });
+          return;
+        }
+        resultBar.classList.add('show');
+        var ready = 0, close = 0, far = 0;
+        var readyCards = [], closeCards = [], farCards = [];
+
+        cards.forEach(function(c) {
+          c.classList.remove('pantry-dim', 'pantry-close-state');
+          var tags = c._ingrTags;
+          if (!tags.length) {
+            c._badge.className = 'match-badge';
+            c._badge.textContent = '';
+            c.classList.add('pantry-dim');
+            farCards.push(c);
+            return;
+          }
+          var missing = tags.filter(function(t) { return !selected.has(t); });
+          if (missing.length === 0) {
+            ready++;
+            c._badge.className = 'match-badge ready';
+            c._badge.textContent = 'Ready to cook';
+            readyCards.push(c);
+          } else if (missing.length === 1) {
+            close++;
+            c._badge.className = 'match-badge close';
+            c._badge.textContent = 'Need ' + missing[0];
+            c.classList.add('pantry-close-state');
+            closeCards.push(c);
+          } else {
+            far++;
+            c._badge.className = 'match-badge far';
+            c._badge.textContent = missing.length + ' more needed';
+            c.classList.add('pantry-dim');
+            farCards.push(c);
+          }
+        });
+
+        /* Reorder DOM: ready first, then close, then far */
+        var sorted = readyCards.concat(closeCards, farCards);
+        sorted.forEach(function(c) { grid.appendChild(c); });
+
+        statReady.textContent = ready + (ready === 1 ? ' recipe ready now' : ' recipes ready now');
+        statClose.textContent = close + ' one ingredient away';
+        statFar.textContent = far + ' further out';
+      }
+
       chips.forEach(function(chip) {
         chip.addEventListener('click', function() {
           var val = chip.dataset.ingr;
-          if (selectedIngr.has(val)) {
-            selectedIngr.delete(val);
+          if (selected.has(val)) {
+            selected.delete(val);
             chip.classList.remove('active');
           } else {
-            selectedIngr.add(val);
+            selected.add(val);
             chip.classList.add('active');
           }
-          refreshCards();
+          update();
         });
       });
 
       clearBtn.addEventListener('click', function() {
-        selectedIngr.clear();
+        selected.clear();
         chips.forEach(function(c) { c.classList.remove('active'); });
-        refreshCards();
+        update();
       });
     })();
   </script>
