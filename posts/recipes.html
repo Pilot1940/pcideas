@@ -141,6 +141,89 @@
       white-space: nowrap;
     }
 
+    /* ── PANTRY CHECK ── */
+    .pantry {
+      max-width: 960px;
+      width: 100%;
+      margin: 20px auto 0;
+      padding: 18px 24px;
+    }
+    .pantry-inner {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg-card);
+      padding: 18px 22px;
+    }
+    .pantry-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .pantry-sub {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      max-width: 620px;
+      margin-bottom: 14px;
+    }
+    .pantry-sub strong { color: var(--text); }
+    .pantry-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg);
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .pantry-result {
+      display: none;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .pantry-result.show { display: flex; }
+    .pantry-stat {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .pantry-stat.ready { background: var(--green-bg); color: var(--green); }
+    .pantry-stat.close { background: var(--orange-bg); color: var(--orange); }
+    .pantry-stat.far { background: var(--bg-alt); color: var(--text-dim); }
+    .pantry-clear {
+      margin-left: auto;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
     /* ── CARD GRID ── */
     .card-grid {
       max-width: 960px;
@@ -166,7 +249,27 @@
 
     .card-header {
       padding: 20px 20px 0;
+      position: relative;
     }
+    .match-badge {
+      display: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      max-width: 50%;
+      text-align: right;
+      line-height: 1.4;
+    }
+    .match-badge:not(:empty) { display: inline-block; }
+    .match-badge.ready { background: var(--green-bg); color: var(--green); }
+    .match-badge.close { background: var(--orange-bg); color: var(--orange); }
+    .match-badge.far { background: var(--bg-alt); color: var(--text-muted); }
     .card-category {
       display: inline-block;
       font-size: 10px;
@@ -339,6 +442,8 @@
     @media (hover: hover) and (pointer: fine) {
       .topbar-back:hover { color: rgba(250,250,247,0.9); }
       .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+      .chip:hover { border-color: var(--accent); color: var(--accent); }
+      .chip.active:hover { color: #fff; }
       .card:hover {
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         transform: translateY(-2px);
@@ -362,6 +467,10 @@
       .macro { padding: 8px 2px; }
       .card-toggle { padding: 12px 16px; }
       .card-detail-inner { padding: 0 16px 16px; }
+      .pantry { padding: 14px 16px 0; }
+      .pantry-inner { padding: 16px; }
+      .pantry-clear { margin-left: 0; width: 100%; text-align: right; order: 1; }
+      .match-badge { top: 16px; right: 16px; }
     }
   </style>
 </head>
@@ -386,13 +495,40 @@
     <span class="filter-count" id="card-count">16 recipes</span>
   </div>
 
+  <section class="pantry">
+    <div class="pantry-inner">
+      <div class="pantry-title">What can you cook?</div>
+      <p class="pantry-sub" id="pantry-sub">Tap what's in your fridge. <strong>Chicken</strong> alone unlocks 13 of these 16 recipes — the single most versatile ingredient in the collection.</p>
+      <div class="pantry-chips" id="pantry-chips">
+        <button class="chip" data-ingr="chicken">Chicken</button>
+        <button class="chip" data-ingr="greek yogurt">Greek Yogurt</button>
+        <button class="chip" data-ingr="cottage cheese">Cottage Cheese</button>
+        <button class="chip" data-ingr="bell pepper">Bell Pepper</button>
+        <button class="chip" data-ingr="parmesan">Parmesan</button>
+        <button class="chip" data-ingr="zucchini">Zucchini</button>
+        <button class="chip" data-ingr="eggs">Eggs</button>
+        <button class="chip" data-ingr="spinach">Spinach</button>
+        <button class="chip" data-ingr="cheddar">Cheddar</button>
+        <button class="chip" data-ingr="lettuce">Lettuce</button>
+        <button class="chip" data-ingr="marinara">Marinara</button>
+        <button class="chip" data-ingr="paneer">Paneer</button>
+      </div>
+      <div class="pantry-result" id="pantry-result">
+        <span class="pantry-stat ready" id="stat-ready">0 ready now</span>
+        <span class="pantry-stat close" id="stat-close">0 one away</span>
+        <span class="pantry-stat far" id="stat-far">0 further out</span>
+        <button class="pantry-clear" id="pantry-clear">Clear selection</button>
+      </div>
+    </div>
+  </section>
+
   <div class="card-grid" id="card-grid">
 
     <!-- ═══════════════════════════════════════════ -->
     <!-- WRAP SHELLS                                 -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <div class="card" data-cat="shell">
+    <div class="card" data-cat="shell" data-ingr="cottage cheese,eggs">
       <div class="card-header">
         <span class="card-category cat-shell">Wrap Shell</span>
         <div class="card-title">Cottage Cheese Wrap</div>
@@ -429,7 +565,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="shell">
+    <div class="card" data-cat="shell" data-ingr="paneer,bell pepper">
       <div class="card-header">
         <span class="card-category cat-shell">Wrap Shell</span>
         <div class="card-title">Moong Dal Chilla</div>
@@ -477,7 +613,7 @@
     <!-- WRAPS                                       -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <div class="card" data-cat="wrap">
+    <div class="card" data-cat="wrap" data-ingr="chicken,greek yogurt,cheddar">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Buffalo Chicken Wraps</div>
@@ -516,7 +652,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="wrap">
+    <div class="card" data-cat="wrap" data-ingr="chicken">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Peri Peri Chicken Wrap</div>
@@ -556,7 +692,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="wrap">
+    <div class="card" data-cat="wrap" data-ingr="chicken,lettuce">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Korean Spiced Chicken Lettuce Wraps</div>
@@ -598,7 +734,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="wrap">
+    <div class="card" data-cat="wrap" data-ingr="chicken,greek yogurt">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Chicken Tikka Wraps</div>
@@ -636,7 +772,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="wrap">
+    <div class="card" data-cat="wrap" data-ingr="chicken,greek yogurt,bell pepper,spinach,cheddar">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">High-Protein Chicken Burrito</div>
@@ -673,7 +809,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="wrap">
+    <div class="card" data-cat="wrap" data-ingr="chicken,greek yogurt,lettuce">
       <div class="card-header">
         <span class="card-category cat-wrap">Wrap</span>
         <div class="card-title">Chicken Taco Lettuce Wraps</div>
@@ -717,7 +853,7 @@
     <!-- NOODLES & PASTA                             -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <div class="card" data-cat="noodle">
+    <div class="card" data-cat="noodle" data-ingr="chicken,zucchini,parmesan">
       <div class="card-header">
         <span class="card-category cat-noodle">Noodles</span>
         <div class="card-title">Garlic Chicken Zucchini Noodles</div>
@@ -753,7 +889,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="noodle">
+    <div class="card" data-cat="noodle" data-ingr="chicken,zucchini,eggs,marinara,parmesan">
       <div class="card-header">
         <span class="card-category cat-noodle">Noodles</span>
         <div class="card-title">Chicken Meatballs &amp; Zoodles</div>
@@ -789,7 +925,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="noodle">
+    <div class="card" data-cat="noodle" data-ingr="chicken,cottage cheese,bell pepper,parmesan">
       <div class="card-header">
         <span class="card-category cat-noodle">Pasta</span>
         <div class="card-title">Creamy Cajun Chicken Pasta</div>
@@ -832,7 +968,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="noodle">
+    <div class="card" data-cat="noodle" data-ingr="chicken,zucchini,spinach">
       <div class="card-header">
         <span class="card-category cat-noodle">Noodles</span>
         <div class="card-title">Chicken Pesto Zucchini Noodles</div>
@@ -872,7 +1008,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="noodle">
+    <div class="card" data-cat="noodle" data-ingr="chicken">
       <div class="card-header">
         <span class="card-category cat-noodle">Stir-Fry</span>
         <div class="card-title">Thai Basil Ground Chicken</div>
@@ -913,7 +1049,7 @@
     <!-- STUFFED & OTHER                             -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <div class="card" data-cat="stuffed">
+    <div class="card" data-cat="stuffed" data-ingr="cottage cheese,eggs,parmesan,marinara">
       <div class="card-header">
         <span class="card-category cat-stuffed">Flatbread</span>
         <div class="card-title">Cottage Cheese Flatbread Pizza</div>
@@ -952,7 +1088,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="stuffed">
+    <div class="card" data-cat="stuffed" data-ingr="chicken,bell pepper,cheddar">
       <div class="card-header">
         <span class="card-category cat-stuffed">Stuffed</span>
         <div class="card-title">Chicken Fajita Stuffed Peppers</div>
@@ -990,7 +1126,7 @@
       </div>
     </div>
 
-    <div class="card" data-cat="stuffed">
+    <div class="card" data-cat="stuffed" data-ingr="chicken,spinach">
       <div class="card-header">
         <span class="card-category cat-stuffed">Stuffed</span>
         <div class="card-title">Chipotle BBQ Stuffed Sweet Potato</div>
@@ -1059,6 +1195,88 @@
 
       document.getElementById('card-count').textContent = count + ' recipe' + (count !== 1 ? 's' : '');
     }
+
+    (function() {
+      var cards = document.querySelectorAll('.card');
+      var chips = document.querySelectorAll('.pantry-chips .chip');
+      var resultBar = document.getElementById('pantry-result');
+      var statReady = document.getElementById('stat-ready');
+      var statClose = document.getElementById('stat-close');
+      var statFar = document.getElementById('stat-far');
+      var clearBtn = document.getElementById('pantry-clear');
+      var selected = new Set();
+
+      cards.forEach(function(card) {
+        card._ingrTags = (card.dataset.ingr || '').split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+        var badge = document.createElement('span');
+        badge.className = 'match-badge';
+        card.querySelector('.card-header').appendChild(badge);
+        card._badge = badge;
+      });
+
+      function update() {
+        if (selected.size === 0) {
+          resultBar.classList.remove('show');
+          cards.forEach(function(c) {
+            c.style.order = '';
+            c._badge.className = 'match-badge';
+            c._badge.textContent = '';
+          });
+          return;
+        }
+        resultBar.classList.add('show');
+        var ready = 0, close = 0, far = 0;
+        cards.forEach(function(c) {
+          var tags = c._ingrTags;
+          if (!tags.length) {
+            c._badge.className = 'match-badge';
+            c._badge.textContent = '';
+            c.style.order = '3';
+            return;
+          }
+          var missing = tags.filter(function(t) { return !selected.has(t); });
+          if (missing.length === 0) {
+            ready++;
+            c._badge.className = 'match-badge ready';
+            c._badge.textContent = 'Ready to cook';
+            c.style.order = '0';
+          } else if (missing.length === 1) {
+            close++;
+            c._badge.className = 'match-badge close';
+            c._badge.textContent = 'Need ' + missing[0];
+            c.style.order = '1';
+          } else {
+            far++;
+            c._badge.className = 'match-badge far';
+            c._badge.textContent = missing.length + ' more needed';
+            c.style.order = '2';
+          }
+        });
+        statReady.textContent = ready + (ready === 1 ? ' recipe ready now' : ' recipes ready now');
+        statClose.textContent = close + ' one ingredient away';
+        statFar.textContent = far + ' further out';
+      }
+
+      chips.forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          var val = chip.dataset.ingr;
+          if (selected.has(val)) {
+            selected.delete(val);
+            chip.classList.remove('active');
+          } else {
+            selected.add(val);
+            chip.classList.add('active');
+          }
+          update();
+        });
+      });
+
+      clearBtn.addEventListener('click', function() {
+        selected.clear();
+        chips.forEach(function(c) { c.classList.remove('active'); });
+        update();
+      });
+    })();
   </script>
 
 </body>
